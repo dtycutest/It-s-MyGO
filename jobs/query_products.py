@@ -1,0 +1,79 @@
+from __future__ import annotations
+
+import argparse
+
+from scrapy.utils.project import get_project_settings
+
+from onebuy_crawler.services.crawl_tasks import enqueue_tasks
+from onebuy_crawler.services.db import mysql_connection
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Query cached product offers from MySQL.")
+    parser.add_argument("--keyword", required=True)
+    parser.add_argument("--limit", type=int, default=20)
+    parser.add_argument(
+        "--enqueue-missing",
+        action="store_true",
+        help="Create JD and Taobao crawl tasks when no cached products are found.",
+    )
+    args = parser.parse_args()
+
+    settings = get_project_settings()
+    rows = query_products(settings, args.keyword, args.limit)
+    if not rows:
+        print(f"no cached products found: keyword={args.keyword}")
+        if args.enqueue_missing:
+            enqueue_tasks(settings, args.keyword, ["jingdong", "taobao"])
+            print(f"crawl tasks enqueued: keyword={args.keyword}, platforms=jingdong,taobao")
+        return
+
+    for row in rows:
+        (
+            product_id,
+            title,
+            min_price,
+            max_price,
+            best_platform,
+            platform_name,
+            price,
+            seller_name,
+            product_url,
+            update_at,
+        ) = row
+        print(
+            f"{product_id} | {platform_name} | {price} | {title} | "
+            f"best={best_platform} | range={min_price}-{max_price} | seller={seller_name or '-'} | updated={update_at}"
+        )
+        print(f"  {product_url}")
+
+
+def query_products(settings, keyword: str, limit: int):
+    with mysql_connection(settings) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT
+                    p.product_id,
+                    p.title,
+                    p.min_price,
+                    p.max_price,
+                    p.best_platform,
+                    o.platform_name,
+                    o.price,
+                    o.seller_name,
+                    o.product_url,
+                    o.update_at
+                FROM products p
+                JOIN platform_offers o ON p.product_id = o.product_id
+                WHERE p.title LIKE %s
+                ORDER BY p.updated_at DESC, o.price ASC
+                LIMIT %s
+                """,
+                (f"%{keyword}%", limit),
+            )
+            return cursor.fetchall()
+
+
+if __name__ == "__main__":
+    main()

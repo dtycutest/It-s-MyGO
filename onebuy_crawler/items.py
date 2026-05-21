@@ -1,0 +1,83 @@
+from __future__ import annotations
+
+from .compat import scrapy
+
+
+class RawProductItem(scrapy.Item):
+    platform_code = scrapy.Field()
+    platform_name = scrapy.Field()
+    source_sku_id = scrapy.Field()
+    keyword = scrapy.Field()
+    title = scrapy.Field()
+    price_text = scrapy.Field()
+    original_price_text = scrapy.Field()
+    sales_text = scrapy.Field()
+    seller_name = scrapy.Field()
+    seller_rating_text = scrapy.Field()
+    image_url = scrapy.Field()
+    product_url = scrapy.Field()
+    category_text = scrapy.Field()
+    promo_info = scrapy.Field()
+    specs = scrapy.Field()
+    in_stock = scrapy.Field()
+    stock_quantity = scrapy.Field()
+    raw_payload = scrapy.Field()
+    crawl_time = scrapy.Field()
+    parse_status = scrapy.Field()
+    failure_reason = scrapy.Field()
+
+
+class CleanProductItem(scrapy.Item):
+    product_id = scrapy.Field()
+    source_key = scrapy.Field()
+    match_fingerprint = scrapy.Field()
+    platform_code = scrapy.Field()
+    platform_id = scrapy.Field()
+    platform_name = scrapy.Field()
+    source_sku_id = scrapy.Field()
+    title = scrapy.Field()
+    category_id = scrapy.Field()
+    category_name = scrapy.Field()
+    image_url = scrapy.Field()
+    images = scrapy.Field()
+    description = scrapy.Field()
+    specs = scrapy.Field()
+    price = scrapy.Field()
+    original_price = scrapy.Field()
+    discount_rate = scrapy.Field()
+    sales_volume = scrapy.Field()
+    seller_name = scrapy.Field()
+    seller_rating = scrapy.Field()
+    seller_id = scrapy.Field()
+    product_url = scrapy.Field()
+    in_stock = scrapy.Field()
+    stock_quantity = scrapy.Field()
+    promo_info = scrapy.Field()
+    crawl_time = scrapy.Field()
+
+
+class PlatformOfferItem(scrapy.Item):
+    product_id = scrapy.Field()
+    platform_id = scrapy.Field()
+    platform_name = scrapy.Field()
+    platform_code = scrapy.Field()
+    source_sku_id = scrapy.Field()
+    price = scrapy.Field()
+    original_price = scrapy.Field()
+    discount_rate = scrapy.Field()
+    sales_volume = scrapy.Field()
+    seller_name = scrapy.Field()
+    seller_rating = scrapy.Field()
+    seller_id = scrapy.Field()
+    product_url = scrapy.Field()
+    in_stock = scrapy.Field()
+    stock_quantity = scrapy.Field()
+    update_at = scrapy.Field()
+
+
+class PriceHistoryItem(scrapy.Item):
+    product_id = scrapy.Field()
+    platform_code = scrapy.Field()
+    price = scrapy.Field()
+    promo_info = scrapy.Field()
+    crawl_time = scrapy.Field()
