@@ -34,7 +34,7 @@ py -m venv .venv
 
 ```powershell
 # 搜索采集
-.\.venv\Scripts\python -m jobs.run_search --keyword "iPhone 15" --platform all --pages 1
+.\.venv\Scripts\python -m jobs.run_search --keyword "iPhone 15" --platform jd --pages 1
 
 # 详情补采
 .\.venv\Scripts\python -m jobs.backfill_details --input urls.txt
@@ -42,11 +42,17 @@ py -m venv .venv
 # 价格刷新
 .\.venv\Scripts\python -m jobs.refresh_prices --limit 100
 
-# 前端查不到数据时，创建后台补采任务
-.\.venv\Scripts\python -m jobs.enqueue_crawl_task --keyword "iPhone 15" --platform all
+# 前端查不到数据时，创建京东后台补采任务
+.\.venv\Scripts\python -m jobs.enqueue_crawl_task --keyword "iPhone 15"
 
 # 处理待补采任务
 .\.venv\Scripts\python -m jobs.run_crawl_tasks --limit 5
+
+# 全自动流程：初始化表、关键词入队、后台采集、可选刷新价格
+.\.venv\Scripts\python -m jobs.auto_crawl --use-default-keywords --rounds 2 --task-limit 4 --refresh-prices
+
+# 首次使用前准备京东登录态；后续自动采集会复用 browser_profiles/jd
+.\.venv\Scripts\python -m jobs.prepare_browser_profile --platform jd
 
 # 模拟后端按关键词查询数据库；查不到时可顺手创建补采任务
 .\.venv\Scripts\python -m jobs.query_products --keyword "iPhone 15" --enqueue-missing
@@ -141,7 +147,6 @@ TAOBAO_COOKIE=
 $env:CRAWLER_USE_COOKIES="0"
 $env:CRAWLER_OBEY_ROBOTS="0"
 .\.venv\Scripts\python -m jobs.run_search --keyword "iPhone 15" --platform jd --pages 1
-.\.venv\Scripts\python -m jobs.run_search --keyword "iPhone 15" --platform taobao --pages 1
 ```
 
 注意：无 Cookie 模式只能抓目标站公开返回的内容。如果目标站返回登录页、验证码页或空结构页，爬虫会记录失败原因，不做验证码破解或登录绕过。
@@ -156,24 +161,36 @@ $env:CRAWLER_OBEY_ROBOTS="0"
 .\.venv\Scripts\pip install -r requirements.txt
 ```
 
-首次运行建议打开浏览器界面：
+首次采集前，建议先为京东准备一次持久化登录态：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.browser_capture_search --platform taobao --keyword "iPhone 15" --pages 1 --limit 20 --login-wait
+.\.venv\Scripts\python -m jobs.prepare_browser_profile --platform jd
+```
+
+命令会打开一个浏览器窗口。你在里面登录账号、选择地区并完成必要验证，回到终端按 Enter 后，登录态会保存在：
+
+```text
+browser_profiles/jd
+```
+
+后续 `jobs.browser_capture_search`、`jobs.run_crawl_tasks` 和 `jobs.auto_crawl` 默认都会复用这个目录，因此一般不需要重复登录。不要删除 `browser_profiles/jd` 目录，也不要同时用多个进程打开同一个 profile。
+
+首次运行建议打开京东浏览器界面：
+
+```powershell
 .\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --login-wait
 ```
 
 `--login-wait` 会先打开平台首页，并在终端等待你按 Enter。你可以在浏览器里手动完成登录、定位或人机验证。程序不会读取 Cookie 文件，也不会破解验证码；它只复用浏览器自己的用户目录：
 
 ```text
-browser_profiles/taobao
 browser_profiles/jd
 ```
 
 后续如果 profile 已经可用，可以去掉 `--login-wait`。需要后台运行时加 `--headless`：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.browser_capture_search --platform taobao --keyword "iPhone 15" --pages 1 --limit 20
+.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20
 ```
 
 入库前确认：
@@ -205,7 +222,6 @@ $env:MYSQL_DATABASE="onebuy"
 
 ```powershell
 .\.venv\Scripts\python -m jobs.run_search --keyword "iPhone 15" --platform jd --pages 1
-.\.venv\Scripts\python -m jobs.run_search --keyword "iPhone 15" --platform taobao --pages 1
 ```
 
 默认 `CRAWLER_OBEY_ROBOTS=1`。如果你确认有课程演示、授权测试或自担风险的本地实验需求，可以临时设置 `CRAWLER_OBEY_ROBOTS=0`，但不要用于绕过验证码、登录风控或高频访问。
@@ -231,10 +247,10 @@ $env:MYSQL_DATABASE="onebuy"
 采集成功后写入 products/platform_offers/price_history
 ```
 
-手动创建补采任务：
+手动创建京东补采任务：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.enqueue_crawl_task --keyword "iPhone 15" --platform all
+.\.venv\Scripts\python -m jobs.enqueue_crawl_task --keyword "iPhone 15"
 ```
 
 模拟后端查库；没有缓存时创建补采任务：
@@ -253,10 +269,50 @@ $env:MYSQL_DATABASE="onebuy"
 
 ```powershell
 .\.venv\Scripts\python -m jobs.launch_debug_browser --port 9222 --use-default-user-data --url https://www.jd.com/?country=CN
-.\.venv\Scripts\python -m jobs.run_crawl_tasks --platform jd --limit 1 --jd-cdp-url http://127.0.0.1:9222 --manual-search-wait
+.\.venv\Scripts\python -m jobs.run_crawl_tasks --limit 1 --jd-cdp-url http://127.0.0.1:9222 --manual-search-wait
 ```
 
 任务失败时不会删除旧商品数据。遇到 `jd_access_too_frequent`、`jd_search_redirected_to_home`、验证码或风控页时，任务会进入延迟重试状态，前端继续使用数据库中的历史有效数据。
+
+## 全自动采集流程
+
+不需要人工打开搜索页时，推荐使用全自动入口：
+
+```powershell
+.\.venv\Scripts\python -m jobs.auto_crawl --use-default-keywords --rounds 2 --task-limit 4 --pages 1 --item-limit 20 --refresh-prices
+```
+
+也可以指定关键词，默认只跑京东：
+
+```powershell
+.\.venv\Scripts\python -m jobs.auto_crawl --keyword "iPhone 15" --keyword "蓝牙耳机" --rounds 1
+```
+
+或使用关键词文件，每行一个关键词：
+
+```text
+# keywords.txt
+iPhone 15
+华为 手机
+小米 手机
+蓝牙耳机
+机械键盘
+```
+
+```powershell
+.\.venv\Scripts\python -m jobs.auto_crawl --keyword-file keywords.txt --rounds 2 --task-limit 5
+```
+
+全自动流程会做四件事：
+
+```text
+初始化 MySQL 表结构
+把关键词写入 crawl_tasks
+自动处理到期任务并写入 products/platform_offers/price_history
+可选刷新已有商品详情价格
+```
+
+如果京东返回验证码、访问频繁、搜索被重定向等情况，程序不会破解或绕过验证，而是把任务标记为 `blocked` 或 `failed`，按延迟时间自动重试。前端仍然读取数据库里的历史有效数据。
 
 ## 合规边界
 

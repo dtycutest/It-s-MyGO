@@ -4,7 +4,7 @@ import argparse
 
 from scrapy.utils.project import get_project_settings
 
-from onebuy_crawler.services.crawl_tasks import enqueue_tasks
+from onebuy_crawler.services.crawl_tasks import enqueue_tasks, normalize_task_platform
 from onebuy_crawler.services.db import mysql_connection
 
 
@@ -12,6 +12,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Query cached product offers from MySQL.")
     parser.add_argument("--keyword", required=True)
     parser.add_argument("--limit", type=int, default=20)
+    parser.add_argument(
+        "--platform",
+        default="jd",
+        choices=["jd", "jingdong", "taobao", "all"],
+        help="Platform to enqueue when --enqueue-missing is used. Defaults to JD.",
+    )
     parser.add_argument(
         "--enqueue-missing",
         action="store_true",
@@ -24,8 +30,9 @@ def main() -> None:
     if not rows:
         print(f"no cached products found: keyword={args.keyword}")
         if args.enqueue_missing:
-            enqueue_tasks(settings, args.keyword, ["jingdong", "taobao"])
-            print(f"crawl tasks enqueued: keyword={args.keyword}, platforms=jingdong,taobao")
+            platforms = ["jingdong", "taobao"] if args.platform == "all" else [normalize_task_platform(args.platform)]
+            enqueue_tasks(settings, args.keyword, platforms)
+            print(f"crawl tasks enqueued: keyword={args.keyword}, platforms={','.join(platforms)}")
         return
 
     for row in rows:

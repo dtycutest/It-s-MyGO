@@ -12,9 +12,9 @@ def main() -> None:
     parser.add_argument("--keyword", action="append", required=True, help="Keyword to enqueue. Can be used multiple times.")
     parser.add_argument(
         "--platform",
-        default="all",
+        default="jd",
         choices=["all", "jd", "jingdong", "taobao"],
-        help="Target platform. Use all to enqueue both JD and Taobao.",
+        help="Target platform. Defaults to JD. Use all to enqueue both JD and Taobao.",
     )
     parser.add_argument("--force", action="store_true", help="Reset existing tasks to pending.")
     args = parser.parse_args()

@@ -24,7 +24,7 @@ FINISH_RE = re.compile(r"browser_capture finished: .*?items=(\d+)(?:,\s*reason=(
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run due background crawl tasks from MySQL.")
     parser.add_argument("--limit", type=int, default=5, help="Maximum task count to process in this run.")
-    parser.add_argument("--platform", default="all", choices=["all", "jd", "jingdong", "taobao"])
+    parser.add_argument("--platform", default="jd", choices=["all", "jd", "jingdong", "taobao"])
     parser.add_argument("--pages", type=int, default=1)
     parser.add_argument("--item-limit", type=int, default=20, help="Maximum products captured per task.")
     parser.add_argument("--timeout", type=int, default=30)
@@ -45,14 +45,14 @@ def main() -> None:
         return
 
     for task in tasks:
-        print(f"running crawl task: id={task.id}, platform={task.platform_code}, keyword={task.keyword}")
+        _safe_print(f"running crawl task: id={task.id}, platform={task.platform_code}, keyword={task.keyword}")
         mark_running(settings, task.id)
         items, reason, output = _run_capture(task, args)
         if output.strip():
-            print(output.rstrip())
+            _safe_print(output.rstrip())
         if items > 0:
             mark_success(settings, task.id)
-            print(f"crawl task success: id={task.id}, items={items}")
+            _safe_print(f"crawl task success: id={task.id}, items={items}")
         else:
             next_retry_count = task.retry_count + 1
             mark_failed(
@@ -63,7 +63,7 @@ def main() -> None:
                 failed_delay_minutes=args.failed_delay_minutes,
                 blocked_delay_minutes=args.blocked_delay_minutes,
             )
-            print(f"crawl task deferred: id={task.id}, retry_count={next_retry_count}, reason={reason or 'capture_no_items'}")
+            _safe_print(f"crawl task deferred: id={task.id}, retry_count={next_retry_count}, reason={reason or 'capture_no_items'}")
 
 
 def _run_capture(task: CrawlTask, args) -> tuple[int, str, str]:
@@ -101,6 +101,14 @@ def _run_capture(task: CrawlTask, args) -> tuple[int, str, str]:
     items = int(match.group(1))
     reason = (match.group(2) or "").strip()
     return items, reason, output
+
+
+def _safe_print(value: str) -> None:
+    try:
+        print(value)
+    except UnicodeEncodeError:
+        encoded = value.encode(sys.stdout.encoding or "utf-8", errors="replace")
+        print(encoded.decode(sys.stdout.encoding or "utf-8", errors="replace"))
 
 
 if __name__ == "__main__":

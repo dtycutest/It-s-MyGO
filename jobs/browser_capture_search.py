@@ -169,6 +169,8 @@ def main() -> None:
                 continue
             url = _search_url(args.platform, args.keyword, page_no)
             _open_search_page(page, args.platform, args.keyword, page_no, url, PlaywrightError, PlaywrightTimeoutError)
+            if _page_has_failure_marker(page, args.platform):
+                break
             _nudge_page(page)
             deadline = time.time() + args.timeout
             while time.time() < deadline and collected_count < args.limit:
