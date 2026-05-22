@@ -3,7 +3,8 @@ from __future__ import annotations
 import json
 import unittest
 
-from onebuy_crawler.services.browser_extractors import extract_from_dom, extract_from_response
+from jobs.browser_capture_search import _merge_jd_prices
+from onebuy_crawler.services.browser_extractors import extract_from_dom, extract_from_response, extract_jd_price_map
 
 
 class BrowserExtractorTests(unittest.TestCase):
@@ -50,6 +51,19 @@ class BrowserExtractorTests(unittest.TestCase):
         self.assertEqual(len(result.items), 1)
         self.assertEqual(result.items[0]["source_sku_id"], "456")
         self.assertEqual(result.items[0]["platform_code"], "jingdong")
+
+    def test_extract_jd_price_map(self):
+        body = json.dumps([{"id": "J_100012043978", "p": "4599.00", "m": "4999.00"}])
+        prices = extract_jd_price_map(body)
+        self.assertEqual(prices["100012043978"]["price"], "4599.00")
+        self.assertEqual(prices["100012043978"]["original_price"], "4999.00")
+
+    def test_merge_jd_dom_rows_with_async_price(self):
+        rows = [{"skuId": "100012043978", "skuName": "Apple iPhone 15", "price": ""}]
+        merged = _merge_jd_prices(rows, {"100012043978": {"price": "4599.00"}})
+        items = extract_from_dom("jd", merged, "iPhone")
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0]["price_text"], "4599.00")
 
     def test_extract_dom_rows(self):
         rows = [{"item_id": "789", "title": "iPhone 15", "price": "￥4888", "detail_url": "https://item.taobao.com/item.htm?id=789"}]

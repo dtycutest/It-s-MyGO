@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import unittest
+from unittest.mock import patch
 
 from jobs.run_crawl_tasks import FINISH_RE
-from onebuy_crawler.services.crawl_tasks import normalize_task_platform, task_platform_to_capture_platform
+from onebuy_crawler.services.crawl_tasks import load_due_tasks, normalize_task_platform, task_platform_to_capture_platform
 from onebuy_crawler.services.db import SCHEMA_SQL
 
 
@@ -21,10 +22,59 @@ class CrawlTaskTests(unittest.TestCase):
         self.assertEqual(match.group(1), "0")
         self.assertEqual(match.group(2), "jd_access_too_frequent")
 
+    def test_finish_line_reason_stops_before_extra_fields(self):
+        output = (
+            "browser_capture finished: platform=jd, keyword=iPhone 15, items=0, "
+            "reason=jd_browser_capture_no_items, dom_rows=12, jd_prices=12"
+        )
+        match = FINISH_RE.search(output)
+        self.assertIsNotNone(match)
+        self.assertEqual(match.group(2), "jd_browser_capture_no_items")
+
     def test_schema_contains_crawl_tasks(self):
         schema = "\n".join(SCHEMA_SQL)
         self.assertIn("CREATE TABLE IF NOT EXISTS crawl_tasks", schema)
         self.assertIn("uk_task_keyword_platform", schema)
+
+    def test_load_due_tasks_can_filter_keywords(self):
+        fake_cursor = FakeCursor([])
+        with patch("onebuy_crawler.services.crawl_tasks.mysql_connection", return_value=FakeConnection(fake_cursor)):
+            load_due_tasks(None, 1, platform="jd", keywords=["华为 手机"])
+        sql, params = fake_cursor.calls[0]
+        self.assertIn("keyword IN (%s)", sql)
+        self.assertIn("华为 手机", params)
+
+
+class FakeCursor:
+    def __init__(self, rows):
+        self.rows = rows
+        self.calls = []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        return False
+
+    def execute(self, sql, params=None):
+        self.calls.append((sql, params))
+
+    def fetchall(self):
+        return self.rows
+
+
+class FakeConnection:
+    def __init__(self, cursor):
+        self._cursor = cursor
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        return False
+
+    def cursor(self):
+        return self._cursor
 
 
 if __name__ == "__main__":

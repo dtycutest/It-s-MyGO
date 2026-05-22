@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import time
 from pathlib import Path
 from urllib.parse import quote_plus
@@ -10,6 +11,7 @@ from scrapy.utils.project import get_project_settings
 
 from onebuy_crawler.services.browser_extractors import (
     extract_from_dom,
+    extract_jd_price_map,
     extract_from_response,
     failure_item,
 )
@@ -61,6 +63,19 @@ def main() -> None:
         help="Pause for manual search and capture the current browser page instead of navigating automatically",
     )
     parser.add_argument("--timeout", type=int, default=25, help="Seconds to wait for network responses per page")
+    parser.add_argument(
+        "--open-strategy",
+        default="direct-first",
+        choices=["direct-first", "home-first"],
+        help="JD navigation strategy for page 1. Direct search first is usually more stable for automation.",
+    )
+    parser.add_argument(
+        "--no-jd-price-fetch",
+        action="store_true",
+        help="Disable supplemental JD price fetch for SKUs found in the DOM.",
+    )
+    parser.add_argument("--debug-dir", default="output/browser_debug", help="Directory for zero-item debug snapshots.")
+    parser.add_argument("--no-debug-dump", action="store_true", help="Do not save HTML/screenshot when no items are captured.")
     args = parser.parse_args()
 
     settings = get_project_settings()
@@ -72,6 +87,9 @@ def main() -> None:
     collected_keys: set[tuple[str, str]] = set()
     collected_count = 0
     final_failure_reason = ""
+    last_dom_row_count = 0
+    debug_snapshot = ""
+    jd_price_cache: dict[str, dict[str, str]] = {}
     browser_proxy = args.proxy
     if args.use_proxy_pool and not browser_proxy:
         browser_proxy = ProxyPool(
@@ -127,6 +145,8 @@ def main() -> None:
                 body = response.text()
             except BaseException:
                 return
+            if args.platform == "jd":
+                jd_price_cache.update(extract_jd_price_map(body))
             result = extract_from_response(args.platform, url, body, args.keyword)
             for item in result.items:
                 if collected_count >= args.limit:
@@ -154,6 +174,11 @@ def main() -> None:
                     try:
                         page.wait_for_timeout(1000)
                         dom_rows = _extract_dom_rows(page, args.platform)
+                        last_dom_row_count = len(dom_rows)
+                        if args.platform == "jd":
+                            if not args.no_jd_price_fetch:
+                                jd_price_cache.update(_fetch_jd_prices_for_rows(page, dom_rows, jd_price_cache))
+                            dom_rows = _merge_jd_prices(dom_rows, jd_price_cache)
                     except PlaywrightError:
                         break
                     dom_items = extract_from_dom(args.platform, dom_rows, args.keyword)
@@ -168,15 +193,30 @@ def main() -> None:
                             break
                 continue
             url = _search_url(args.platform, args.keyword, page_no)
-            _open_search_page(page, args.platform, args.keyword, page_no, url, PlaywrightError, PlaywrightTimeoutError)
+            _open_search_page(
+                page,
+                args.platform,
+                args.keyword,
+                page_no,
+                url,
+                PlaywrightError,
+                PlaywrightTimeoutError,
+                args.open_strategy,
+            )
             if _page_has_failure_marker(page, args.platform):
                 break
+            _wait_for_product_signals(page, args.platform, PlaywrightTimeoutError, timeout_ms=min(12000, args.timeout * 1000))
             _nudge_page(page)
             deadline = time.time() + args.timeout
             while time.time() < deadline and collected_count < args.limit:
                 try:
                     page.wait_for_timeout(1000)
                     dom_rows = _extract_dom_rows(page, args.platform)
+                    last_dom_row_count = len(dom_rows)
+                    if args.platform == "jd":
+                        if not args.no_jd_price_fetch:
+                            jd_price_cache.update(_fetch_jd_prices_for_rows(page, dom_rows, jd_price_cache))
+                        dom_rows = _merge_jd_prices(dom_rows, jd_price_cache)
                 except PlaywrightError:
                     break
                 dom_items = extract_from_dom(args.platform, dom_rows, args.keyword)
@@ -193,6 +233,8 @@ def main() -> None:
         if collected_count == 0:
             failure_reason = _detect_browser_failure_reason(page, args.platform)
             final_failure_reason = failure_reason
+            if not args.no_debug_dump:
+                debug_snapshot = _save_debug_snapshot(page, args.platform, args.keyword, Path(args.debug_dir))
             runner.process(
                 failure_item(
                     args.platform,
@@ -204,6 +246,9 @@ def main() -> None:
                         "profile_dir": str(profile_dir),
                         "cdp_url": args.cdp_url,
                         "proxy": browser_proxy,
+                        "dom_rows": last_dom_row_count,
+                        "jd_price_cache": len(jd_price_cache),
+                        "debug_snapshot": debug_snapshot,
                     },
                 )
             )
@@ -221,6 +266,12 @@ def main() -> None:
     message = f"browser_capture finished: platform={args.platform}, keyword={args.keyword}, items={collected_count}"
     if final_failure_reason:
         message += f", reason={final_failure_reason}"
+    if last_dom_row_count:
+        message += f", dom_rows={last_dom_row_count}"
+    if jd_price_cache:
+        message += f", jd_prices={len(jd_price_cache)}"
+    if debug_snapshot:
+        message += f", debug={debug_snapshot}"
     print(message)
 
 
@@ -274,17 +325,46 @@ def _search_url(platform: str, keyword: str, page_no: int) -> str:
     return SEARCH_URLS[platform].format(keyword=encoded, page=page_no * 2 - 1)
 
 
-def _open_search_page(page, platform: str, keyword: str, page_no: int, direct_url: str, playwright_error, timeout_error) -> None:
-    if platform == "jd" and page_no == 1:
+def _open_search_page(
+    page,
+    platform: str,
+    keyword: str,
+    page_no: int,
+    direct_url: str,
+    playwright_error,
+    timeout_error,
+    open_strategy: str = "direct-first",
+) -> None:
+    if platform != "jd" or page_no != 1:
+        _goto_search_url(page, direct_url, playwright_error, timeout_error)
+        return
+
+    strategies = [_open_jd_direct_search, _open_jd_home_search]
+    if open_strategy == "home-first":
+        strategies.reverse()
+
+    for strategy in strategies:
         try:
-            page.goto("https://www.jd.com/?country=CN", wait_until="domcontentloaded")
-            if _submit_jd_home_search(page, keyword, timeout_error):
-                return
-            if _page_has_failure_marker(page, platform):
+            if strategy(page, keyword, direct_url, playwright_error, timeout_error):
                 return
         except playwright_error:
-            pass
+            continue
+        reason = _detect_browser_failure_reason(page, platform)
+        if _is_hard_failure_reason(reason):
+            return
 
+
+def _open_jd_direct_search(page, keyword: str, direct_url: str, playwright_error, timeout_error) -> bool:
+    _goto_search_url(page, direct_url, playwright_error, timeout_error)
+    return "search.jd.com" in getattr(page, "url", "").lower()
+
+
+def _open_jd_home_search(page, keyword: str, direct_url: str, playwright_error, timeout_error) -> bool:
+    page.goto("https://www.jd.com/?country=CN", wait_until="domcontentloaded")
+    return _submit_jd_home_search(page, keyword, timeout_error)
+
+
+def _goto_search_url(page, direct_url: str, playwright_error, timeout_error) -> None:
     try:
         page.goto(direct_url, wait_until="domcontentloaded")
     except playwright_error as exc:
@@ -343,6 +423,24 @@ def _submit_jd_home_search(page, keyword: str, timeout_error) -> bool:
 def _wait_for_navigation_settle(page, timeout_error) -> None:
     try:
         page.wait_for_load_state("domcontentloaded", timeout=8000)
+    except timeout_error:
+        pass
+    try:
+        page.wait_for_load_state("networkidle", timeout=8000)
+    except timeout_error:
+        pass
+
+
+def _wait_for_product_signals(page, platform: str, timeout_error, timeout_ms: int = 10000) -> None:
+    selectors = {
+        "jd": 'li.gl-item, [data-sku], a[href*="item.jd.com"]',
+        "taobao": '[data-nid], [data-item-id], a[href*="item.taobao"], a[href*="detail.tmall"]',
+    }
+    selector = selectors.get(platform)
+    if not selector:
+        return
+    try:
+        page.locator(selector).first.wait_for(state="attached", timeout=timeout_ms)
     except timeout_error:
         pass
     try:
@@ -411,7 +509,8 @@ def _extract_dom_rows(page, platform: str) -> list[dict]:
             const img = card.querySelector('img');
             const text = card.innerText || '';
             const sku = card.getAttribute('data-sku') || (hrefEl.href.match(/item\\.jd\\.com\\/(\\d+)\\.html/) || [,''])[1] || hrefEl.href;
-            const price = (text.match(/¥\\s*\\d+(?:\\.\\d+)?|￥\\s*\\d+(?:\\.\\d+)?/) || [''])[0];
+            const priceEl = card.querySelector('.p-price i, .p-price strong, [class*="price"] i, [class*="Price"]');
+            const price = (priceEl && priceEl.innerText) || (text.match(/¥\\s*\\d+(?:\\.\\d+)?|￥\\s*\\d+(?:\\.\\d+)?/) || [''])[0];
             return {
               skuId: sku,
               skuName: (card.querySelector('.p-name em, .p-name a, [title]') || {}).innerText || hrefEl.getAttribute('title') || text.split('\\n')[0],
@@ -424,6 +523,72 @@ def _extract_dom_rows(page, platform: str) -> list[dict]:
           })
         """
     )
+
+
+def _merge_jd_prices(rows: list[dict], price_cache: dict[str, dict[str, str]]) -> list[dict]:
+    merged = []
+    for row in rows:
+        sku = _normalize_sku(row.get("skuId"))
+        price_info = price_cache.get(sku, {})
+        if price_info:
+            row = dict(row)
+            row["skuId"] = sku
+            row["price"] = row.get("price") or price_info.get("price", "")
+            row["originalPrice"] = row.get("originalPrice") or price_info.get("original_price", "")
+        merged.append(row)
+    return merged
+
+
+def _fetch_jd_prices_for_rows(page, rows: list[dict], price_cache: dict[str, dict[str, str]]) -> dict[str, dict[str, str]]:
+    missing = []
+    for row in rows:
+        sku = _normalize_sku(row.get("skuId"))
+        if sku and sku not in price_cache:
+            missing.append(sku)
+    missing = list(dict.fromkeys(missing))[:50]
+    if not missing:
+        return {}
+
+    sku_ids = ",".join(f"J_{sku}" for sku in missing)
+    url = f"https://p.3.cn/prices/mgets?type=1&skuIds={quote_plus(sku_ids)}"
+    try:
+        response = page.context.request.get(
+            url,
+            timeout=8000,
+            headers={
+                "Referer": getattr(page, "url", "https://search.jd.com/"),
+                "Accept": "application/json,text/javascript,*/*;q=0.01",
+            },
+        )
+        if not response.ok:
+            return {}
+        return extract_jd_price_map(response.text())
+    except Exception:
+        return {}
+
+
+def _normalize_sku(value) -> str:
+    text = str(value or "").strip()
+    match = re.search(r"(\d{5,})", text)
+    return match.group(1) if match else text
+
+
+def _save_debug_snapshot(page, platform: str, keyword: str, debug_dir: Path) -> str:
+    debug_dir.mkdir(parents=True, exist_ok=True)
+    safe_keyword = re.sub(r"[^0-9A-Za-z\u4e00-\u9fff_-]+", "_", keyword).strip("_")[:40] or "keyword"
+    stamp = time.strftime("%Y%m%d_%H%M%S")
+    base = debug_dir / f"{platform}_{safe_keyword}_{stamp}"
+    html_path = base.with_suffix(".html")
+    png_path = base.with_suffix(".png")
+    try:
+        html_path.write_text(page.content(), encoding="utf-8")
+    except Exception:
+        pass
+    try:
+        page.screenshot(path=str(png_path), full_page=True)
+    except Exception:
+        pass
+    return str(base)
 
 
 def _safe_title(page) -> str:
@@ -464,6 +629,10 @@ def _detect_browser_failure_reason(page, platform: str) -> str:
     if "登录" in combined and ("passport" in combined or "login" in combined):
         return f"{platform}_login_required"
     return f"{platform}_browser_capture_no_items"
+
+
+def _is_hard_failure_reason(reason: str) -> bool:
+    return any(token in reason for token in ("access_too_frequent", "captcha", "risk_handler", "login_required"))
 
 
 if __name__ == "__main__":

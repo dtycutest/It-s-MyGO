@@ -4,6 +4,7 @@ from .compat import scrapy
 
 
 class RawProductItem(scrapy.Item):
+    product_id = scrapy.Field()
     platform_code = scrapy.Field()
     platform_name = scrapy.Field()
     source_sku_id = scrapy.Field()
@@ -14,6 +15,7 @@ class RawProductItem(scrapy.Item):
     sales_text = scrapy.Field()
     seller_name = scrapy.Field()
     seller_rating_text = scrapy.Field()
+    seller_id = scrapy.Field()
     image_url = scrapy.Field()
     product_url = scrapy.Field()
     category_text = scrapy.Field()

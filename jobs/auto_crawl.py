@@ -92,6 +92,8 @@ def main() -> None:
         ]
         if args.headless:
             command.append("--headless")
+        for keyword in keywords:
+            command.extend(["--keyword", keyword])
         _run_command(command)
         if round_no < max(1, args.rounds) and args.interval_seconds > 0:
             time.sleep(args.interval_seconds)

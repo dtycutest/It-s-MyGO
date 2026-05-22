@@ -18,7 +18,7 @@ from onebuy_crawler.services.crawl_tasks import (
 )
 
 
-FINISH_RE = re.compile(r"browser_capture finished: .*?items=(\d+)(?:,\s*reason=([^\r\n]+))?")
+FINISH_RE = re.compile(r"browser_capture finished: .*?items=(\d+)(?:,\s*reason=([^,\r\n]+))?")
 
 
 def main() -> None:
@@ -35,11 +35,12 @@ def main() -> None:
     parser.add_argument("--taobao-cdp-url", default="", help="Optional CDP URL for Taobao.")
     parser.add_argument("--manual-search-wait", action="store_true", help="Pause for manual search before each task.")
     parser.add_argument("--headless", action="store_true", help="Run browser capture in headless mode when CDP is not used.")
+    parser.add_argument("--keyword", action="append", help="Only run due tasks for this exact keyword. Can repeat.")
     args = parser.parse_args()
 
     settings = get_project_settings()
     platform = "" if args.platform == "all" else args.platform
-    tasks = load_due_tasks(settings, args.limit, platform=platform, max_retries=args.max_retries)
+    tasks = load_due_tasks(settings, args.limit, platform=platform, max_retries=args.max_retries, keywords=args.keyword)
     if not tasks:
         print("no due crawl tasks")
         return
@@ -93,7 +94,15 @@ def _run_capture(task: CrawlTask, args) -> tuple[int, str, str]:
 
     env = os.environ.copy()
     env.setdefault("CRAWLER_ENABLE_MYSQL", "1")
-    completed = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="replace", env=env)
+    env.setdefault("PYTHONIOENCODING", "utf-8")
+    completed = subprocess.run(
+        command,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        env=env,
+    )
     output = "\n".join(part for part in (completed.stdout, completed.stderr) if part)
     match = FINISH_RE.search(output)
     if not match:

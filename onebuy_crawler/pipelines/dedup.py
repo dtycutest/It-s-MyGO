@@ -18,7 +18,7 @@ class DedupPipeline:
         if not source_key or not fingerprint:
             return item
 
-        product_id = self.source_to_product.get(source_key) or self.fingerprint_to_product.get(fingerprint)
+        product_id = adapter.get("product_id") or self.source_to_product.get(source_key) or self.fingerprint_to_product.get(fingerprint)
         if not product_id:
             product_id = generate_product_id(fingerprint)
         self.source_to_product[source_key] = product_id

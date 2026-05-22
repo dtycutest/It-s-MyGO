@@ -59,6 +59,12 @@ py -m venv .venv
 
 # 初始化数据库表
 .\.venv\Scripts\python -m jobs.init_schema
+
+# 联调保障：先尝试京东实时采集，失败时导入种子缓存/本地演示数据
+.\.venv\Scripts\python -m jobs.ensure_cache --use-default-keywords --rounds 1 --min-count 3
+
+# 只导入内置京东种子缓存，不访问京东
+.\.venv\Scripts\python -m jobs.import_seed_data --use-default-keywords --only-missing
 ```
 
 ## 环境变量
@@ -193,6 +199,16 @@ browser_profiles/jd
 .\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20
 ```
 
+如果自动采集曾经出现 `items=0`，优先使用当前增强版浏览器采集入口重新验证：
+
+```powershell
+$env:CRAWLER_ENABLE_MYSQL="1"
+.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --timeout 30 --headless
+.\.venv\Scripts\python -m jobs.query_products --keyword "iPhone 15" --limit 10
+```
+
+增强版会同时做三件事：直接打开搜索页和首页搜索双策略兜底；等待京东商品卡片出现；监听并补抓京东异步价格响应，再按 SKU 把 DOM 中的商品标题和价格接口中的价格合并。若仍然没有商品，会把页面 HTML 和截图保存到 `output/browser_debug/`，便于判断是登录态失效、验证码、访问频繁还是页面结构变化。
+
 入库前确认：
 
 ```powershell
@@ -273,6 +289,31 @@ $env:MYSQL_DATABASE="onebuy"
 ```
 
 任务失败时不会删除旧商品数据。遇到 `jd_access_too_frequent`、`jd_search_redirected_to_home`、验证码或风控页时，任务会进入延迟重试状态，前端继续使用数据库中的历史有效数据。
+
+## 联调缓存保障
+
+京东实时页面采集受登录态、地区、验证码、访问频率和页面结构影响，不能作为“每个同学第一次运行必定有数据”的唯一来源。项目现在提供缓存保障层：
+
+```powershell
+# 推荐给联调同学使用：先跑实时京东采集，失败时自动补内置种子缓存；
+# 如果关键词不在种子文件中，会生成带“课程演示数据”标记的本地兜底记录。
+.\.venv\Scripts\python -m jobs.ensure_cache --keyword "显示器" --min-count 3 --rounds 1
+
+# 批量保障默认关键词
+.\.venv\Scripts\python -m jobs.ensure_cache --use-default-keywords --min-count 3 --rounds 1
+
+# 完全离线，只导入内置种子缓存，不访问京东
+.\.venv\Scripts\python -m jobs.import_seed_data --use-default-keywords --only-missing
+```
+
+如果你自己的数据库已经抓到较好的真实数据，可以导出一份给其他同学导入：
+
+```powershell
+.\.venv\Scripts\python -m jobs.export_seed_data --use-default-keywords --output data/team_seed_products.json
+.\.venv\Scripts\python -m jobs.import_seed_data --seed-file data/team_seed_products.json --use-default-keywords --only-missing
+```
+
+这条链路的目标是保证前端/后端联调稳定：前端永远先查 MySQL；实时采集只负责刷新缓存；当京东触发风控时，缓存或种子数据继续支撑搜索、比价、价格历史等功能。内置或生成的兜底数据会通过 `promo_info`/`seller_name` 标记来源，不应当声称为实时京东价格。
 
 ## 全自动采集流程
 

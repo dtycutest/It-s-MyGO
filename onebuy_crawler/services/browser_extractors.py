@@ -48,6 +48,25 @@ def extract_from_response(platform: str, url: str, body: str, keyword: str) -> E
     return ExtractResult([])
 
 
+def extract_jd_price_map(body_or_payload: Any) -> dict[str, dict[str, str]]:
+    payload = parse_jsonish(body_or_payload) if isinstance(body_or_payload, str) else body_or_payload
+    if payload is None:
+        return {}
+
+    prices: dict[str, dict[str, str]] = {}
+    for mapping in _walk_dicts(payload):
+        sku = _normalize_jd_sku(_first(mapping, "skuId", "sku_id", "sku", "wareId", "id"))
+        price = _first(mapping, "price", "p", "jdPrice", "lowestPrice", "lowestCouponPrice")
+        if not sku or not price:
+            continue
+        entry = {"price": clean_text(price)}
+        original_price = _first(mapping, "originalPrice", "marketPrice", "m", "op", "wlPrice")
+        if original_price:
+            entry["original_price"] = clean_text(original_price)
+        prices[sku] = entry
+    return prices
+
+
 def extract_from_dom(platform: str, rows: Iterable[dict[str, Any]], keyword: str) -> list[RawProductItem]:
     items = []
     for row in rows:
@@ -122,9 +141,9 @@ def _taobao_item_from_mapping(data: dict[str, Any], keyword: str) -> RawProductI
 
 
 def _jd_item_from_mapping(data: dict[str, Any], keyword: str) -> RawProductItem | None:
-    sku = _first(data, "skuId", "sku_id", "wareId", "ware_id", "spuId", "id")
+    sku = _normalize_jd_sku(_first(data, "skuId", "sku_id", "sku", "wareId", "ware_id", "spuId", "id"))
     title = _first(data, "skuName", "productName", "wareName", "name", "title")
-    price = _first(data, "price", "lowestPrice", "lowestCouponPrice", "wlPrice", "jdPrice")
+    price = _first(data, "price", "p", "lowestPrice", "lowestCouponPrice", "wlPrice", "jdPrice")
     if not sku or not title or not price:
         return None
     if not _matches_keyword(title, keyword):
@@ -135,10 +154,10 @@ def _jd_item_from_mapping(data: dict[str, Any], keyword: str) -> RawProductItem 
         platform_code="jingdong",
         platform_name="京东",
         keyword=keyword,
-        source_sku_id=str(sku),
+        source_sku_id=sku,
         title=title,
         price_text=price,
-        original_price_text=_first(data, "originalPrice", "marketPrice", "wlPrice"),
+        original_price_text=_first(data, "originalPrice", "marketPrice", "m", "op", "wlPrice"),
         sales_text=_first(data, "comments", "commentCount", "sales", "inOrderCount30Days"),
         seller_name=_first(data, "shopName", "sellerName", "owner"),
         image_url=_url(image, "https://img10.360buyimg.com/"),
@@ -192,6 +211,14 @@ def _url(value: Any, default_or_base: str) -> str:
     if default_or_base.startswith("http") and default_or_base.endswith("/"):
         return urljoin(default_or_base, text)
     return text
+
+
+def _normalize_jd_sku(value: Any) -> str:
+    text = clean_text(value)
+    if not text:
+        return ""
+    match = re.search(r"(\d{5,})", text)
+    return match.group(1) if match else text
 
 
 def _dedupe(items: list[RawProductItem]) -> list[RawProductItem]:

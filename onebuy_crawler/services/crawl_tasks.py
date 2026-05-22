@@ -95,7 +95,13 @@ def enqueue_tasks(settings, keyword: str, platforms: Iterable[str], force: bool 
         enqueue_task(settings, keyword, platform, force=force)
 
 
-def load_due_tasks(settings, limit: int, platform: str = "", max_retries: int = 3) -> list[CrawlTask]:
+def load_due_tasks(
+    settings,
+    limit: int,
+    platform: str = "",
+    max_retries: int = 3,
+    keywords: Iterable[str] | None = None,
+) -> list[CrawlTask]:
     where = [
         "status IN ('pending', 'failed', 'blocked')",
         "next_run_at <= CURRENT_TIMESTAMP",
@@ -105,6 +111,10 @@ def load_due_tasks(settings, limit: int, platform: str = "", max_retries: int = 
     if platform:
         where.append("platform_code = %s")
         params.append(normalize_task_platform(platform))
+    keyword_list = [clean_text(keyword) for keyword in (keywords or []) if clean_text(keyword)]
+    if keyword_list:
+        where.append("keyword IN (" + ",".join(["%s"] * len(keyword_list)) + ")")
+        params.extend(keyword_list)
 
     params.append(limit)
     with mysql_connection(settings) as conn:

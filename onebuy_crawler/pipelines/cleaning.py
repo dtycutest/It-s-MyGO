@@ -36,6 +36,8 @@ class CleaningPipeline:
         specs = adapter.get("specs") or {}
 
         clean = CleanProductItem()
+        if adapter.get("product_id"):
+            clean["product_id"] = clean_text(adapter.get("product_id"))
         clean["source_key"] = build_source_key(platform_code, source_sku_id)
         clean["match_fingerprint"] = build_match_fingerprint(title, specs)
         clean["platform_code"] = platform_code
