@@ -1,0 +1,1784 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "《一次买够》网购比价平台 API",
+    "description": "一次买够网购比价平台的完整API文档，用于前后端接口对接。本文档定义了所有后端接口的请求/响应格式、数据结构与业务逻辑。",
+    "version": "1.0.0",
+    "contact": {
+      "name": "后端开发团队",
+      "email": "api-support@ycg.com",
+      "url": "https://docs.ycg.com"
+    },
+    "license": {
+      "name": "CC BY 4.0"
+    },
+    "x-api-id": "ycg-api",
+    "x-api-lifecycle": "production"
+  },
+  "servers": [
+    {
+      "url": "https://api.ycg.com/api/v1",
+      "description": "生产环境"
+    },
+    {
+      "url": "https://test-api.ycg.com/api/v1",
+      "description": "测试环境"
+    },
+    {
+      "url": "http://localhost:8080/api/v1",
+      "description": "开发环境"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "使用Bearer token进行认证"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "title": "用户对象",
+        "description": "微信用户信息对象",
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "用户唯一标识",
+            "example": 12345,
+            "minimum": 1
+          },
+          "openid": {
+            "type": "string",
+            "description": "微信OpenID，用于唯一标识微信用户",
+            "example": "oZxsulsr5z0GQyVQW...",
+            "maxLength": 128
+          },
+          "nick_name": {
+            "type": "string",
+            "description": "用户昵称",
+            "example": "张三",
+            "maxLength": 32
+          },
+          "avatar_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "用户头像URL，微信提供的头像链接",
+            "example": "https://thirdwx.qlogo.cn/mmopen/...",
+            "maxLength": 512
+          },
+          "gender": {
+            "type": "integer",
+            "enum": [0, 1, 2],
+            "description": "性别 (0=女性, 1=男性, 2=保密)",
+            "example": 1,
+            "default": 2
+          },
+          "province": {
+            "type": "string",
+            "description": "省份名称，如：浙江省",
+            "example": "浙江省",
+            "maxLength": 50
+          },
+          "city": {
+            "type": "string",
+            "description": "城市名称，如：杭州市",
+            "example": "杭州市",
+            "maxLength": 50
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "用户账户创建时间",
+            "example": "2025-01-01T10:30:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "用户信息最后更新时间",
+            "example": "2025-01-15T14:20:00Z"
+          },
+          "vip_level": {
+            "type": "integer",
+            "enum": [0, 1],
+            "description": "VIP等级 (0=普通用户, 1=VIP用户)",
+            "example": 0,
+            "default": 0
+          },
+          "vip_expire_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "VIP过期时间，null表示未开通VIP或不是VIP用户",
+            "example": null
+          }
+        },
+        "required": ["user_id", "openid", "nick_name", "created_at", "updated_at"]
+      },
+      "Product": {
+        "type": "object",
+        "title": "商品对象",
+        "description": "商品的完整信息，包括多平台价格比较数据",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "商品编号/SKU，全局唯一标识，格式为SKU+8位时间戳",
+            "example": "SKU20250315001",
+            "maxLength": 32
+          },
+          "title": {
+            "type": "string",
+            "description": "商品标题/名称",
+            "example": "Apple iPhone 15 Pro Max 256GB",
+            "maxLength": 256
+          },
+          "category_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "商品分类ID",
+            "example": 100,
+            "minimum": 0
+          },
+          "category_name": {
+            "type": "string",
+            "description": "商品分类名称，完整路径用'-'分隔",
+            "example": "手机-iPhone",
+            "maxLength": 128
+          },
+          "image_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "商品主图URL",
+            "example": "https://cdn.ycg.com/products/SKU20250315001/main.jpg",
+            "maxLength": 512
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri",
+              "maxLength": 512
+            },
+            "description": "商品图片列表，包含多张商品图片",
+            "example": ["https://cdn.ycg.com/products/SKU20250315001/image1.jpg"]
+          },
+          "platforms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Platform"
+            },
+            "description": "多个电商平台的该商品信息列表"
+          },
+          "min_price": {
+            "type": "number",
+            "format": "double",
+            "description": "所有平台中的最低价格",
+            "example": 6699.00,
+            "minimum": 0
+          },
+          "max_price": {
+            "type": "number",
+            "format": "double",
+            "description": "所有平台中的最高价格",
+            "example": 6999.00,
+            "minimum": 0
+          },
+          "price_diff": {
+            "type": "number",
+            "format": "double",
+            "description": "最高价格与最低价格的差距",
+            "example": 300.00,
+            "minimum": 0
+          },
+          "best_platform": {
+            "type": "string",
+            "description": "价格最优的平台名称",
+            "example": "淘宝",
+            "maxLength": 32
+          },
+          "description": {
+            "type": "string",
+            "description": "商品描述/卖点",
+            "example": "官方正品 全网最低价",
+            "maxLength": 1024
+          },
+          "specs": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "商品规格信息，键值对形式，如storage, color等",
+            "example": {
+              "storage": "256GB",
+              "color": "深空黑",
+              "warranty": "12个月官方保修"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "商品创建时间",
+            "example": "2025-03-20T10:30:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "商品信息最后更新时间",
+            "example": "2025-03-24T10:30:00Z"
+          }
+        },
+        "required": ["product_id", "title", "category_id", "min_price", "max_price"]
+      },
+      "Platform": {
+        "type": "object",
+        "title": "平台商品信息",
+        "description": "特定电商平台上的商品信息",
+        "properties": {
+          "platform_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "平台ID (1=淘宝, 2=京东, 3=拼多多等)",
+            "example": 1,
+            "enum": [1, 2, 3, 4, 5]
+          },
+          "platform_name": {
+            "type": "string",
+            "description": "平台名称",
+            "example": "淘宝",
+            "enum": ["淘宝", "京东", "拼多多", "亚马逊", "其他"],
+            "maxLength": 32
+          },
+          "platform_code": {
+            "type": "string",
+            "description": "平台代码，用于URL参数过滤",
+            "example": "taobao",
+            "enum": ["taobao", "jingdong", "pinduoduo", "amazon", "other"],
+            "maxLength": 16
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "description": "当前销售价格（单位：元）",
+            "example": 6699.00,
+            "minimum": 0
+          },
+          "original_price": {
+            "type": "number",
+            "format": "double",
+            "description": "原价/市场指导价（单位：元）",
+            "example": 8999.00,
+            "minimum": 0
+          },
+          "discount_rate": {
+            "type": "integer",
+            "description": "折扣率，百分比形式 (0-100)，计算方式：(1 - 当前价/原价) * 100",
+            "example": 25,
+            "minimum": 0,
+            "maximum": 100
+          },
+          "sales_volume": {
+            "type": "integer",
+            "format": "int64",
+            "description": "商品销售量（30天内）",
+            "example": 2500,
+            "minimum": 0
+          },
+          "seller_name": {
+            "type": "string",
+            "description": "卖家/店铺名称，如'官方旗舰店'",
+            "example": "官方旗舰店",
+            "maxLength": 128
+          },
+          "seller_rating": {
+            "type": "number",
+            "format": "double",
+            "description": "卖家评分，范围 0-5",
+            "example": 4.8,
+            "minimum": 0,
+            "maximum": 5
+          },
+          "seller_id": {
+            "type": "string",
+            "description": "卖家ID",
+            "example": "seller_123456",
+            "maxLength": 64
+          },
+          "product_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "该商品在平台的详情页链接",
+            "example": "https://item.taobao.com/item.htm?id=123456",
+            "maxLength": 512
+          },
+          "in_stock": {
+            "type": "boolean",
+            "description": "是否有货",
+            "example": true,
+            "default": true
+          },
+          "stock_quantity": {
+            "type": "integer",
+            "format": "int32",
+            "description": "库存数量",
+            "example": 100,
+            "minimum": 0
+          },
+          "update_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "该平台商品信息最后更新时间",
+            "example": "2025-03-24T10:30:00Z"
+          }
+        },
+        "required": ["platform_id", "platform_name", "platform_code", "price", "in_stock"]
+      },
+      "Favorite": {
+        "type": "object",
+        "title": "收藏记录",
+        "description": "用户收藏的商品",
+        "properties": {
+          "favorite_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "收藏记录ID",
+            "example": 1001,
+            "minimum": 1
+          },
+          "user_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "用户ID",
+            "example": 12345,
+            "minimum": 1
+          },
+          "product_id": {
+            "type": "string",
+            "description": "收藏的商品ID",
+            "example": "SKU20250315001",
+            "maxLength": 32
+          },
+          "product_title": {
+            "type": "string",
+            "description": "商品标题/名称",
+            "example": "Apple iPhone 15 Pro Max",
+            "maxLength": 256
+          },
+          "product_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "商品主图URL",
+            "example": "https://cdn.example.com/products/iphone15_main.jpg",
+            "maxLength": 512
+          },
+          "product_min_price": {
+            "type": "number",
+            "format": "double",
+            "description": "该商品当前最低价格（跨平台），单位：元",
+            "example": 6699.00,
+            "minimum": 0
+          },
+          "notes": {
+            "type": "string",
+            "description": "用户添加的收藏备注",
+            "example": "618打折再买",
+            "maxLength": 500,
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "收藏创建时间",
+            "example": "2025-03-24T10:30:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "收藏最后更新时间",
+            "example": "2025-03-25T15:45:00Z"
+          }
+        },
+        "required": ["favorite_id", "user_id", "product_id"]
+      },
+      "PriceAlert": {
+        "type": "object",
+        "title": "降价提醒",
+        "description": "用户设置的商品降价提醒规则",
+        "properties": {
+          "alert_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "降价提醒ID",
+            "example": 2001,
+            "minimum": 1
+          },
+          "user_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "用户ID",
+            "example": 12345,
+            "minimum": 1
+          },
+          "product_id": {
+            "type": "string",
+            "description": "监控的商品ID",
+            "example": "SKU20250315001",
+            "maxLength": 32
+          },
+          "product_title": {
+            "type": "string",
+            "description": "商品标题/名称",
+            "example": "Apple iPhone 15 Pro Max",
+            "maxLength": 256
+          },
+          "target_price": {
+            "type": "number",
+            "format": "double",
+            "description": "目标价格/期望价格，单位：元。当商品价格降至此价格时触发提醒",
+            "example": 5999.00,
+            "minimum": 0
+          },
+          "current_price": {
+            "type": "number",
+            "format": "double",
+            "description": "当前最低价格，单位：元",
+            "example": 6699.00,
+            "minimum": 0
+          },
+          "is_triggered": {
+            "type": "boolean",
+            "description": "是否已触发（价格已经跌至目标价或以下）",
+            "example": false,
+            "default": false
+          },
+          "triggered_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "降价提醒被触发的时间，未触发时为null",
+            "example": "2025-03-24T08:15:00Z",
+            "nullable": true
+          },
+          "is_enabled": {
+            "type": "boolean",
+            "description": "提醒是否启用（用户可禁用但保留数据）",
+            "example": true,
+            "default": true
+          },
+          "platform_filter": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "仅监控这些平台的价格，如为空则监控全部平台。示例：['taobao','jingdong']",
+            "example": ["taobao", "jingdong"],
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "提醒创建时间",
+            "example": "2025-03-20T10:30:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "提醒最后更新时间",
+            "example": "2025-03-24T08:15:00Z"
+          }
+        },
+        "required": ["alert_id", "user_id", "product_id", "target_price"]
+      },
+      "ApiResponse": {
+        "type": "object",
+        "title": "通用API响应",
+        "description": "所有API端点的统一响应格式",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "状态码 (0=成功, 非0=失败)。详见错误码表",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "description": "消息描述，成功时通常为'ok'，失败时为错误说明",
+            "example": "ok",
+            "maxLength": 256
+          },
+          "data": {
+            "type": "object",
+            "description": "响应数据正文，结构因不同接口而异。失败时通常为null",
+            "nullable": true
+          }
+        },
+        "required": ["code", "message"]
+      },
+      "PaginatedResponse": {
+        "type": "object",
+        "title": "分页响应容器",
+        "description": "用于包装分页列表数据的响应格式，通常用于查询接口返回多条记录的情况",
+        "properties": {
+          "list": {
+            "type": "array",
+            "items": {},
+            "description": "数据列表，具体元素类型由调用的接口决定",
+            "example": []
+          },
+          "pagination": {
+            "type": "object",
+            "title": "分页信息",
+            "description": "分页元数据，包含当前页、每页数量、总数等信息",
+            "properties": {
+              "page": {
+                "type": "integer",
+                "format": "int32",
+                "description": "当前页码（从1开始）",
+                "example": 1,
+                "minimum": 1
+              },
+              "page_size": {
+                "type": "integer",
+                "format": "int32",
+                "description": "每页数量",
+                "example": 20,
+                "minimum": 1,
+                "maximum": 100
+              },
+              "total": {
+                "type": "integer",
+                "format": "int64",
+                "description": "数据总数",
+                "example": 150,
+                "minimum": 0
+              },
+              "total_pages": {
+                "type": "integer",
+                "format": "int32",
+                "description": "总页数",
+                "example": 8,
+                "minimum": 0
+              },
+              "has_next": {
+                "type": "boolean",
+                "description": "是否有下一页",
+                "example": true
+              },
+              "has_prev": {
+                "type": "boolean",
+                "description": "是否有上一页",
+                "example": false
+              }
+            },
+            "required": ["page", "page_size", "total", "total_pages"]
+          }
+        },
+        "required": ["list", "pagination"]
+      }
+    },
+    "responses": {
+      "Success": {
+        "description": "请求成功",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "请求参数错误",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            },
+            "example": {
+              "code": 400001,
+              "message": "参数缺失",
+              "data": null
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "未认证或Token无效",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            },
+            "example": {
+              "code": 401002,
+              "message": "Token过期",
+              "data": null
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "权限不足",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            },
+            "example": {
+              "code": 403001,
+              "message": "无访问权限",
+              "data": null
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "资源不存在",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            },
+            "example": {
+              "code": 404002,
+              "message": "商品不存在",
+              "data": null
+            }
+          }
+        }
+      },
+      "TooManyRequests": {
+        "description": "请求过于频繁",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            },
+            "example": {
+              "code": 429001,
+              "message": "搜索请求频率限制",
+              "data": {
+                "retry_after": 60
+              }
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "服务器错误",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            },
+            "example": {
+              "code": 500001,
+              "message": "数据库操作失败",
+              "data": null
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["认证"],
+        "summary": "微信登录",
+        "description": "通过微信授权code获取access_token",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "微信授权code"
+                  },
+                  "raw_data": {
+                    "type": "string",
+                    "description": "微信原始数据"
+                  },
+                  "signature": {
+                    "type": "string",
+                    "description": "微信签名"
+                  }
+                },
+                "required": ["code", "raw_data", "signature"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "登录成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "code": 0,
+                  "message": "登录成功",
+                  "data": {
+                    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                    "refresh_token": "refresh_token_value",
+                    "expires_in": 86400,
+                    "user_id": 12345,
+                    "openid": "oZxsulsr5z0GQyVQW..."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": ["认证"],
+        "summary": "刷新Token",
+        "description": "使用refresh_token获取新的access_token",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refresh_token": {
+                    "type": "string",
+                    "description": "刷新令牌"
+                  }
+                },
+                "required": ["refresh_token"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "刷新成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "code": 0,
+                  "message": "刷新成功",
+                  "data": {
+                    "access_token": "new_access_token",
+                    "refresh_token": "new_refresh_token",
+                    "expires_in": 86400
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["认证"],
+        "summary": "登出",
+        "description": "用户登出",
+        "responses": {
+          "200": {
+            "description": "登出成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "code": 0,
+                  "message": "登出成功",
+                  "data": null
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/products/search": {
+      "get": {
+        "tags": ["商品"],
+        "summary": "商品搜索",
+        "description": "按关键词搜索商品，支持多维度筛选和排序",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "description": "搜索关键词，支持商品名称、品牌、型号等多维度搜索",
+            "example": "iPhone 15 Pro Max"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "description": "页码，从1开始",
+            "example": 1
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "每页数量，最大100条",
+            "example": 20
+          },
+          {
+            "name": "category_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "商品分类ID（可选），用于按类目筛选。如10001=电子产品，10002=服装等",
+            "example": 10001
+          },
+          {
+            "name": "min_price",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "minimum": 0
+            },
+            "description": "最低价格（单位：元），用于价格区间筛选",
+            "example": 5000.00
+          },
+          {
+            "name": "max_price",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "minimum": 0
+            },
+            "description": "最高价格（单位：元），用于价格区间筛选",
+            "example": 9999.00
+          },
+          {
+            "name": "platform",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "平台筛选，多个平台用英文逗号分隔。可选值：taobao,jingdong,pinduoduo,amazon,other",
+            "example": "taobao,jingdong"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["price_asc", "price_desc", "sales_desc", "rating_desc"],
+              "default": "price_asc"
+            },
+            "description": "排序方式：price_asc=低价优先，price_desc=高价优先，sales_desc=热销优先，rating_desc=高评优先",
+            "example": "price_asc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "查询成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/products/{product_id}": {
+      "get": {
+        "tags": ["商品"],
+        "summary": "获取商品详情",
+        "description": "获取单个商品的详细信息，包括多平台价格、历史价格等",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 32
+            },
+            "description": "商品ID，由系统生成的唯一标识符，格式如SKU20250315001",
+            "example": "SKU20250315001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "查询成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/products/categories": {
+      "get": {
+        "tags": ["商品"],
+        "summary": "获取商品分类",
+        "description": "获取商品分类树",
+        "parameters": [
+          {
+            "name": "parent_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "description": "父分类ID（0=获取顶级分类，其他值=获取该分类的子分类）",
+            "example": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "查询成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": ["用户"],
+        "summary": "获取用户信息",
+        "description": "获取当前登录用户的信息",
+        "responses": {
+          "200": {
+            "description": "查询成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "tags": ["用户"],
+        "summary": "更新用户信息",
+        "description": "更新当前用户的个人信息",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "更新用户信息请求",
+                "properties": {
+                  "nick_name": {
+                    "type": "string",
+                    "description": "昵称",
+                    "example": "小明",
+                    "maxLength": 64,
+                    "minLength": 1,
+                    "nullable": true
+                  },
+                  "avatar_url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "头像URL",
+                    "example": "https://cdn.example.com/avatars/user123.jpg",
+                    "maxLength": 512,
+                    "nullable": true
+                  },
+                  "gender": {
+                    "type": "integer",
+                    "description": "性别（0=未知，1=男，2=女）",
+                    "enum": [0, 1, 2],
+                    "example": 1,
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/favorites": {
+      "get": {
+        "tags": ["收藏"],
+        "summary": "获取收藏列表",
+        "description": "获取当前用户的收藏列表",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "description": "页码，从1开始",
+            "example": 1
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "每页数量，最大100条",
+            "example": 20
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "查询成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["收藏"],
+        "summary": "添加收藏",
+        "description": "将商品添加到用户收藏",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "添加收藏请求",
+                "properties": {
+                  "product_id": {
+                    "type": "string",
+                    "description": "商品ID",
+                    "example": "SKU20250315001",
+                    "maxLength": 32
+                  },
+                  "notes": {
+                    "type": "string",
+                    "description": "用户添加的收藏备注（可选），如'618打折再买'",
+                    "example": "618打折再买",
+                    "maxLength": 500,
+                    "nullable": true
+                  }
+                },
+                "required": ["product_id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "收藏成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/favorites/{favorite_id}": {
+      "delete": {
+        "tags": ["收藏"],
+        "summary": "移除收藏",
+        "description": "取消商品收藏",
+        "parameters": [
+          {
+            "name": "favorite_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取消收藏成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "tags": ["收藏"],
+        "summary": "更新收藏备注",
+        "description": "更新收藏商品的备注信息",
+        "parameters": [
+          {
+            "name": "favorite_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notes": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/price-alerts": {
+      "get": {
+        "tags": ["降价提醒"],
+        "summary": "获取降价提醒列表",
+        "description": "获取用户设置的所有降价提醒",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "description": "页码，从1开始",
+            "example": 1
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "每页数量，最大100条",
+            "example": 20
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["all", "triggered", "untriggered"],
+              "default": "all"
+            },
+            "description": "提醒状态筛选：all=全部，triggered=已触发，untriggered=未触发",
+            "example": "all"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "查询成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["降价提醒"],
+        "summary": "创建降价提醒",
+        "description": "为商品设置降价提醒",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "创建降价提醒请求",
+                "properties": {
+                  "product_id": {
+                    "type": "string",
+                    "description": "商品ID",
+                    "example": "SKU20250315001",
+                    "maxLength": 32
+                  },
+                  "target_price": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "目标降价价格（单位：元）。当商品价格降至少于此价格时触发提醒",
+                    "example": 5999.00,
+                    "minimum": 0
+                  },
+                  "platform_filter": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "监控平台列表（可选），为空则监控所有平台。可选值：taobao,jingdong,pinduoduo,amazon",
+                    "example": ["taobao", "jingdong"],
+                    "nullable": true
+                  }
+                },
+                "required": ["product_id", "target_price"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "提醒创建成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/price-alerts/{alert_id}": {
+      "put": {
+        "tags": ["降价提醒"],
+        "summary": "更新降价提醒",
+        "description": "更新降价提醒的目标价格和状态",
+        "parameters": [
+          {
+            "name": "alert_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "更新降价提醒请求",
+                "properties": {
+                  "target_price": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "新的目标价格（单位：元）",
+                    "example": 5699.00,
+                    "minimum": 0
+                  },
+                  "is_enabled": {
+                    "type": "boolean",
+                    "description": "是否启用提醒",
+                    "example": true,
+                    "default": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["降价提醒"],
+        "summary": "删除降价提醒",
+        "description": "删除用户的降价提醒",
+        "parameters": [
+          {
+            "name": "alert_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "删除成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/users/browse-history": {
+      "get": {
+        "tags": ["浏览历史"],
+        "summary": "获取浏览历史",
+        "description": "获取用户的浏览历史记录，按时间倒序排列",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "description": "页码，从1开始",
+            "example": 1
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "每页数量，最大100条",
+            "example": 20
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "查询成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["浏览历史"],
+        "summary": "添加浏览历史",
+        "description": "记录用户浏览商品",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "添加浏览历史请求",
+                "properties": {
+                  "product_id": {
+                    "type": "string",
+                    "description": "浏览的商品ID",
+                    "example": "SKU20250315001",
+                    "maxLength": 32
+                  }
+                },
+                "required": ["product_id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "添加成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["浏览历史"],
+        "summary": "清除浏览历史",
+        "description": "清除用户所有浏览历史记录",
+        "responses": {
+          "200": {
+            "description": "清除成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/search-records": {
+      "get": {
+        "tags": ["搜索记录"],
+        "summary": "获取搜索记录",
+        "description": "获取用户的搜索历史记录，按时间倒序排列",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "description": "页码，从1开始",
+            "example": 1
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "每页数量，最大100条",
+            "example": 20
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "查询成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/hot-words": {
+      "get": {
+        "tags": ["搜索记录"],
+        "summary": "获取热搜词",
+        "description": "获取平台热搜关键词排行",
+        "security": [],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 50
+            },
+            "description": "返回热搜词数量，默认10个，最多50个",
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "查询成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recommendations/personalized": {
+      "get": {
+        "tags": ["推荐"],
+        "summary": "获取个性化推荐",
+        "description": "基于用户行为的个性化推荐商品",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "description": "页码，从1开始",
+            "example": 1
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "每页数量，最大100条",
+            "example": 20
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "查询成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analytics/events": {
+      "post": {
+        "tags": ["分析"],
+        "summary": "上报用户行为",
+        "description": "上报用户操作事件用于数据分析",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "用户事件上报请求",
+                "description": "上报用户操作事件，用于数据分析和推荐系统",
+                "properties": {
+                  "event_type": {
+                    "type": "string",
+                    "description": "事件类型",
+                    "enum": ["search", "product_click", "add_favorite", "remove_favorite", "alert_set", "purchase_redirect"],
+                    "example": "search"
+                  },
+                  "product_id": {
+                    "type": "string",
+                    "description": "商品ID（仅在与商品相关的事件时使用）",
+                    "example": "SKU20250315001",
+                    "maxLength": 32,
+                    "nullable": true
+                  },
+                  "platform": {
+                    "type": "string",
+                    "description": "平台名称（仅在platform_click事件时使用）",
+                    "example": "taobao",
+                    "maxLength": 32,
+                    "nullable": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "事件发生的时间（ISO 8601格式）",
+                    "example": "2025-03-24T10:30:00Z"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "description": "附加元数据，用于存储特殊事件信息。如search事件可包含keyword字段",
+                    "example": {"keyword": "iPhone 15", "search_platform": "ycg"},
+                    "nullable": true,
+                    "additionalProperties": true
+                  }
+                },
+                "required": ["event_type", "timestamp"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "上报成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
