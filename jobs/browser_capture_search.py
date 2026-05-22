@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import time
@@ -40,6 +41,22 @@ JD_SEARCH_BUTTON_SELECTORS = (
     'input[type="button"]',
 )
 
+TAOBAO_SEARCH_INPUT_SELECTORS = (
+    "#q",
+    'input[name="q"]',
+    'input[aria-label*="搜索"]',
+    'input[placeholder*="搜索"]',
+    'input[type="search"]',
+    'input[type="text"]',
+)
+
+TAOBAO_SEARCH_BUTTON_SELECTORS = (
+    'button[type="submit"]',
+    'button:has-text("搜索")',
+    '.btn-search',
+    '.search-button',
+)
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Capture product search data through a real browser.")
@@ -67,7 +84,7 @@ def main() -> None:
         "--open-strategy",
         default="direct-first",
         choices=["direct-first", "home-first"],
-        help="JD navigation strategy for page 1. Direct search first is usually more stable for automation.",
+        help="Search navigation strategy for page 1. Direct search first is usually more stable for automation.",
     )
     parser.add_argument(
         "--no-jd-price-fetch",
@@ -76,6 +93,17 @@ def main() -> None:
     )
     parser.add_argument("--debug-dir", default="output/browser_debug", help="Directory for zero-item debug snapshots.")
     parser.add_argument("--no-debug-dump", action="store_true", help="Do not save HTML/screenshot when no items are captured.")
+    parser.add_argument("--summary-file", default="", help="Optional JSON file for machine-readable capture summary.")
+    parser.add_argument(
+        "--manual-verify-on-failure",
+        action="store_true",
+        help="Keep the browser open on login/security failure, wait for manual verification, then retry once.",
+    )
+    parser.add_argument(
+        "--keep-open-on-failure",
+        action="store_true",
+        help="Keep the browser open after a failed capture until Enter is pressed.",
+    )
     args = parser.parse_args()
 
     settings = get_project_settings()
@@ -160,58 +188,15 @@ def main() -> None:
 
         page.on("response", handle_response)
 
-        if args.manual_search_wait:
-            input("请在浏览器中手动搜索关键词并确认商品列表可见；如果仍停在首页，也可以直接回到终端按 Enter 让程序自动搜索...")
-            if not _current_page_looks_search_page(page, args.platform):
-                _ensure_manual_search_page(page, args.platform, args.keyword, PlaywrightTimeoutError)
-
-        for page_no in range(1, args.pages + 1):
-            if collected_count >= args.limit:
-                break
-            if args.manual_search_wait and page_no == 1:
-                deadline = time.time() + args.timeout
-                while time.time() < deadline and collected_count < args.limit:
-                    try:
-                        page.wait_for_timeout(1000)
-                        dom_rows = _extract_dom_rows(page, args.platform)
-                        last_dom_row_count = len(dom_rows)
-                        if args.platform == "jd":
-                            if not args.no_jd_price_fetch:
-                                jd_price_cache.update(_fetch_jd_prices_for_rows(page, dom_rows, jd_price_cache))
-                            dom_rows = _merge_jd_prices(dom_rows, jd_price_cache)
-                    except PlaywrightError:
-                        break
-                    dom_items = extract_from_dom(args.platform, dom_rows, args.keyword)
-                    for item in dom_items:
-                        key = (item.get("platform_code"), item.get("source_sku_id"))
-                        if key in collected_keys:
-                            continue
-                        collected_keys.add(key)
-                        runner.process(item)
-                        collected_count += 1
-                        if collected_count >= args.limit:
-                            break
-                continue
-            url = _search_url(args.platform, args.keyword, page_no)
-            _open_search_page(
-                page,
-                args.platform,
-                args.keyword,
-                page_no,
-                url,
-                PlaywrightError,
-                PlaywrightTimeoutError,
-                args.open_strategy,
-            )
-            if _page_has_failure_marker(page, args.platform):
-                break
-            _wait_for_product_signals(page, args.platform, PlaywrightTimeoutError, timeout_ms=min(12000, args.timeout * 1000))
-            _nudge_page(page)
-            deadline = time.time() + args.timeout
+        def collect_dom_items_until(timeout_seconds: int) -> None:
+            nonlocal collected_count, last_dom_row_count, jd_price_cache
+            deadline = time.time() + timeout_seconds
             while time.time() < deadline and collected_count < args.limit:
                 try:
                     page.wait_for_timeout(1000)
                     dom_rows = _extract_dom_rows(page, args.platform)
+                    dom_rows.extend(_extract_state_rows(page, args.platform))
+                    dom_rows = _dedupe_dom_rows(dom_rows, args.platform)
                     last_dom_row_count = len(dom_rows)
                     if args.platform == "jd":
                         if not args.no_jd_price_fetch:
@@ -230,28 +215,74 @@ def main() -> None:
                     if collected_count >= args.limit:
                         break
 
+        if args.manual_search_wait:
+            input("请在浏览器中手动搜索关键词并确认商品列表可见；如果仍停在首页，也可以直接回到终端按 Enter 让程序自动搜索...")
+            if not _current_page_looks_search_page(page, args.platform):
+                _ensure_manual_search_page(page, args.platform, args.keyword, PlaywrightTimeoutError)
+
+        for page_no in range(1, args.pages + 1):
+            if collected_count >= args.limit:
+                break
+            if args.manual_search_wait and page_no == 1:
+                collect_dom_items_until(args.timeout)
+                continue
+            url = _search_url(args.platform, args.keyword, page_no)
+            _open_search_page(
+                page,
+                args.platform,
+                args.keyword,
+                page_no,
+                url,
+                PlaywrightError,
+                PlaywrightTimeoutError,
+                args.open_strategy,
+            )
+            if _page_has_failure_marker(page, args.platform):
+                break
+            _wait_for_product_signals(page, args.platform, PlaywrightTimeoutError, timeout_ms=min(12000, args.timeout * 1000))
+            _nudge_page(page)
+            collect_dom_items_until(args.timeout)
+
         if collected_count == 0:
             failure_reason = _detect_browser_failure_reason(page, args.platform)
-            final_failure_reason = failure_reason
-            if not args.no_debug_dump:
-                debug_snapshot = _save_debug_snapshot(page, args.platform, args.keyword, Path(args.debug_dir))
-            runner.process(
-                failure_item(
-                    args.platform,
-                    page.url,
-                    args.keyword,
-                    failure_reason,
-                    {
-                        "title": _safe_title(page),
-                        "profile_dir": str(profile_dir),
-                        "cdp_url": args.cdp_url,
-                        "proxy": browser_proxy,
-                        "dom_rows": last_dom_row_count,
-                        "jd_price_cache": len(jd_price_cache),
-                        "debug_snapshot": debug_snapshot,
-                    },
+            if args.manual_verify_on_failure and _is_hard_failure_reason(failure_reason):
+                print(
+                    f"manual verification needed: platform={args.platform}, reason={failure_reason}\n"
+                    "请在打开的浏览器中完成登录/安全验证，并确认商品列表可见；完成后回到终端按 Enter 继续...",
+                    flush=True,
                 )
-            )
+                input()
+                if not _current_page_looks_search_page(page, args.platform):
+                    _ensure_manual_search_page(page, args.platform, args.keyword, PlaywrightTimeoutError)
+                _wait_for_product_signals(page, args.platform, PlaywrightTimeoutError, timeout_ms=min(15000, args.timeout * 1000))
+                _nudge_page(page)
+                collect_dom_items_until(args.timeout)
+
+            if collected_count == 0:
+                failure_reason = _detect_browser_failure_reason(page, args.platform)
+                final_failure_reason = failure_reason
+                if not args.no_debug_dump:
+                    debug_snapshot = _save_debug_snapshot(page, args.platform, args.keyword, Path(args.debug_dir))
+                runner.process(
+                    failure_item(
+                        args.platform,
+                        page.url,
+                        args.keyword,
+                        failure_reason,
+                        {
+                            "title": _safe_title(page),
+                            "profile_dir": str(profile_dir),
+                            "cdp_url": args.cdp_url,
+                            "proxy": browser_proxy,
+                            "dom_rows": last_dom_row_count,
+                            "jd_price_cache": len(jd_price_cache),
+                            "debug_snapshot": debug_snapshot,
+                        },
+                    )
+                )
+
+        if collected_count == 0 and args.keep_open_on_failure and not args.cdp_url:
+            input("采集仍未成功，浏览器已保持打开。检查页面后按 Enter 关闭浏览器...")
 
         try:
             page.remove_listener("response", handle_response)
@@ -273,6 +304,19 @@ def main() -> None:
     if debug_snapshot:
         message += f", debug={debug_snapshot}"
     print(message)
+    if args.summary_file:
+        _write_summary(
+            args.summary_file,
+            {
+                "platform": args.platform,
+                "keyword": args.keyword,
+                "items": collected_count,
+                "reason": final_failure_reason,
+                "dom_rows": last_dom_row_count,
+                "jd_prices": len(jd_price_cache),
+                "debug": debug_snapshot,
+            },
+        )
 
 
 def _launch_context(playwright, profile_dir: Path, headless: bool, proxy_url: str = ""):
@@ -335,11 +379,14 @@ def _open_search_page(
     timeout_error,
     open_strategy: str = "direct-first",
 ) -> None:
-    if platform != "jd" or page_no != 1:
+    if page_no != 1 or platform not in {"jd", "taobao"}:
         _goto_search_url(page, direct_url, playwright_error, timeout_error)
         return
 
-    strategies = [_open_jd_direct_search, _open_jd_home_search]
+    if platform == "jd":
+        strategies = [_open_jd_direct_search, _open_jd_home_search]
+    else:
+        strategies = [_open_taobao_direct_search, _open_taobao_home_search]
     if open_strategy == "home-first":
         strategies.reverse()
 
@@ -364,6 +411,16 @@ def _open_jd_home_search(page, keyword: str, direct_url: str, playwright_error, 
     return _submit_jd_home_search(page, keyword, timeout_error)
 
 
+def _open_taobao_direct_search(page, keyword: str, direct_url: str, playwright_error, timeout_error) -> bool:
+    _goto_search_url(page, direct_url, playwright_error, timeout_error)
+    return _current_page_looks_search_page(page, "taobao")
+
+
+def _open_taobao_home_search(page, keyword: str, direct_url: str, playwright_error, timeout_error) -> bool:
+    page.goto("https://www.taobao.com/", wait_until="domcontentloaded")
+    return _submit_taobao_home_search(page, keyword, timeout_error)
+
+
 def _goto_search_url(page, direct_url: str, playwright_error, timeout_error) -> None:
     try:
         page.goto(direct_url, wait_until="domcontentloaded")
@@ -383,6 +440,13 @@ def _ensure_manual_search_page(page, platform: str, keyword: str, timeout_error)
             return
         if _page_has_failure_marker(page, platform):
             return
+    if platform == "taobao":
+        lowered = getattr(page, "url", "").lower()
+        if "taobao.com" in lowered or "tmall.com" in lowered:
+            if _submit_taobao_home_search(page, keyword, timeout_error):
+                return
+            if _page_has_failure_marker(page, platform):
+                return
     page.goto(_search_url(platform, keyword, 1), wait_until="domcontentloaded")
     _wait_for_navigation_settle(page, timeout_error)
 
@@ -420,6 +484,35 @@ def _submit_jd_home_search(page, keyword: str, timeout_error) -> bool:
     return "search.jd.com" in page.url.lower()
 
 
+def _submit_taobao_home_search(page, keyword: str, timeout_error) -> bool:
+    search_input = None
+    for selector in TAOBAO_SEARCH_INPUT_SELECTORS:
+        locator = page.locator(selector).first
+        try:
+            locator.wait_for(state="visible", timeout=2500)
+            search_input = locator
+            break
+        except Exception:
+            continue
+    if search_input is None:
+        return False
+
+    search_input.fill(keyword, timeout=5000)
+    for selector in TAOBAO_SEARCH_BUTTON_SELECTORS:
+        button = page.locator(selector).first
+        try:
+            if button.count() and button.is_visible(timeout=1000):
+                button.click(timeout=3000)
+                break
+        except Exception:
+            continue
+    else:
+        search_input.press("Enter")
+
+    _wait_for_navigation_settle(page, timeout_error)
+    return _current_page_looks_search_page(page, "taobao")
+
+
 def _wait_for_navigation_settle(page, timeout_error) -> None:
     try:
         page.wait_for_load_state("domcontentloaded", timeout=8000)
@@ -434,7 +527,7 @@ def _wait_for_navigation_settle(page, timeout_error) -> None:
 def _wait_for_product_signals(page, platform: str, timeout_error, timeout_ms: int = 10000) -> None:
     selectors = {
         "jd": 'li.gl-item, [data-sku], a[href*="item.jd.com"]',
-        "taobao": '[data-nid], [data-item-id], a[href*="item.taobao"], a[href*="detail.tmall"]',
+        "taobao": '[data-nid], [data-item-id], [data-auction-id], a[href*="item.taobao"], a[href*="detail.tmall"], a[href*="item.htm?id="]',
     }
     selector = selectors.get(platform)
     if not selector:
@@ -458,14 +551,31 @@ def _current_page_looks_search_page(page, platform: str) -> bool:
     if platform == "jd":
         return "search.jd.com" in lowered or "item.jd.com" in lowered
     if platform == "taobao":
-        return "s.taobao.com" in lowered or "item.taobao.com" in lowered or "detail.tmall.com" in lowered
+        return (
+            "s.taobao.com" in lowered
+            or "list.taobao.com" in lowered
+            or "item.taobao.com" in lowered
+            or "detail.tmall.com" in lowered
+        )
     return False
 
 
 def _looks_like_product_response(platform: str, url: str) -> bool:
     lowered = url.lower()
     if platform == "taobao":
-        return any(token in lowered for token in ("mtop", "search", "h5api", "item"))
+        return any(
+            token in lowered
+            for token in (
+                "mtop",
+                "h5api",
+                "search",
+                "pcsearch",
+                "auction",
+                "item",
+                "taobao.com",
+                "tmall.com",
+            )
+        )
     if platform == "jd":
         return any(token in lowered for token in ("search", "prices", "goods", "ware", "sku", "item"))
     return False
@@ -481,23 +591,37 @@ def _extract_dom_rows(page, platform: str) -> list[dict]:
     if platform == "taobao":
         return page.evaluate(
             """
-            () => Array.from(document.querySelectorAll('[data-nid], [data-item-id], a[href*="item.taobao"], a[href*="detail.tmall"]'))
-              .map((el) => {
-                const card = el.closest('[data-nid], [data-item-id], .item, [class*="Card"], [class*="card"]') || el;
-                const hrefEl = card.querySelector('a[href*="item.taobao"], a[href*="detail.tmall"]') || el;
+            () => {
+              const cards = Array.from(document.querySelectorAll('[data-nid], [data-item-id], [data-auction-id], a[href*="item.taobao"], a[href*="detail.tmall"], a[href*="item.htm?id="]'));
+              const seen = new Set();
+              const rows = [];
+              for (const el of cards) {
+                const card = el.closest('[data-nid], [data-item-id], [data-auction-id], [class*="item"], [class*="Item"], [class*="Card"], [class*="card"], li, div') || el;
+                const hrefEl = card.querySelector('a[href*="item.taobao"], a[href*="detail.tmall"], a[href*="item.htm?id="]') || el;
+                if (!hrefEl || !hrefEl.href) continue;
+                let itemId = card.getAttribute('data-nid') || card.getAttribute('data-item-id') || card.getAttribute('data-auction-id') || '';
+                try { itemId = itemId || new URL(hrefEl.href).searchParams.get('id') || ''; } catch (e) {}
+                itemId = itemId || hrefEl.href;
+                if (seen.has(itemId)) continue;
+                seen.add(itemId);
                 const img = card.querySelector('img');
                 const text = card.innerText || '';
-                const price = (text.match(/¥\\s*\\d+(?:\\.\\d+)?|￥\\s*\\d+(?:\\.\\d+)?/) || [''])[0];
-                return {
-                  item_id: card.getAttribute('data-nid') || card.getAttribute('data-item-id') || new URL(hrefEl.href).searchParams.get('id') || hrefEl.href,
-                  title: hrefEl.getAttribute('title') || (card.querySelector('[title]') || {}).title || text.split('\\n')[0],
+                const priceEl = card.querySelector('[class*="price"], [class*="Price"], [class*="PRICE"]');
+                const price = (priceEl && priceEl.innerText) || (text.match(/¥\\s*\\d+(?:\\.\\d+)?|￥\\s*\\d+(?:\\.\\d+)?|\\d+(?:\\.\\d+)?\\s*元/) || [''])[0];
+                const lines = text.split('\\n').map((line) => line.trim()).filter(Boolean);
+                const titleFromLines = lines.find((line) => !/[¥￥]\\s*\\d|销量|付款|评价|包邮|进店|相似/.test(line) && line.length >= 4) || '';
+                rows.push({
+                  item_id: itemId,
+                  title: hrefEl.getAttribute('title') || hrefEl.getAttribute('aria-label') || (card.querySelector('[title]') || {}).title || (img && img.alt) || titleFromLines,
                   price: price,
-                  pic_url: img ? (img.currentSrc || img.src) : '',
+                  pic_url: img ? (img.currentSrc || img.src || img.getAttribute('data-src')) : '',
                   detail_url: hrefEl.href,
-                  shopName: '',
+                  shopName: ((card.querySelector('[class*="shop"], [class*="Shop"], [class*="seller"], [class*="Seller"]') || {}).innerText || '').split('\\n')[0],
                   view_sales: text
-                };
-              })
+                });
+              }
+              return rows;
+            }
             """
         )
     return page.evaluate(
@@ -523,6 +647,108 @@ def _extract_dom_rows(page, platform: str) -> list[dict]:
           })
         """
     )
+
+
+def _extract_state_rows(page, platform: str) -> list[dict]:
+    if platform != "taobao":
+        return []
+    try:
+        return page.evaluate(
+            """
+            () => {
+              const rows = [];
+              const seen = new Set();
+              const visited = new WeakSet();
+              const idKeys = ['item_id', 'itemId', 'nid', 'id', 'auctionId', 'itemIdStr', 'auction_id', 'item_id_str'];
+              const titleKeys = ['title', 'raw_title', 'rawTitle', 'name', 'item_title', 'itemTitle', 'shortTitle'];
+              const priceKeys = ['view_price', 'price', 'salePrice', 'realPrice', 'promotionPrice', 'priceShow', 'priceWithRate', 'proPrice'];
+              const urlKeys = ['detail_url', 'detailUrl', 'auctionURL', 'item_url', 'url', 'clickUrl'];
+              const imageKeys = ['pic_url', 'picUrl', 'pict_url', 'image', 'img', 'imgUrl', 'itemPic'];
+              const shopKeys = ['nick', 'shopName', 'sellerName', 'storeName', 'sellerNick'];
+              const salesKeys = ['view_sales', 'sales', 'sold', 'monthSales', 'realSales', 'tradeCount'];
+
+              const clean = (value) => {
+                if (value === undefined || value === null) return '';
+                if (typeof value === 'object') {
+                  for (const key of ['price', 'value', 'text', 'title', 'url', 'priceText', 'display']) {
+                    if (value[key] !== undefined && value[key] !== null && value[key] !== '') return clean(value[key]);
+                  }
+                  return '';
+                }
+                return String(value).replace(/<[^>]+>/g, '').replace(/\\s+/g, ' ').trim();
+              };
+              const first = (obj, keys) => {
+                for (const key of keys) {
+                  const text = clean(obj && obj[key]);
+                  if (text) return text;
+                }
+                return '';
+              };
+              const add = (obj) => {
+                if (!obj || typeof obj !== 'object') return;
+                const itemId = first(obj, idKeys);
+                const title = first(obj, titleKeys);
+                const price = first(obj, priceKeys);
+                if (!itemId || !title || !price || seen.has(itemId)) return;
+                seen.add(itemId);
+                rows.push({
+                  item_id: itemId,
+                  title: title,
+                  price: price,
+                  detail_url: first(obj, urlKeys),
+                  pic_url: first(obj, imageKeys),
+                  shopName: first(obj, shopKeys),
+                  view_sales: first(obj, salesKeys)
+                });
+              };
+              const walk = (value, depth = 0) => {
+                if (!value || depth > 8) return;
+                if (typeof value === 'string') {
+                  const text = value.trim();
+                  if (text.length > 2 && text.length < 2000000 && (text[0] === '{' || text[0] === '[')) {
+                    try { walk(JSON.parse(text), depth + 1); } catch (e) {}
+                  }
+                  return;
+                }
+                if (typeof value !== 'object') return;
+                if (visited.has(value)) return;
+                visited.add(value);
+                add(value);
+                if (Array.isArray(value)) {
+                  for (const child of value) walk(child, depth + 1);
+                  return;
+                }
+                for (const child of Object.values(value)) walk(child, depth + 1);
+              };
+
+              for (const name of ['__INIT_DATA__', '__SEARCH_DATA__', '__PAGE_DATA__', '__GLOBAL_INIT_DATA__', '__APOLLO_STATE__', 'g_config']) {
+                try { walk(window[name]); } catch (e) {}
+              }
+              return rows;
+            }
+            """
+        )
+    except Exception:
+        return []
+
+
+def _dedupe_dom_rows(rows: list[dict], platform: str) -> list[dict]:
+    key_names = ("skuId", "sku_id", "wareId") if platform == "jd" else ("item_id", "itemId", "nid", "auctionId")
+    seen = set()
+    result = []
+    for row in rows:
+        key = ""
+        for name in key_names:
+            if row.get(name):
+                key = str(row.get(name))
+                break
+        if not key:
+            key = str(row.get("detail_url") or row.get("itemUrl") or row.get("url") or row)
+        if key in seen:
+            continue
+        seen.add(key)
+        result.append(row)
+    return result
 
 
 def _merge_jd_prices(rows: list[dict], price_cache: dict[str, dict[str, str]]) -> list[dict]:
@@ -591,6 +817,12 @@ def _save_debug_snapshot(page, platform: str, keyword: str, debug_dir: Path) -> 
     return str(base)
 
 
+def _write_summary(path: str, payload: dict) -> None:
+    summary_path = Path(path)
+    summary_path.parent.mkdir(parents=True, exist_ok=True)
+    summary_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
 def _safe_title(page) -> str:
     try:
         return page.title()
@@ -613,6 +845,22 @@ def _detect_browser_failure_reason(page, platform: str) -> str:
     combined = f"{url}\n{title}\n{body_text}".lower()
     if "risk_handler" in combined:
         return f"{platform}_risk_handler"
+    if platform == "taobao" and (
+        "login.taobao.com" in combined
+        or "login.tmall.com" in combined
+        or "请登录" in combined
+        or "親，請登錄" in combined
+    ):
+        return "taobao_login_required"
+    if platform == "taobao" and (
+        "sec.taobao.com" in combined
+        or "baxia" in combined
+        or "punish" in combined
+        or "访问受限" in combined
+        or "访问被拒绝" in combined
+        or "滑块" in combined
+    ):
+        return "taobao_captcha_or_security_check"
     if platform == "jd" and "www.jd.com" in combined and "from=pc_search_sd" in combined:
         return "jd_search_redirected_to_home"
     if (

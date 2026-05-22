@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import subprocess
 import sys
+import tempfile
+from pathlib import Path
 
 from scrapy.utils.project import get_project_settings
 
@@ -34,6 +37,13 @@ def main() -> None:
     parser.add_argument("--jd-cdp-url", default="", help="Optional CDP URL for JD, for example http://127.0.0.1:9222")
     parser.add_argument("--taobao-cdp-url", default="", help="Optional CDP URL for Taobao.")
     parser.add_argument("--manual-search-wait", action="store_true", help="Pause for manual search before each task.")
+    parser.add_argument("--login-wait", action="store_true", help="Pause for manual login before each task.")
+    parser.add_argument(
+        "--manual-verify-on-failure",
+        action="store_true",
+        help="Keep browser open on login/security failure, wait for manual verification, then retry once.",
+    )
+    parser.add_argument("--keep-open-on-failure", action="store_true", help="Keep browser open after failed capture.")
     parser.add_argument("--headless", action="store_true", help="Run browser capture in headless mode when CDP is not used.")
     parser.add_argument("--keyword", action="append", help="Only run due tasks for this exact keyword. Can repeat.")
     args = parser.parse_args()
@@ -69,6 +79,7 @@ def main() -> None:
 
 def _run_capture(task: CrawlTask, args) -> tuple[int, str, str]:
     platform = task_platform_to_capture_platform(task.platform_code)
+    summary_path = _new_summary_path()
     command = [
         sys.executable,
         "-m",
@@ -83,33 +94,73 @@ def _run_capture(task: CrawlTask, args) -> tuple[int, str, str]:
         str(args.item_limit),
         "--timeout",
         str(args.timeout),
+        "--summary-file",
+        str(summary_path),
     ]
     cdp_url = args.jd_cdp_url if platform == "jd" else args.taobao_cdp_url
     if cdp_url:
         command.extend(["--cdp-url", cdp_url])
     elif args.headless:
         command.append("--headless")
+    if args.login_wait:
+        command.append("--login-wait")
     if args.manual_search_wait:
         command.append("--manual-search-wait")
+    if args.manual_verify_on_failure:
+        command.append("--manual-verify-on-failure")
+    if args.keep_open_on_failure:
+        command.append("--keep-open-on-failure")
 
     env = os.environ.copy()
     env.setdefault("CRAWLER_ENABLE_MYSQL", "1")
     env.setdefault("PYTHONIOENCODING", "utf-8")
-    completed = subprocess.run(
-        command,
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        env=env,
-    )
-    output = "\n".join(part for part in (completed.stdout, completed.stderr) if part)
-    match = FINISH_RE.search(output)
-    if not match:
-        return 0, f"capture_process_failed_exit_{completed.returncode}", output
-    items = int(match.group(1))
-    reason = (match.group(2) or "").strip()
-    return items, reason, output
+    interactive = args.login_wait or args.manual_search_wait or args.manual_verify_on_failure or args.keep_open_on_failure
+    try:
+        if interactive:
+            completed = subprocess.run(command, text=True, env=env)
+            summary = _read_summary(summary_path)
+            if summary:
+                return int(summary.get("items", 0)), str(summary.get("reason") or ""), ""
+            return 0, f"capture_process_failed_exit_{completed.returncode}", ""
+
+        completed = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            env=env,
+        )
+        output = "\n".join(part for part in (completed.stdout, completed.stderr) if part)
+        summary = _read_summary(summary_path)
+        if summary:
+            return int(summary.get("items", 0)), str(summary.get("reason") or ""), output
+        match = FINISH_RE.search(output)
+        if not match:
+            return 0, f"capture_process_failed_exit_{completed.returncode}", output
+        items = int(match.group(1))
+        reason = (match.group(2) or "").strip()
+        return items, reason, output
+    finally:
+        try:
+            summary_path.unlink(missing_ok=True)
+        except Exception:
+            pass
+
+
+def _new_summary_path() -> Path:
+    handle = tempfile.NamedTemporaryFile(prefix="onebuy_capture_", suffix=".json", delete=False)
+    handle.close()
+    return Path(handle.name)
+
+
+def _read_summary(path: Path) -> dict:
+    try:
+        if not path.exists() or path.stat().st_size == 0:
+            return {}
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
 
 
 def _safe_print(value: str) -> None:

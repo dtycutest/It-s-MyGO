@@ -5,6 +5,7 @@ from decimal import Decimal
 
 from onebuy_crawler.services.normalizer import (
     calculate_discount_rate,
+    canonicalize_product_url,
     normalize_title,
     normalize_url,
     parse_price,
@@ -29,6 +30,14 @@ class NormalizerTests(unittest.TestCase):
     def test_title_and_url(self):
         self.assertEqual(normalize_title(" Apple\u200b   iPhone 15 "), "Apple iPhone 15")
         self.assertEqual(normalize_url("//item.jd.com/1.html"), "https://item.jd.com/1.html")
+
+    def test_canonicalize_taobao_product_url(self):
+        url = "https://s.click.taobao.com/t?foo=1&url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D123%26spm%3Dabc"
+        self.assertEqual(canonicalize_product_url(url), "https://item.taobao.com/item.htm?id=123")
+
+    def test_canonicalize_tmall_product_url(self):
+        url = "https://detail.tmall.com/item.htm?id=456&spm=a21"
+        self.assertEqual(canonicalize_product_url(url), "https://detail.tmall.com/item.htm?id=456")
 
     def test_discount(self):
         self.assertEqual(calculate_discount_rate(Decimal("75"), Decimal("100")), 25)

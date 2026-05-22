@@ -115,15 +115,25 @@ def _extract_jd_payload(payload: Any, keyword: str) -> list[RawProductItem]:
 
 
 def _taobao_item_from_mapping(data: dict[str, Any], keyword: str) -> RawProductItem | None:
-    sku = _first(data, "item_id", "itemId", "nid", "id", "auctionId", "itemIdStr")
-    title = _first(data, "title", "raw_title", "rawTitle", "name", "item_title")
-    price = _first(data, "view_price", "price", "salePrice", "realPrice", "promotionPrice")
+    sku = _first(data, "item_id", "itemId", "nid", "id", "auctionId", "itemIdStr", "auction_id", "item_id_str")
+    title = _first(data, "title", "raw_title", "rawTitle", "name", "item_title", "itemTitle", "shortTitle")
+    price = _first(
+        data,
+        "view_price",
+        "price",
+        "salePrice",
+        "realPrice",
+        "promotionPrice",
+        "priceShow",
+        "priceWithRate",
+        "proPrice",
+    )
     if not sku or not title or not price:
         return None
     if not _matches_keyword(title, keyword):
         return None
-    url = _first(data, "detail_url", "detailUrl", "auctionURL", "item_url", "url")
-    image = _first(data, "pic_url", "picUrl", "pict_url", "image", "img")
+    url = _first(data, "detail_url", "detailUrl", "auctionURL", "item_url", "url", "clickUrl")
+    image = _first(data, "pic_url", "picUrl", "pict_url", "image", "img", "imgUrl", "itemPic")
     return _raw_item(
         platform_code="taobao",
         platform_name="淘宝",
@@ -131,8 +141,8 @@ def _taobao_item_from_mapping(data: dict[str, Any], keyword: str) -> RawProductI
         source_sku_id=str(sku),
         title=title,
         price_text=price,
-        sales_text=_first(data, "view_sales", "sales", "sold", "monthSales", "realSales"),
-        seller_name=_first(data, "nick", "shopName", "sellerName", "storeName"),
+        sales_text=_first(data, "view_sales", "sales", "sold", "monthSales", "realSales", "tradeCount"),
+        seller_name=_first(data, "nick", "shopName", "sellerName", "storeName", "sellerNick"),
         image_url=_url(image, "https:"),
         product_url=_url(url, "https://item.taobao.com/"),
         promo_info=_first(data, "promotion", "coupon", "icon", "subTitle"),
@@ -185,6 +195,15 @@ def _walk_dicts(value: Any) -> Iterable[dict[str, Any]]:
     elif isinstance(value, list):
         for child in value:
             yield from _walk_dicts(child)
+    elif isinstance(value, str):
+        text = value.strip()
+        if len(text) < 2 or len(text) > 2_000_000:
+            return
+        if not (text[0] in "[{" or JSONP_RE.match(text)):
+            return
+        parsed = parse_jsonish(text)
+        if parsed is not None:
+            yield from _walk_dicts(parsed)
 
 
 def _first(data: dict[str, Any], *keys: str) -> Any:
@@ -192,7 +211,7 @@ def _first(data: dict[str, Any], *keys: str) -> Any:
         value = data.get(key)
         if value not in (None, "", [], {}):
             if isinstance(value, dict):
-                nested = _first(value, "price", "value", "text", "title", "url")
+                nested = _first(value, "price", "value", "text", "title", "url", "priceText", "display")
                 if nested not in (None, ""):
                     return nested
             else:

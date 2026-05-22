@@ -45,6 +45,12 @@ class BrowserCaptureSearchTests(unittest.TestCase):
         self.assertEqual(_detect_browser_failure_reason(captcha_page, "jd"), "jd_captcha_or_security_check")
         self.assertEqual(_detect_browser_failure_reason(login_page, "jd"), "jd_login_required")
 
+    def test_detect_taobao_login_and_security(self):
+        login_page = FakePage("https://login.taobao.com/member/login.jhtml", "淘宝登录", "亲，请登录")
+        security_page = FakePage("https://sec.taobao.com/query.htm", "访问受限", "请完成滑块验证")
+        self.assertEqual(_detect_browser_failure_reason(login_page, "taobao"), "taobao_login_required")
+        self.assertEqual(_detect_browser_failure_reason(security_page, "taobao"), "taobao_captcha_or_security_check")
+
 
 if __name__ == "__main__":
     unittest.main()

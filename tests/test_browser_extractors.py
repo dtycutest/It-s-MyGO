@@ -31,6 +31,33 @@ class BrowserExtractorTests(unittest.TestCase):
         self.assertEqual(result.items[0]["source_sku_id"], "123")
         self.assertEqual(result.items[0]["platform_code"], "taobao")
 
+    def test_extract_taobao_modern_nested_json_string(self):
+        body = json.dumps(
+            {
+                "data": {
+                    "payload": json.dumps(
+                        {
+                            "auctions": [
+                                {
+                                    "auctionId": "456",
+                                    "rawTitle": "Sony 蓝牙耳机 真无线降噪",
+                                    "priceShow": {"price": "399.00"},
+                                    "clickUrl": "//item.taobao.com/item.htm?id=456",
+                                    "sellerNick": "数码旗舰店",
+                                }
+                            ]
+                        },
+                        ensure_ascii=False,
+                    )
+                }
+            },
+            ensure_ascii=False,
+        )
+        result = extract_from_response("taobao", "https://h5api.m.taobao.com", body, "蓝牙耳机")
+        self.assertEqual(len(result.items), 1)
+        self.assertEqual(result.items[0]["source_sku_id"], "456")
+        self.assertEqual(result.items[0]["price_text"], "399.00")
+
     def test_extract_jd_json(self):
         body = json.dumps(
             {

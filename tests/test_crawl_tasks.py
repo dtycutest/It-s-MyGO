@@ -35,6 +35,8 @@ class CrawlTaskTests(unittest.TestCase):
         schema = "\n".join(SCHEMA_SQL)
         self.assertIn("CREATE TABLE IF NOT EXISTS crawl_tasks", schema)
         self.assertIn("uk_task_keyword_platform", schema)
+        self.assertIn("product_url TEXT", schema)
+        self.assertIn("url TEXT", schema)
 
     def test_load_due_tasks_can_filter_keywords(self):
         fake_cursor = FakeCursor([])

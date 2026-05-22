@@ -215,6 +215,40 @@ $env:CRAWLER_ENABLE_MYSQL="1"
 .\.venv\Scripts\python -m jobs.init_schema
 ```
 
+## 淘宝采集模式
+
+淘宝搜索比京东更容易触发登录、安全验证或访问受限。当前实现采用与京东一致的浏览器采集管线，但针对淘宝补充了三路提取：
+
+```text
+监听淘宝 mtop/h5api/search 等 Network JSON/JSONP 响应
+扫描页面全局状态对象中的 auctions/itemlist 数据
+从 DOM 商品卡片兜底提取 item_id/title/price/shop/url
+```
+
+首次建议先准备淘宝持久化登录态：
+
+```powershell
+.\.venv\Scripts\python -m jobs.prepare_browser_profile --platform taobao
+```
+
+在打开的浏览器中完成淘宝登录和必要验证后，再运行：
+
+```powershell
+$env:CRAWLER_ENABLE_MYSQL="1"
+.\.venv\Scripts\python -m jobs.auto_crawl --platform taobao --keyword "蓝牙耳机" --force --rounds 1 --task-limit 1 --pages 1 --item-limit 20 --timeout 35
+.\.venv\Scripts\python -m jobs.query_products --keyword "蓝牙耳机" --limit 10
+```
+
+`auto_crawl --platform taobao` 在非 `--headless` 模式下默认会启用人工验证兜底：如果淘宝跳到登录/安全验证页，浏览器不会立刻关闭，终端会提示你在浏览器中完成验证并按 Enter，程序随后会重试一次采集。如果你只想后台失败记录，不希望停下来等待人工处理，可以加 `--headless`。
+
+也可以直接调浏览器采集入口：
+
+```powershell
+.\.venv\Scripts\python -m jobs.browser_capture_search --platform taobao --keyword "蓝牙耳机" --pages 1 --limit 20 --timeout 35
+```
+
+如果返回 `taobao_login_required`、`taobao_captcha_or_security_check` 或 `items=0`，程序不会破解或绕过验证，会保存 HTML/截图到 `output/browser_debug/` 便于判断原因。淘宝采集不要高频并发运行，建议每次 1 页、低频、复用 `browser_profiles/taobao`。
+
 ## 可选：手动登录抓取
 
 如果需要抓取登录后的京东/淘宝页面：

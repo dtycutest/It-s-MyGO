@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from decimal import Decimal, InvalidOperation
 from typing import Any
-from urllib.parse import urljoin
+from urllib.parse import parse_qs, unquote, urljoin, urlparse, urlunparse
 
 
 SPACE_RE = re.compile(r"\s+")
@@ -64,10 +64,47 @@ def normalize_url(value: Any, base_url: str = "") -> str:
     if not text:
         return ""
     if text.startswith("//"):
-        return "https:" + text
+        text = "https:" + text
     if base_url:
-        return urljoin(base_url, text)
+        text = urljoin(base_url, text)
+    return canonicalize_product_url(text)
+
+
+def canonicalize_product_url(value: str) -> str:
+    text = clean_text(value)
+    if not text:
+        return ""
+    parsed = urlparse(text)
+    host = parsed.netloc.lower()
+    query = parse_qs(parsed.query)
+
+    if "taobao.com" in host or "tmall.com" in host:
+        item_id = _first_query_value(query, "id", "item_id", "itemId", "itemIdStr", "nid")
+        if not item_id and "url" in query:
+            nested = canonicalize_product_url(unquote(query["url"][0]))
+            if nested:
+                return nested
+        if item_id:
+            if "tmall.com" in host:
+                return f"https://detail.tmall.com/item.htm?id={item_id}"
+            return f"https://item.taobao.com/item.htm?id={item_id}"
+
+    if "jd.com" in host:
+        match = re.search(r"/(\d{5,})\.html", parsed.path)
+        if match:
+            return f"https://item.jd.com/{match.group(1)}.html"
+
+    if parsed.query:
+        return urlunparse((parsed.scheme, parsed.netloc, parsed.path, "", "", ""))
     return text
+
+
+def _first_query_value(query: dict[str, list[str]], *keys: str) -> str:
+    for key in keys:
+        values = query.get(key)
+        if values and values[0]:
+            return clean_text(values[0])
+    return ""
 
 
 def normalize_image_url(value: Any, base_url: str = "") -> str:

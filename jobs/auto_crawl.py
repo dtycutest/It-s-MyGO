@@ -49,6 +49,13 @@ def main() -> None:
     parser.add_argument("--failed-delay-minutes", type=int, default=15)
     parser.add_argument("--blocked-delay-minutes", type=int, default=60)
     parser.add_argument("--headless", action="store_true", help="Run browser capture headlessly.")
+    parser.add_argument("--login-wait", action="store_true", help="Pause for manual login before each capture task.")
+    parser.add_argument(
+        "--manual-verify-on-failure",
+        action="store_true",
+        help="Keep browser open on login/security failure, wait for manual verification, then retry once.",
+    )
+    parser.add_argument("--keep-open-on-failure", action="store_true", help="Keep browser open after failed capture.")
     parser.add_argument("--skip-init-schema", action="store_true", help="Do not initialize MySQL schema first.")
     parser.add_argument("--refresh-prices", action="store_true", help="Refresh existing offer prices after task processing.")
     parser.add_argument("--refresh-limit", type=int, default=50)
@@ -92,6 +99,13 @@ def main() -> None:
         ]
         if args.headless:
             command.append("--headless")
+        if args.login_wait:
+            command.append("--login-wait")
+        taobao_visible = args.platform in {"taobao", "all"} and not args.headless
+        if args.manual_verify_on_failure or taobao_visible:
+            command.append("--manual-verify-on-failure")
+        if args.keep_open_on_failure or taobao_visible:
+            command.append("--keep-open-on-failure")
         for keyword in keywords:
             command.extend(["--keyword", keyword])
         _run_command(command)
@@ -123,7 +137,7 @@ def _platforms(platform: str) -> list[str]:
 
 
 def _run_command(command: list[str]) -> None:
-    print("running:", " ".join(command))
+    print("running:", " ".join(command), flush=True)
     completed = subprocess.run(command, text=True)
     if completed.returncode != 0:
         raise SystemExit(completed.returncode)
