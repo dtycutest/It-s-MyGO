@@ -21,7 +21,7 @@ def main() -> None:
     parser.add_argument("--keyword", action="append", help="Export rows whose title matches this keyword. Can repeat.")
     parser.add_argument("--keyword-file", default="", help="UTF-8 keyword file, one keyword per line.")
     parser.add_argument("--use-default-keywords", action="store_true")
-    parser.add_argument("--platform", default="jd", choices=["jd", "jingdong", "taobao"])
+    parser.add_argument("--platform", default="jd", choices=["jd", "jingdong", "taobao", "all"])
     parser.add_argument("--limit", type=int, default=500)
     args = parser.parse_args()
 
@@ -42,9 +42,11 @@ def main() -> None:
 
 
 def export_records(settings, keywords: list[str], platform: str, limit: int) -> list[dict]:
-    platform_code = normalize_task_platform(platform)
-    where = ["o.platform_code = %s"]
-    params: list[object] = [platform_code]
+    where = []
+    params: list[object] = []
+    if platform != "all":
+        where.append("o.platform_code = %s")
+        params.append(normalize_task_platform(platform))
     if keywords:
         keyword_clauses = []
         for keyword in keywords:
@@ -80,7 +82,7 @@ def export_records(settings, keywords: list[str], platform: str, limit: int) -> 
                     o.update_at
                 FROM products p
                 JOIN platform_offers o ON p.product_id = o.product_id
-                WHERE {' AND '.join(where)}
+                WHERE {' AND '.join(where) if where else '1=1'}
                 ORDER BY p.updated_at DESC, o.update_at DESC
                 LIMIT %s
                 """,

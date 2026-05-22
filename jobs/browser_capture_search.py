@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import random
 import re
 import time
 from pathlib import Path
@@ -79,13 +80,21 @@ def main() -> None:
         action="store_true",
         help="Pause for manual search and capture the current browser page instead of navigating automatically",
     )
+    parser.add_argument(
+        "--manual-search-only",
+        action="store_true",
+        help="With --manual-search-wait, never auto-submit search; only capture after the current page is a search result page.",
+    )
     parser.add_argument("--timeout", type=int, default=25, help="Seconds to wait for network responses per page")
     parser.add_argument(
         "--open-strategy",
         default="direct-first",
         choices=["direct-first", "home-first"],
-        help="Search navigation strategy for page 1. Direct search first is usually more stable for automation.",
+        help="Search navigation strategy for page 1. Direct search is more reliable for JD in the current profile.",
     )
+    parser.add_argument("--typing-delay-ms", type=int, default=120, help="Delay between search keyword characters.")
+    parser.add_argument("--pre-search-delay-ms", type=int, default=800, help="Delay before typing on the home page.")
+    parser.add_argument("--post-search-delay-ms", type=int, default=1500, help="Delay after submitting a search.")
     parser.add_argument(
         "--no-jd-price-fetch",
         action="store_true",
@@ -105,6 +114,8 @@ def main() -> None:
         help="Keep the browser open after a failed capture until Enter is pressed.",
     )
     args = parser.parse_args()
+    if args.manual_search_only:
+        args.manual_search_wait = True
 
     settings = get_project_settings()
     runner = PipelineRunner(settings)
@@ -216,9 +227,15 @@ def main() -> None:
                         break
 
         if args.manual_search_wait:
-            input("请在浏览器中手动搜索关键词并确认商品列表可见；如果仍停在首页，也可以直接回到终端按 Enter 让程序自动搜索...")
-            if not _current_page_looks_search_page(page, args.platform):
-                _ensure_manual_search_page(page, args.platform, args.keyword, PlaywrightTimeoutError)
+            if getattr(page, "url", "").lower().startswith("about:"):
+                page.goto(_home_url(args.platform), wait_until="domcontentloaded")
+            _wait_for_manual_search_page(
+                page,
+                args.platform,
+                args.keyword,
+                PlaywrightTimeoutError,
+                allow_auto_search=not args.manual_search_only,
+            )
 
         for page_no in range(1, args.pages + 1):
             if collected_count >= args.limit:
@@ -236,6 +253,9 @@ def main() -> None:
                 PlaywrightError,
                 PlaywrightTimeoutError,
                 args.open_strategy,
+                args.typing_delay_ms,
+                args.pre_search_delay_ms,
+                args.post_search_delay_ms,
             )
             if _page_has_failure_marker(page, args.platform):
                 break
@@ -253,7 +273,16 @@ def main() -> None:
                 )
                 input()
                 if not _current_page_looks_search_page(page, args.platform):
-                    _ensure_manual_search_page(page, args.platform, args.keyword, PlaywrightTimeoutError)
+                    if args.manual_search_only:
+                        _wait_for_manual_search_page(
+                            page,
+                            args.platform,
+                            args.keyword,
+                            PlaywrightTimeoutError,
+                            allow_auto_search=False,
+                        )
+                    else:
+                        _ensure_manual_search_page(page, args.platform, args.keyword, PlaywrightTimeoutError)
                 _wait_for_product_signals(page, args.platform, PlaywrightTimeoutError, timeout_ms=min(15000, args.timeout * 1000))
                 _nudge_page(page)
                 collect_dom_items_until(args.timeout)
@@ -378,6 +407,9 @@ def _open_search_page(
     playwright_error,
     timeout_error,
     open_strategy: str = "direct-first",
+    typing_delay_ms: int = 120,
+    pre_search_delay_ms: int = 800,
+    post_search_delay_ms: int = 1500,
 ) -> None:
     if page_no != 1 or platform not in {"jd", "taobao"}:
         _goto_search_url(page, direct_url, playwright_error, timeout_error)
@@ -392,7 +424,16 @@ def _open_search_page(
 
     for strategy in strategies:
         try:
-            if strategy(page, keyword, direct_url, playwright_error, timeout_error):
+            if strategy(
+                page,
+                keyword,
+                direct_url,
+                playwright_error,
+                timeout_error,
+                typing_delay_ms,
+                pre_search_delay_ms,
+                post_search_delay_ms,
+            ):
                 return
         except playwright_error:
             continue
@@ -401,24 +442,60 @@ def _open_search_page(
             return
 
 
-def _open_jd_direct_search(page, keyword: str, direct_url: str, playwright_error, timeout_error) -> bool:
+def _open_jd_direct_search(
+    page,
+    keyword: str,
+    direct_url: str,
+    playwright_error,
+    timeout_error,
+    typing_delay_ms: int = 120,
+    pre_search_delay_ms: int = 800,
+    post_search_delay_ms: int = 1500,
+) -> bool:
     _goto_search_url(page, direct_url, playwright_error, timeout_error)
     return "search.jd.com" in getattr(page, "url", "").lower()
 
 
-def _open_jd_home_search(page, keyword: str, direct_url: str, playwright_error, timeout_error) -> bool:
+def _open_jd_home_search(
+    page,
+    keyword: str,
+    direct_url: str,
+    playwright_error,
+    timeout_error,
+    typing_delay_ms: int = 120,
+    pre_search_delay_ms: int = 800,
+    post_search_delay_ms: int = 1500,
+) -> bool:
     page.goto("https://www.jd.com/?country=CN", wait_until="domcontentloaded")
-    return _submit_jd_home_search(page, keyword, timeout_error)
+    return _submit_jd_home_search(page, keyword, timeout_error, typing_delay_ms, pre_search_delay_ms, post_search_delay_ms)
 
 
-def _open_taobao_direct_search(page, keyword: str, direct_url: str, playwright_error, timeout_error) -> bool:
+def _open_taobao_direct_search(
+    page,
+    keyword: str,
+    direct_url: str,
+    playwright_error,
+    timeout_error,
+    typing_delay_ms: int = 120,
+    pre_search_delay_ms: int = 800,
+    post_search_delay_ms: int = 1500,
+) -> bool:
     _goto_search_url(page, direct_url, playwright_error, timeout_error)
     return _current_page_looks_search_page(page, "taobao")
 
 
-def _open_taobao_home_search(page, keyword: str, direct_url: str, playwright_error, timeout_error) -> bool:
+def _open_taobao_home_search(
+    page,
+    keyword: str,
+    direct_url: str,
+    playwright_error,
+    timeout_error,
+    typing_delay_ms: int = 120,
+    pre_search_delay_ms: int = 800,
+    post_search_delay_ms: int = 1500,
+) -> bool:
     page.goto("https://www.taobao.com/", wait_until="domcontentloaded")
-    return _submit_taobao_home_search(page, keyword, timeout_error)
+    return _submit_taobao_home_search(page, keyword, timeout_error, typing_delay_ms, pre_search_delay_ms, post_search_delay_ms)
 
 
 def _goto_search_url(page, direct_url: str, playwright_error, timeout_error) -> None:
@@ -451,7 +528,28 @@ def _ensure_manual_search_page(page, platform: str, keyword: str, timeout_error)
     _wait_for_navigation_settle(page, timeout_error)
 
 
-def _submit_jd_home_search(page, keyword: str, timeout_error) -> bool:
+def _wait_for_manual_search_page(page, platform: str, keyword: str, timeout_error, allow_auto_search: bool) -> None:
+    while True:
+        input(
+            "Manual search mode: finish the search in the browser and make sure the product list is visible, "
+            "then press Enter here to capture the current page..."
+        )
+        if _current_page_looks_search_page(page, platform) or _page_has_failure_marker(page, platform):
+            return
+        if allow_auto_search:
+            _ensure_manual_search_page(page, platform, keyword, timeout_error)
+            return
+        print("The current page is not a search result page yet. I will not auto-search; please search manually and press Enter again.")
+
+
+def _submit_jd_home_search(
+    page,
+    keyword: str,
+    timeout_error,
+    typing_delay_ms: int = 120,
+    pre_search_delay_ms: int = 800,
+    post_search_delay_ms: int = 1500,
+) -> bool:
     search_input = None
     for selector in JD_SEARCH_INPUT_SELECTORS:
         locator = page.locator(selector).first
@@ -468,23 +566,35 @@ def _submit_jd_home_search(page, keyword: str, timeout_error) -> bool:
         page.evaluate("() => { if (window.search) window.search.isSubmitted = 0; }")
     except Exception:
         pass
-    search_input.fill(keyword, timeout=5000)
+    _human_pause(page, pre_search_delay_ms, pre_search_delay_ms + 600)
+    _human_type_keyword(search_input, keyword, typing_delay_ms)
+    _human_pause(page, 300, 900)
     for selector in JD_SEARCH_BUTTON_SELECTORS:
         button = page.locator(selector).first
         try:
             if button.count() and button.is_visible(timeout=1000):
+                _human_pause(page, 200, 700)
                 button.click(timeout=3000)
                 break
         except Exception:
             continue
     else:
+        _human_pause(page, 200, 700)
         search_input.press("Enter")
 
+    _human_pause(page, post_search_delay_ms, post_search_delay_ms + 1000)
     _wait_for_navigation_settle(page, timeout_error)
     return "search.jd.com" in page.url.lower()
 
 
-def _submit_taobao_home_search(page, keyword: str, timeout_error) -> bool:
+def _submit_taobao_home_search(
+    page,
+    keyword: str,
+    timeout_error,
+    typing_delay_ms: int = 120,
+    pre_search_delay_ms: int = 800,
+    post_search_delay_ms: int = 1500,
+) -> bool:
     search_input = None
     for selector in TAOBAO_SEARCH_INPUT_SELECTORS:
         locator = page.locator(selector).first
@@ -497,20 +607,53 @@ def _submit_taobao_home_search(page, keyword: str, timeout_error) -> bool:
     if search_input is None:
         return False
 
-    search_input.fill(keyword, timeout=5000)
+    _human_pause(page, pre_search_delay_ms, pre_search_delay_ms + 600)
+    _human_type_keyword(search_input, keyword, typing_delay_ms)
+    _human_pause(page, 300, 900)
     for selector in TAOBAO_SEARCH_BUTTON_SELECTORS:
         button = page.locator(selector).first
         try:
             if button.count() and button.is_visible(timeout=1000):
+                _human_pause(page, 200, 700)
                 button.click(timeout=3000)
                 break
         except Exception:
             continue
     else:
+        _human_pause(page, 200, 700)
         search_input.press("Enter")
 
+    _human_pause(page, post_search_delay_ms, post_search_delay_ms + 1000)
     _wait_for_navigation_settle(page, timeout_error)
     return _current_page_looks_search_page(page, "taobao")
+
+
+def _human_type_keyword(locator, keyword: str, delay_ms: int = 120) -> None:
+    delay_ms = max(0, delay_ms)
+    try:
+        locator.click(timeout=5000)
+    except Exception:
+        pass
+    try:
+        locator.press("Control+A", timeout=3000)
+        locator.press("Backspace", timeout=3000)
+    except Exception:
+        try:
+            locator.fill("", timeout=3000)
+        except Exception:
+            pass
+    try:
+        locator.press_sequentially(keyword, delay=delay_ms, timeout=max(8000, len(keyword) * max(delay_ms, 1) + 5000))
+    except Exception:
+        locator.fill(keyword, timeout=5000)
+
+
+def _human_pause(page, min_ms: int, max_ms: int | None = None) -> None:
+    if max_ms is None:
+        max_ms = min_ms
+    low = max(0, min(min_ms, max_ms))
+    high = max(0, max(min_ms, max_ms))
+    page.wait_for_timeout(random.randint(low, high))
 
 
 def _wait_for_navigation_settle(page, timeout_error) -> None:

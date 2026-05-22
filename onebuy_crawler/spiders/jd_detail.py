@@ -10,7 +10,7 @@ class JdDetailSpider(BaseProductSpider):
     name = "jd_detail"
     platform_code = "jingdong"
     platform_name = "京东"
-    allowed_domains = ["item.jd.com", "search.jd.com"]
+    allowed_domains = ["item.jd.com", "search.jd.com", "p.3.cn"]
     referer = "https://www.jd.com/"
 
     def __init__(self, url: str = "", source_sku_id: str = "", *args, **kwargs):

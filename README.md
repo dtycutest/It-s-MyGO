@@ -196,18 +196,18 @@ browser_profiles/jd
 后续如果 profile 已经可用，可以去掉 `--login-wait`。需要后台运行时加 `--headless`：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20
+.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --open-strategy direct-first
 ```
 
 如果自动采集曾经出现 `items=0`，优先使用当前增强版浏览器采集入口重新验证：
 
 ```powershell
 $env:CRAWLER_ENABLE_MYSQL="1"
-.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --timeout 30 --headless
+.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --timeout 30 --open-strategy direct-first --headless
 .\.venv\Scripts\python -m jobs.query_products --keyword "iPhone 15" --limit 10
 ```
 
-增强版会同时做三件事：直接打开搜索页和首页搜索双策略兜底；等待京东商品卡片出现；监听并补抓京东异步价格响应，再按 SKU 把 DOM 中的商品标题和价格接口中的价格合并。若仍然没有商品，会把页面 HTML 和截图保存到 `output/browser_debug/`，便于判断是登录态失效、验证码、访问频繁还是页面结构变化。
+增强版会同时做三件事：优先直接打开京东搜索结果页；等待京东商品卡片出现；监听并补抓京东异步价格响应，再按 SKU 把 DOM 中的商品标题和价格接口中的价格合并。若仍然没有商品，会把页面 HTML 和截图保存到 `output/browser_debug/`，便于判断是登录态失效、验证码、访问频繁、首页重定向还是页面结构变化。
 
 入库前确认：
 
@@ -312,7 +312,7 @@ $env:MYSQL_DATABASE="onebuy"
 处理任务：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.run_crawl_tasks --limit 5 --pages 1 --item-limit 20
+.\.venv\Scripts\python -m jobs.run_crawl_tasks --limit 5 --platform jd --pages 1 --item-limit 20 --open-strategy direct-first
 ```
 
 如果京东需要复用已打开的 Edge 调试浏览器：
@@ -322,7 +322,7 @@ $env:MYSQL_DATABASE="onebuy"
 .\.venv\Scripts\python -m jobs.run_crawl_tasks --limit 1 --jd-cdp-url http://127.0.0.1:9222 --manual-search-wait
 ```
 
-任务失败时不会删除旧商品数据。遇到 `jd_access_too_frequent`、`jd_search_redirected_to_home`、验证码或风控页时，任务会进入延迟重试状态，前端继续使用数据库中的历史有效数据。
+任务失败时不会删除旧商品数据。遇到 `jd_access_too_frequent`、`jd_search_redirected_to_home`、验证码或风控页时，任务会进入延迟重试状态，并停止当前这一轮京东任务，避免继续消耗同一个浏览器 profile/IP。前端继续使用数据库中的历史有效数据。
 
 ## 联调缓存保障
 

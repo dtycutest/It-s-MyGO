@@ -18,6 +18,7 @@ BLOCKED_FAILURE_REASONS = {
     "jd_access_too_frequent",
     "jd_browser_capture_no_items",
     "jd_captcha_or_security_check",
+    "jd_login_required",
     "jd_risk_handler",
     "jd_search_redirected_to_home",
     "taobao_captcha_or_security_check",
@@ -139,6 +140,41 @@ def load_due_tasks(
                 )
                 for row in cursor.fetchall()
             ]
+
+
+def reset_stale_running_tasks(
+    settings,
+    stale_minutes: int = 30,
+    platform: str = "",
+    keywords: Iterable[str] | None = None,
+) -> int:
+    where = [
+        "status = 'running'",
+        "updated_at < DATE_SUB(CURRENT_TIMESTAMP, INTERVAL %s MINUTE)",
+    ]
+    params: list[object] = [max(1, stale_minutes)]
+    if platform:
+        where.append("platform_code = %s")
+        params.append(normalize_task_platform(platform))
+    keyword_list = [clean_text(keyword) for keyword in (keywords or []) if clean_text(keyword)]
+    if keyword_list:
+        where.append("keyword IN (" + ",".join(["%s"] * len(keyword_list)) + ")")
+        params.extend(keyword_list)
+
+    with mysql_connection(settings) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                f"""
+                UPDATE crawl_tasks
+                SET status='pending',
+                    last_error='stale_running_task',
+                    next_run_at=CURRENT_TIMESTAMP,
+                    updated_at=CURRENT_TIMESTAMP
+                WHERE {' AND '.join(where)}
+                """,
+                params,
+            )
+            return int(getattr(cursor, "rowcount", 0) or 0)
 
 
 def mark_running(settings, task_id: int) -> None:

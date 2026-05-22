@@ -1,0 +1,4351 @@
+{
+  "version": 1,
+  "source": "onebuy exported cache",
+  "exported_at": "2026-05-22T14:20:50.776085+00:00",
+  "records": [
+    {
+      "product_id": "SKU20260522709",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10215828896659",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "苹果AppleiPhone15promax苹果15pro国行全网通5G激活双卡无使用 【iPhone15】蓝色 6.1寸 128G【国行双卡 磁吸快充套装】",
+      "price_text": "4499.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "灵动数码通讯店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10215828896659.html",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 14:09:55",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522920",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10214095941235",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【准新机】Apple资源机【限时补贴】苹果15 proiPhone15promax 15promax 苹果手机 iPhone15蓝色(6.1英寸) 128GB【公开版+豪华大礼包】",
+      "price_text": "6427.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "Apple专售买手店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10214095941235.html",
+      "category_text": "电脑办公-显示器",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 14:09:55",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522222",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10199163018294",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【准新机】Apple苹果【分期0首付】苹果iPhone16/15/14/13 iphone16plus/16e/15plus双卡双待 全网通5G 智能手机 苹果15 蓝色 256GB+全网通+质保2年+配件礼包",
+      "price_text": "6118.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "旺莱晗手机买手店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10199163018294.html",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 14:09:55",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522226",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10213822072662",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "AppleiPhone15/15Pro/苹果15ProMax全网通5G激活无使用手机 【iPhone15】蓝色 6.1寸 256G【国行双卡 磁吸快充套装】",
+      "price_text": "4198.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "科优数码通讯店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10213822072662.html",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 14:09:55",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522907",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10205463624616",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple【24期免息】Apple iPhone 15 Pro 苹果15pro国行5G全网通 苹果二手机 原色钛金属【人气推荐】 【99新】256G【低价好物+超长质保+大礼包】",
+      "price_text": "4299.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "迅麦二手手机专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10205463624616.html",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 14:09:55",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522005",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "663099858205",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "惠普机械键盘键鼠套装鼠标电竞游戏笔记本电脑键盘台式男女生办公",
+      "price_text": "279.00",
+      "original_price_text": "",
+      "sales_text": "30000",
+      "seller_name": "惠普中国官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=663099858205",
+      "product_url": "https://detail.tmall.com/item.htm?id=663099858205",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522628",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "883484330512",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【可用数码消费券】小米15Ultra手机新品小米徕卡联合研发小米官方旗舰店官网小米澎湃OS高通骁龙8至尊版",
+      "price_text": "4139.10",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=883484330512",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522035",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "962954046078",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "REDMI Note 15 Pro手机红米note手机小米手机小米官方旗舰店官网新品小米note15pro",
+      "price_text": "1899.00",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=962954046078",
+      "product_url": "https://detail.tmall.com/item.htm?id=962954046078",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522649",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "962465307121",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "REDMI Note 15 5G手机红米note手机小米手机小米官方旗舰店官网新品小米note15",
+      "price_text": "1499.00",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=962465307121",
+      "product_url": "https://detail.tmall.com/item.htm?id=962465307121",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522387",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1046866605486",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【至高12期免息】Xiaomi 17 Max手机新品新款上市小米徕卡联合研发小米官方旗舰店小米17max手机",
+      "price_text": "4299.00",
+      "original_price_text": "",
+      "sales_text": "0",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1046866605486",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522134",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "829825725244",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "Redmi Note 14 5G手机红米note手机小米手机小米官方旗舰店官网新品小米note14",
+      "price_text": "1599.00",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=829825725244",
+      "product_url": "https://detail.tmall.com/item.htm?id=829825725244",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522769",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "844758148374",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【支持家电数码消费券】REDMI K80红米k80手机官方旗舰店游戏拍照学生国补智能手机小米红米手机redmik80",
+      "price_text": "3599.00",
+      "original_price_text": "",
+      "sales_text": "200000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=844758148374",
+      "product_url": "https://detail.tmall.com/item.htm?id=844758148374",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522234",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "981190228972",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【12期分期+现货速发】MIUI/小米 Xiaomi 17手机新品新款上市小米官方旗舰店官网小米澎湃OS",
+      "price_text": "3799.00",
+      "original_price_text": "",
+      "sales_text": "700",
+      "seller_name": "机御旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=981190228972",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522862",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "859652826329",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【可用数码消费券】REDMI Turbo 4新品红米note手机小米手机小米官方旗舰店官网redmi正品turbo4",
+      "price_text": "2499.10",
+      "original_price_text": "",
+      "sales_text": "90000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=859652826329",
+      "product_url": "https://detail.tmall.com/item.htm?id=859652826329",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522314",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "971520952713",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【至高12期分期免息】小米17 Pro手机新品上市小米徕卡联合研发小米官方旗舰店官网小米澎湃OS小米17pro",
+      "price_text": "4999.00",
+      "original_price_text": "",
+      "sales_text": "50000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=971520952713",
+      "product_url": "https://detail.tmall.com/item.htm?id=971520952713",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522388",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1010969056730",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【可用数码消费券】REDMI Turbo 5 Max新品红米手机小米手机小米官方旗舰店官网新品正品红米turbo5max",
+      "price_text": "2499.00",
+      "original_price_text": "",
+      "sales_text": "50000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=1010969056730",
+      "product_url": "https://detail.tmall.com/item.htm?id=1010969056730",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522912",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "981156088608",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【支持家电数码消费券】REDMI K90红米k90手机官方旗舰店游戏拍照学生旗舰智能手机小米红米手机redmik90",
+      "price_text": "2899.00",
+      "original_price_text": "",
+      "sales_text": "50000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=981156088608",
+      "product_url": "https://detail.tmall.com/item.htm?id=981156088608",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522483",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "981158216574",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【支持家电数码消费券】REDMI K90 Pro Max红米手机官方旗舰店游戏拍照学生小米红米手机redmik90promax",
+      "price_text": "4699.00",
+      "original_price_text": "",
+      "sales_text": "20000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=981158216574",
+      "product_url": "https://detail.tmall.com/item.htm?id=981158216574",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522087",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "978423660174",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【可用政府补贴】小米17 Pro Max手机小米官方旗舰店Xiaomi17promax小米官网手机新品新款骁龙小米17promax",
+      "price_text": "5429.00",
+      "original_price_text": "",
+      "sales_text": "700",
+      "seller_name": "佰分购旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=978423660174",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522084",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "958987262688",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【支持数码消费券】REDMI Note 15 Pro+手机红米note手机小米手机小米官方旗舰店官网小米note15pro+",
+      "price_text": "2199.00",
+      "original_price_text": "",
+      "sales_text": "50000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=958987262688",
+      "product_url": "https://detail.tmall.com/item.htm?id=958987262688",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522575",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "979765442213",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【至高享3期免息】REDMI K90红米k90手机官方旗舰店游戏拍照学生旗舰智能小米手机红米手机redmik90",
+      "price_text": "3199.00",
+      "original_price_text": "",
+      "sales_text": "60000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=979765442213",
+      "product_url": "https://detail.tmall.com/item.htm?id=979765442213",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522655",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "829818509286",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "Redmi Note 14 Pro手机红米note小米手机小米官方旗舰店官网新品小米note14pro",
+      "price_text": "1699.00",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=829818509286",
+      "product_url": "https://detail.tmall.com/item.htm?id=829818509286",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522852",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1002134573533",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "新品速发【3期免息 新品旗舰】MIUI/小米 Xiaomi 17 Ultra 徕卡版 小米官方旗舰店官网同款正品手机",
+      "price_text": "7499.00",
+      "original_price_text": "",
+      "sales_text": "31",
+      "seller_name": "同迅数码专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1002134573533",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522778",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "839105684164",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【补贴至高15%】Xiaomi小米15 手机官方旗舰店正品新款上市小米15手机官网智能游戏小米手机",
+      "price_text": "3099.00",
+      "original_price_text": "",
+      "sales_text": "2000",
+      "seller_name": "机御旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=839105684164",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522408",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "864678137793",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【立即抢购】Redmi 14C手机新品上市智能官方旗舰店红米小米大音老年备用机老人百元机14c",
+      "price_text": "699.00",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=864678137793",
+      "product_url": "https://detail.tmall.com/item.htm?id=864678137793",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522230",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "912291421207",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "现货【政府补贴15%】MIUI/小米 Xiaomi 14小米官方正品5G新款xiaomi14手机学生智能游戏手机全新",
+      "price_text": "2599.00",
+      "original_price_text": "",
+      "sales_text": "1000",
+      "seller_name": "小米东朔专卖店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=912291421207",
+      "product_url": "https://detail.tmall.com/item.htm?id=912291421207",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522120",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "837016600330",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【至高享6期免息】小米15手机新品新款上市小米徕卡联合研发小米官方旗舰店官网高通骁龙8至尊版国补手机",
+      "price_text": "4799.00",
+      "original_price_text": "",
+      "sales_text": "80000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=837016600330",
+      "product_url": "https://detail.tmall.com/item.htm?id=837016600330",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522568",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "963017150657",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "REDMI Note 15 5G手机红米note手机小米手机小米官方旗舰店官网",
+      "price_text": "1099.00",
+      "original_price_text": "",
+      "sales_text": "4000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=963017150657",
+      "product_url": "https://detail.tmall.com/item.htm?id=963017150657",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522810",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "938527205587",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【享政府补贴】REDMI K80至尊版红米手机小米手机小米官方旗舰店新品上市红米k80至尊学生电竞游戏手机",
+      "price_text": "1911.65",
+      "original_price_text": "",
+      "sales_text": "9000",
+      "seller_name": "喵速达电器官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=938527205587",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522406",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "937664675944",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【补贴至高15%】REDMI K80 至尊版手机红米k80至尊小米手机官方旗舰店新品上市学生电竞游戏手机k80至尊",
+      "price_text": "2149.65",
+      "original_price_text": "",
+      "sales_text": "7000",
+      "seller_name": "机御旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=937664675944",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522055",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "940680249968",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "MIUI/小米 Redmi红米14C手机全网通小米官方旗舰店红米手机大音量老年备用机老人百元机红米14c 3291",
+      "price_text": "599.00",
+      "original_price_text": "",
+      "sales_text": "1000",
+      "seller_name": "苏宁易购官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=940680249968",
+      "product_url": "https://detail.tmall.com/item.htm?id=940680249968",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522103",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "977166807958",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【新品首发】REDMI Note 15 5G手机红米note手机小米手机小米官方旗舰店官网新品小米note15",
+      "price_text": "999.00",
+      "original_price_text": "",
+      "sales_text": "1000",
+      "seller_name": "喵速达电器官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=977166807958",
+      "product_url": "https://detail.tmall.com/item.htm?id=977166807958",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522891",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "902731028409",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【可用数码消费券】REDMI Turbo 4 Pro新品红米note手机小米手机小米官方旗舰店官网新品正品turbo4pro",
+      "price_text": "2899.00",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=902731028409",
+      "product_url": "https://detail.tmall.com/item.htm?id=902731028409",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522609",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "902603131743",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "MIUI/小米 Redmi 14C手机新品备用机老人百元机百亿补贴官方正品",
+      "price_text": "9999.00",
+      "original_price_text": "",
+      "sales_text": "60000",
+      "seller_name": "百亿补贴官方精选",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=902603131743",
+      "product_url": "https://detail.tmall.com/item.htm?id=902603131743",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522334",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1037965552298",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【支持15%政府补贴】REDMI K90 Max性能魔王红米手机小米手机小米官方旗舰店新品学生游戏性能旗舰电竞手机",
+      "price_text": "3499.00",
+      "original_price_text": "",
+      "sales_text": "7000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=1037965552298",
+      "product_url": "https://detail.tmall.com/item.htm?id=1037965552298",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522785",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "963016454161",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【官方正品】REDMI Note 15 Pro手机红米note手机小米手机小米官方旗舰店新品小米note15pro",
+      "price_text": "1449.00",
+      "original_price_text": "",
+      "sales_text": "4000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=963016454161",
+      "product_url": "https://detail.tmall.com/item.htm?id=963016454161",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522905",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "964468646133",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【新国标3C认证可上飞机】2026新款充电宝自带线超级快充20000毫安超薄小巧便携适用苹果专用官方正品旗舰店",
+      "price_text": "73.10",
+      "original_price_text": "",
+      "sales_text": "30000",
+      "seller_name": "vopqr旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=964468646133",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522391",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "753253288569",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证】CUKTECH酷态科电能块30W口袋版电芯10000毫安时移动电源PD快充小巧充电宝适用于iPhone17Pro MAX",
+      "price_text": "138.89",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "cuktech酷态科旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=753253288569",
+      "product_url": "https://detail.tmall.com/item.htm?id=753253288569",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522147",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "839556797282",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证】CUKTECH酷态科CP13电能块自带线33W快充电芯10000毫安时充电宝小巧便携移动电源适用于iPhone苹果",
+      "price_text": "150.00",
+      "original_price_text": "",
+      "sales_text": "30000",
+      "seller_name": "cuktech酷态科旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=839556797282",
+      "product_url": "https://detail.tmall.com/item.htm?id=839556797282",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522573",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "795459806673",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证可上飞机】CUKTECH酷态科2026新款充电宝CP25自带线电芯20000毫安时移动电源PD快充轻薄本笔记本电脑",
+      "price_text": "139.00",
+      "original_price_text": "",
+      "sales_text": "300000",
+      "seller_name": "cuktech酷态科旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=795459806673",
+      "product_url": "https://detail.tmall.com/item.htm?id=795459806673",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522191",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "719619057509",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证可上飞机】小米充电宝10000快充超薄迷你大容量便携移动电源适用于华为小米苹果专用安心充电险",
+      "price_text": "129.00",
+      "original_price_text": "",
+      "sales_text": "700000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=719619057509",
+      "product_url": "https://detail.tmall.com/item.htm?id=719619057509",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522239",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "784476457054",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【充电宝3C认证可上飞机】绿联2026新款充电宝小巧便携20000毫安适用苹果快充16大容量移动电源正品官方旗舰",
+      "price_text": "139.00",
+      "original_price_text": "",
+      "sales_text": "600000",
+      "seller_name": "绿联数码旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=784476457054",
+      "product_url": "https://detail.tmall.com/item.htm?id=784476457054",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522436",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "864497080438",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝",
+        "小米 手机"
+      ],
+      "title": "【3C认证】小米自带线充电宝20000 22.5W自带线双向快充小巧超大容量便携移动电源适用于华为小米苹果15手机",
+      "price_text": "159.00",
+      "original_price_text": "",
+      "sales_text": "300000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=864497080438",
+      "product_url": "https://detail.tmall.com/item.htm?id=864497080438",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522698",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "785450817900",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证可上飞机】ANKER安克自带线充电宝2026新款大容量20000毫安45W快充移动电源适用苹果专用iPhone手机",
+      "price_text": "225.00",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "anker安克官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=785450817900",
+      "product_url": "https://detail.tmall.com/item.htm?id=785450817900",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522480",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "923306093537",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【充电宝3c认证可上飞机】倍思快充大容量2026新款20000毫安自带线小巧移动电源适用小米苹果17官方旗舰正品",
+      "price_text": "599.00",
+      "original_price_text": "",
+      "sales_text": "500000",
+      "seller_name": "baseus倍思旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=923306093537",
+      "product_url": "https://detail.tmall.com/item.htm?id=923306093537",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522019",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "838445204642",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【国家3C认证】名创优品自带线移动电源2025新款可上飞机快充苹果充电宝超薄小巧便携大容量迷你大功率",
+      "price_text": "79.90",
+      "original_price_text": "",
+      "sales_text": "6000",
+      "seller_name": "miniso名创优品旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=838445204642",
+      "product_url": "https://detail.tmall.com/item.htm?id=838445204642",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522333",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "785133974817",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【下拉享优惠】CUKTECH酷态科CP13充电宝10000毫安时30W移动电源",
+      "price_text": "139.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "天猫超市",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=785133974817",
+      "product_url": "https://detail.tmall.com/item.htm?id=785133974817",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522801",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "778412379986",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【充电宝3C认证可上飞机】绿联2026新款10000毫安充电宝适用苹果17专用20W快充自带线超薄小巧便携16官方正品",
+      "price_text": "129.00",
+      "original_price_text": "",
+      "sales_text": "90000",
+      "seller_name": "绿联数码旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=778412379986",
+      "product_url": "https://detail.tmall.com/item.htm?id=778412379986",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522558",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "839563446056",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证可上飞机】OPPO 2025新款80W 快充充电宝大容量 12000适用苹果华为小米移动电源官方正品",
+      "price_text": "199.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "oppo官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=839563446056",
+      "product_url": "https://detail.tmall.com/item.htm?id=839563446056",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522743",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "743865186252",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【充电宝3C认证可上飞机】绿联充电宝2026新款10000毫安自带C线适用苹果17专用快充超薄小巧便携官方旗舰正品",
+      "price_text": "129.00",
+      "original_price_text": "",
+      "sales_text": "60000",
+      "seller_name": "绿联数码旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=743865186252",
+      "product_url": "https://detail.tmall.com/item.htm?id=743865186252",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522911",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "978456393873",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝",
+        "小米 手机"
+      ],
+      "title": "【3C认证】小米充电宝自带线快充版20000 33W双向快充小巧超大容量便携移动电源适用于华为小米苹果17手机",
+      "price_text": "149.00",
+      "original_price_text": "",
+      "sales_text": "60000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=978456393873",
+      "product_url": "https://detail.tmall.com/item.htm?id=978456393873",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522073",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1040859340493",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "2026新款充电宝3C认证可上飞机超级快充大容量20000毫安官方旗舰店正品迷你小巧便携自带线适用小米苹果华为",
+      "price_text": "78.00",
+      "original_price_text": "",
+      "sales_text": "500",
+      "seller_name": "collapsar旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1040859340493",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522731",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "920574795989",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证可上飞机】OPPO 22.5W 能量果冻 快充移动电源 3c充电宝 10000 大容量 官方原厂品质安心",
+      "price_text": "129.00",
+      "original_price_text": "",
+      "sales_text": "1000",
+      "seller_name": "oppo官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=920574795989",
+      "product_url": "https://detail.tmall.com/item.htm?id=920574795989",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522546",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "896529303243",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【国家3C认证】充电宝CP24电能块大容量自带线40W移动电源电芯20000毫安时PD快充适用于华为小米苹果16/17Pro",
+      "price_text": "165.56",
+      "original_price_text": "",
+      "sales_text": "20000",
+      "seller_name": "cuktech酷态科旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=896529303243",
+      "product_url": "https://detail.tmall.com/item.htm?id=896529303243",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522855",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "897237877586",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【充电宝3C认证】CUKTECH酷态科10号mini电能棒电芯10000毫安时快充移动电源迷你小巧便携适用于iPhone苹果17",
+      "price_text": "229.00",
+      "original_price_text": "",
+      "sales_text": "70000",
+      "seller_name": "cuktech酷态科旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=897237877586",
+      "product_url": "https://detail.tmall.com/item.htm?id=897237877586",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522892",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "839555301217",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证】CUKTECH酷态科CP12磁吸电能块充电宝自带线电芯10000毫安时移动电源magsafe适用于iPhone苹果17",
+      "price_text": "272.22",
+      "original_price_text": "",
+      "sales_text": "80000",
+      "seller_name": "cuktech酷态科旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=839555301217",
+      "product_url": "https://detail.tmall.com/item.htm?id=839555301217",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522213",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "987893538088",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝",
+        "小米 手机"
+      ],
+      "title": "【3C认证】小米充电宝 20000 165W 适用于小米红米华为苹果手机笔记本 大功率双口组合超快充单口120W充电宝",
+      "price_text": "299.00",
+      "original_price_text": "",
+      "sales_text": "20000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=987893538088",
+      "product_url": "https://detail.tmall.com/item.htm?id=987893538088",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522424",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "986601577411",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证可上飞机】Anker安克旅行充电宝Pro自带双线20000毫安大容量可上飞机45W快充便携移动电源适配苹果17",
+      "price_text": "239.00",
+      "original_price_text": "",
+      "sales_text": "7000",
+      "seller_name": "anker安克官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=986601577411",
+      "product_url": "https://detail.tmall.com/item.htm?id=986601577411",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522271",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "982142228460",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【充电宝3c认证可上飞机】倍思2026新款20000毫安大容量快充移动电源适用小米华为苹果17专用官方旗舰店正品",
+      "price_text": "599.00",
+      "original_price_text": "",
+      "sales_text": "70000",
+      "seller_name": "baseus倍思旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=982142228460",
+      "product_url": "https://detail.tmall.com/item.htm?id=982142228460",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522426",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "665908442962",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证】绿联10000毫安充电宝20000毫安大容量移动电源20W双向快充迷你便携适用苹果华为手机快充",
+      "price_text": "99.00",
+      "original_price_text": "",
+      "sales_text": "1000",
+      "seller_name": "绿联明和盛专卖店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=665908442962",
+      "product_url": "https://detail.tmall.com/item.htm?id=665908442962",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522904",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "817334628415",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证】小米自带线充电宝10000 33W双向快充小巧超薄迷你超大容量移动电源适用于华为小米苹果15可上飞机",
+      "price_text": "129.00",
+      "original_price_text": "",
+      "sales_text": "80000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=817334628415",
+      "product_url": "https://detail.tmall.com/item.htm?id=817334628415",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522287",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "971831915956",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝",
+        "小米 手机"
+      ],
+      "title": "【3C认证】小米自带线充电宝20000 67W可充手机平板笔记本数显屏适用于华为小米苹果15手机可上飞机火车",
+      "price_text": "199.00",
+      "original_price_text": "",
+      "sales_text": "80000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=971831915956",
+      "product_url": "https://detail.tmall.com/item.htm?id=971831915956",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522662",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "985984497392",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【充电宝3c认证可上飞机】倍思蜡笔小新联名2026新款20000毫安大容量自带线快充移动电源适用小米苹果17专用",
+      "price_text": "999.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "baseus倍思旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=985984497392",
+      "product_url": "https://detail.tmall.com/item.htm?id=985984497392",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522708",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "831399851835",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【充电宝3C认证可上飞机】品胜2026新款彩豆3代快充大容量超薄小巧便携带线移动电源适用苹果17小米高铁火车",
+      "price_text": "198.00",
+      "original_price_text": "",
+      "sales_text": "400000",
+      "seller_name": "品胜官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=831399851835",
+      "product_url": "https://detail.tmall.com/item.htm?id=831399851835",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522792",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "634015385434",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【充电宝3c认证可上飞机】倍思快充大容量2026新款20000毫安移动电源适用小米苹果专用官方正旗舰店高铁火车",
+      "price_text": "189.00",
+      "original_price_text": "",
+      "sales_text": "800000",
+      "seller_name": "baseus倍思旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=634015385434",
+      "product_url": "https://detail.tmall.com/item.htm?id=634015385434",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522772",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "981525773506",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【充电宝3C认证可上飞机】绿联2026新款67W超能块自带线20000毫安快充大容量适用苹果小米专用正品官方旗舰店",
+      "price_text": "229.00",
+      "original_price_text": "",
+      "sales_text": "40000",
+      "seller_name": "绿联数码旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=981525773506",
+      "product_url": "https://detail.tmall.com/item.htm?id=981525773506",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:44:05",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522176",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "892182390388",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "重力星球破茧K1pro机械键盘电竞游戏专用铝合金无线赛博朋克送礼",
+      "price_text": "319.00",
+      "original_price_text": "",
+      "sales_text": "1000",
+      "seller_name": "重力星球拙野专卖店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=892182390388",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522646",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "858342576145",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "MCHOSE迈从G87 V2客制化机械键盘gasket结构无线三模电竞游戏办公",
+      "price_text": "499.00",
+      "original_price_text": "",
+      "sales_text": "200000",
+      "seller_name": "迈从官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=858342576145",
+      "product_url": "https://detail.tmall.com/item.htm?id=858342576145",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522375",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "892224515679",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "重力星球破茧K1机械键盘高颜值女无线电竞游戏电脑办公送朋友礼物",
+      "price_text": "399.00",
+      "original_price_text": "",
+      "sales_text": "4000",
+      "seller_name": "重力星球旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=892224515679",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522969",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "839204052743",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "重力星球破茧75K1Pro机械键盘鼠标套装无线游戏电竞专用男生礼物",
+      "price_text": "319.00",
+      "original_price_text": "",
+      "sales_text": "8000",
+      "seller_name": "重力星球旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=839204052743",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522290",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "591788303391",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "CHERRY樱桃MX3.0S机械键盘铝坨坨无线有线108键游戏办公蓝牙三模",
+      "price_text": "386.10",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "cherry旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=591788303391",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522234",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "895447566406",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【12期分期+现货速发】MIUI/小米 Xiaomi 17手机新品新款上市小米官方旗舰店官网小米澎湃OS",
+      "price_text": "599.00",
+      "original_price_text": "",
+      "sales_text": "9000",
+      "seller_name": "狼途数码旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://detail.tmall.com/item.htm?id=895447566406",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522757",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "684560791624",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "达尔优EK815机械键盘108键真机械合金版黑青红茶轴电竞游戏专用",
+      "price_text": "299.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "达尔优旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=684560791624",
+      "product_url": "https://detail.tmall.com/item.htm?id=684560791624",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522392",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "821422324619",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "腹灵mk870极夜黑黑莓侧刻机械键盘有线无线蓝牙电脑游戏静音87键",
+      "price_text": "229.00",
+      "original_price_text": "",
+      "sales_text": "600",
+      "seller_name": "lxz820811",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=821422324619",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522544",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "879572938122",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "iLovbee B75游戏机械键盘无线客制化电脑复古办公女电竞专用男生",
+      "price_text": "199.00",
+      "original_price_text": "",
+      "sales_text": "4000",
+      "seller_name": "ilovbee旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=879572938122",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522229",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "807387608223",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "前行者X87 V2无线三模客制化机械键盘电竞游戏办公低延迟8K回报率",
+      "price_text": "124.95",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "前行者官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=807387608223",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522555",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "795567685867",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "RK R87机械键盘有线青轴茶轴热插拔台式电脑电竞游戏专用女生办公",
+      "price_text": "299.00",
+      "original_price_text": "",
+      "sales_text": "3000",
+      "seller_name": "rk旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=795567685867",
+      "product_url": "https://detail.tmall.com/item.htm?id=795567685867",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522016",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "719878428996",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼蛛F87Pro无线机械键盘客制化三模蓝牙侧刻电竞游戏专用麻将音",
+      "price_text": "399.00",
+      "original_price_text": "",
+      "sales_text": "70000",
+      "seller_name": "狼蛛旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=719878428996",
+      "product_url": "https://detail.tmall.com/item.htm?id=719878428996",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522340",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "764380714057",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "MCHOSE迈从G98 V2 机械键盘客制化无线三模蓝牙电竞游戏专用pro",
+      "price_text": "599.00",
+      "original_price_text": "",
+      "sales_text": "40000",
+      "seller_name": "迈从官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=764380714057",
+      "product_url": "https://detail.tmall.com/item.htm?id=764380714057",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522234",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "780736980895",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "【12期分期+现货速发】MIUI/小米 Xiaomi 17手机新品新款上市小米官方旗舰店官网小米澎湃OS",
+      "price_text": "199.00",
+      "original_price_text": "",
+      "sales_text": "3000",
+      "seller_name": "达尔优旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://detail.tmall.com/item.htm?id=780736980895",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522184",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "863504380069",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "惠普官方机械键盘男女生有线侧刻电竞游戏专用笔记本电脑台式办公",
+      "price_text": "179.00",
+      "original_price_text": "",
+      "sales_text": "2000",
+      "seller_name": "惠普中国官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=863504380069",
+      "product_url": "https://detail.tmall.com/item.htm?id=863504380069",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522478",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "814497053526",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "RK R104机械键盘有线台式电脑通用男女生电竞办公打字手感好青轴",
+      "price_text": "299.00",
+      "original_price_text": "",
+      "sales_text": "800",
+      "seller_name": "rk旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=814497053526",
+      "product_url": "https://detail.tmall.com/item.htm?id=814497053526",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522429",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "685104042485",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "雷神K104机械键盘电竞游戏青轴红轴全键无冲PBT键帽RGB K87热插拔",
+      "price_text": "499.00",
+      "original_price_text": "",
+      "sales_text": "1000",
+      "seller_name": "thunderobot旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=685104042485",
+      "product_url": "https://detail.tmall.com/item.htm?id=685104042485",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522658",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "864208999562",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "惠普机械键盘有线电竞游戏办公专用可爱男女笔记本台式电脑青茶轴",
+      "price_text": "229.00",
+      "original_price_text": "",
+      "sales_text": "1000",
+      "seller_name": "惠普中国官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=864208999562",
+      "product_url": "https://detail.tmall.com/item.htm?id=864208999562",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522411",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "820872998007",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "锐蚁F98机械键盘有线98配列热插拔办公电竞游戏键盘侧刻全键无冲",
+      "price_text": "599.00",
+      "original_price_text": "",
+      "sales_text": "4000",
+      "seller_name": "锐蚁旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=820872998007",
+      "product_url": "https://detail.tmall.com/item.htm?id=820872998007",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522283",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "973109302720",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼蛛S98有线机械键盘鼠标套装白色游戏电竞专用电脑办公通用",
+      "price_text": "399.00",
+      "original_price_text": "",
+      "sales_text": "3000",
+      "seller_name": "狼蛛旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=973109302720",
+      "product_url": "https://detail.tmall.com/item.htm?id=973109302720",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522077",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "796604458256",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "ikbc机械键盘无线Z108键男女生办公红轴有线游戏键盘台式电脑通用",
+      "price_text": "239.00",
+      "original_price_text": "",
+      "sales_text": "6000",
+      "seller_name": "ikbc旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=796604458256",
+      "product_url": "https://detail.tmall.com/item.htm?id=796604458256",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522703",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "895750666345",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "HP惠普官方机械键盘侧刻电竞游戏笔记本电脑有线键鼠套装办公男女",
+      "price_text": "189.00",
+      "original_price_text": "",
+      "sales_text": "4000",
+      "seller_name": "惠普中国官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=895750666345",
+      "product_url": "https://detail.tmall.com/item.htm?id=895750666345",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522260",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "799403896528",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "HP惠普有线机械键盘渐变透光电竞游戏办公男女生通用台式键鼠套装",
+      "price_text": "249.00",
+      "original_price_text": "",
+      "sales_text": "20000",
+      "seller_name": "惠普中国官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=799403896528",
+      "product_url": "https://detail.tmall.com/item.htm?id=799403896528",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522677",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "704534164366",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼途LT84客制化有线机械键盘鼠标套办公游戏电竞专用屏幕红轴青轴",
+      "price_text": "328.00",
+      "original_price_text": "",
+      "sales_text": "30000",
+      "seller_name": "狼途数码旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=704534164366",
+      "product_url": "https://detail.tmall.com/item.htm?id=704534164366",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522350",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "558005243780",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "雷柏V500PRO机械键盘黑青茶红轴游戏电竞台式笔记本电脑办公专用",
+      "price_text": "399.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "雷柏旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=558005243780",
+      "product_url": "https://detail.tmall.com/item.htm?id=558005243780",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522455",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "736365558945",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "锐蚁F87机械键盘有线87键游戏电竞办公电脑笔记本键盘青轴茶轴",
+      "price_text": "399.00",
+      "original_price_text": "",
+      "sales_text": "3000",
+      "seller_name": "锐蚁旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=736365558945",
+      "product_url": "https://detail.tmall.com/item.htm?id=736365558945",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522670",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1004933180059",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "MCHOSE迈从K99 V3客制化机械键盘无线蓝牙三模电竞游戏办公电脑V2",
+      "price_text": "799.00",
+      "original_price_text": "",
+      "sales_text": "30000",
+      "seller_name": "迈从官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=1004933180059",
+      "product_url": "https://detail.tmall.com/item.htm?id=1004933180059",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522733",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "943236787533",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "联想机械键盘有线104键极光青红茶轴台式电脑笔记本电竞游戏专用",
+      "price_text": "299.00",
+      "original_price_text": "",
+      "sales_text": "4000",
+      "seller_name": "联想星越世纪专卖店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=943236787533",
+      "product_url": "https://detail.tmall.com/item.htm?id=943236787533",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522246",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "698147256305",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "BOW 热插拔有线机械键盘台式电脑通用游戏电竞专用小型红轴茶轴68",
+      "price_text": "198.00",
+      "original_price_text": "",
+      "sales_text": "4000",
+      "seller_name": "bow旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=698147256305",
+      "product_url": "https://detail.tmall.com/item.htm?id=698147256305",
+      "category_text": "电脑办公-键盘鼠标",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:57",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522992",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "855872118514",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "【重磅新品】倍思MC2s耳夹式蓝牙耳机2026新款开放气骨传导AI翻译",
+      "price_text": "238.00",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "baseus倍思旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=855872118514",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522774",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "828317606511",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "oppo蓝牙耳机EncoAir4主动降噪入耳式超长续航旗舰音质新款",
+      "price_text": "169.01",
+      "original_price_text": "",
+      "sales_text": "30000",
+      "seller_name": "oppo官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=828317606511",
+      "product_url": "https://detail.tmall.com/item.htm?id=828317606511",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522586",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "898503313765",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "OPPO Enco Free4无线蓝牙耳机入耳式主动降噪官方正品新款长续航",
+      "price_text": "319.20",
+      "original_price_text": "",
+      "sales_text": "40000",
+      "seller_name": "oppo官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=898503313765",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522430",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "858932486222",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "华为FreeBuds SE 3无线蓝牙耳机42小时超长续航时尚拼接华为耳机",
+      "price_text": "136.00",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "华为官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=858932486222",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522663",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "917814363641",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "OPPO Enco Air4新声版无线蓝牙耳机半入耳式长续航降噪新款",
+      "price_text": "129.00",
+      "original_price_text": "",
+      "sales_text": "30000",
+      "seller_name": "oppo官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=643007454364",
+      "product_url": "https://detail.tmall.com/item.htm?id=917814363641",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522614",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "788627749107",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "OPPO Enco Air5 Pro 无线蓝牙耳机入耳式长续航降噪oppo耳机新品",
+      "price_text": "329.00",
+      "original_price_text": "",
+      "sales_text": "60000",
+      "seller_name": "oppo官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=788627749107",
+      "product_url": "https://detail.tmall.com/item.htm?id=788627749107",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522458",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "972867144101",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "【政府补贴】蓝牙耳机耳夹式无线骨传导不入耳2026新款官方正品挂",
+      "price_text": "98.00",
+      "original_price_text": "",
+      "sales_text": "40000",
+      "seller_name": "miracleepoch旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=972867144101",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522981",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "644687061141",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "QCY T13Pro真无线蓝牙耳机入耳塞式运动跑步音乐通话超长续航",
+      "price_text": "499.00",
+      "original_price_text": "",
+      "sales_text": "20000",
+      "seller_name": "qcy旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=644687061141",
+      "product_url": "https://detail.tmall.com/item.htm?id=644687061141",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522122",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1001408897234",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "QCY N20主动降噪蓝牙耳机无线入耳式超长续航游戏通话降噪新款",
+      "price_text": "299.00",
+      "original_price_text": "",
+      "sales_text": "5000",
+      "seller_name": "qcy旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=1001408897234",
+      "product_url": "https://detail.tmall.com/item.htm?id=1001408897234",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522191",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "982186948478",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【3C认证可上飞机】小米充电宝10000快充超薄迷你大容量便携移动电源适用于华为小米苹果专用安心充电险",
+      "price_text": "231.20",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "baseus倍思旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=719619057509",
+      "product_url": "https://item.taobao.com/item.htm?id=982186948478",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522894",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1010364860964",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "【新品上市】小米REDMIBuds8Pro蓝牙耳机杜比音效55dB深度降噪",
+      "price_text": "344.64",
+      "original_price_text": "",
+      "sales_text": "20000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1010364860964",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522569",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "742345795497",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "QCY AilyBuds Lite蓝牙耳机真无线半入耳运动跑步通话降噪低延迟",
+      "price_text": "599.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "qcy旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=742345795497",
+      "product_url": "https://detail.tmall.com/item.htm?id=742345795497",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522204",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1014216367742",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "【新品上市】小米REDMIBuds8青春红米8青春42dB深度降噪蓝牙耳机",
+      "price_text": "138.99",
+      "original_price_text": "",
+      "sales_text": "30000",
+      "seller_name": "小米官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1014216367742",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522124",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "959491851455",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "弱水时砂琉璃MK2真无线降噪蓝牙耳机2026新款超长续航入耳式耳机",
+      "price_text": "329.00",
+      "original_price_text": "",
+      "sales_text": "70000",
+      "seller_name": "弱水时砂旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=959491851455",
+      "product_url": "https://detail.tmall.com/item.htm?id=959491851455",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522508",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "717123659735",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "漫步者Zero Air真无线蓝牙耳机降噪通话运动跑步游戏2026新款花再",
+      "price_text": "238.00",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "漫步者官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=717123659735",
+      "product_url": "https://detail.tmall.com/item.htm?id=717123659735",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522019",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "852607527605",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "【国家3C认证】名创优品自带线移动电源2025新款可上飞机快充苹果充电宝超薄小巧便携大容量迷你大功率",
+      "price_text": "199.00",
+      "original_price_text": "",
+      "sales_text": "60000",
+      "seller_name": "漫步者官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=838445204642",
+      "product_url": "https://detail.tmall.com/item.htm?id=852607527605",
+      "category_text": "数码配件-移动电源",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522704",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "920562255520",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "漫步者LolliANC萝莉豆蓝牙耳机主动降噪半入耳式无线运动2026新款",
+      "price_text": "438.00",
+      "original_price_text": "",
+      "sales_text": "20000",
+      "seller_name": "漫步者官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=920562255520",
+      "product_url": "https://detail.tmall.com/item.htm?id=920562255520",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522557",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "746306784800",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "漫步者X5PRO主动降噪蓝牙耳机真无线入耳式运动跑步游戏新款2026",
+      "price_text": "299.00",
+      "original_price_text": "",
+      "sales_text": "40000",
+      "seller_name": "漫步者上海专卖店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=746306784800",
+      "product_url": "https://detail.tmall.com/item.htm?id=746306784800",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522853",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "715335899798",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "漫步者花再Zero Air蓝牙耳机真无线半入耳式新款运动游戏降噪2026",
+      "price_text": "139.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "漫步者花再旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=715335899798",
+      "product_url": "https://detail.tmall.com/item.htm?id=715335899798",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522113",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "772746865045",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "iKF Fly Pro入耳式蓝牙耳机主动降噪无线游戏运动长待机2026新款",
+      "price_text": "1899.00",
+      "original_price_text": "",
+      "sales_text": "9000",
+      "seller_name": "ikf旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=772746865045",
+      "product_url": "https://detail.tmall.com/item.htm?id=772746865045",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522663",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "643007454364",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "OPPO Enco Air4新声版无线蓝牙耳机半入耳式长续航降噪新款",
+      "price_text": "129.00",
+      "original_price_text": "",
+      "sales_text": "100000",
+      "seller_name": "oppo官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=643007454364",
+      "product_url": "https://detail.tmall.com/item.htm?id=643007454364",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522765",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "713334720949",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "【618开抢】Beats Studio Buds+透明款真无线主动降噪蓝牙耳机",
+      "price_text": "800.70",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "beats官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=713334720949",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522741",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "877466341733",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "OPPO Enco Air4i蓝牙耳机入耳式无线通话降噪长续航游戏运动新款",
+      "price_text": "99.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "oppo官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=877466341733",
+      "product_url": "https://detail.tmall.com/item.htm?id=877466341733",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522111",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "716216342995",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "QCY ArcBuds Lite无线蓝牙耳机入耳超长续航大电量高音质运动跑步",
+      "price_text": "599.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "qcy旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=716216342995",
+      "product_url": "https://detail.tmall.com/item.htm?id=716216342995",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522025",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "921465083601",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "QCY Buds ANC主动降噪蓝牙耳机真无线入耳式游戏跑步新款超长续航",
+      "price_text": "499.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "qcy旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=921465083601",
+      "product_url": "https://detail.tmall.com/item.htm?id=921465083601",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522528",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "810453196501",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "QCY MeloBuds Pro全能舱ANC主动降噪真无线蓝牙耳机入耳式运动",
+      "price_text": "599.00",
+      "original_price_text": "",
+      "sales_text": "8000",
+      "seller_name": "qcy旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=810453196501",
+      "product_url": "https://detail.tmall.com/item.htm?id=810453196501",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522791",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "860856960193",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "OPPO 一加BudsAce2蓝牙耳机入耳式主动降噪长续航游戏运动新款",
+      "price_text": "179.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "一加官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=860856960193",
+      "product_url": "https://detail.tmall.com/item.htm?id=860856960193",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522583",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "970932523057",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "漫步者X2 EVO无线蓝牙耳机入耳降噪运动游戏超长续航久戴不痛新款",
+      "price_text": "278.00",
+      "original_price_text": "",
+      "sales_text": "7000",
+      "seller_name": "漫步者官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=970932523057",
+      "product_url": "https://detail.tmall.com/item.htm?id=970932523057",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522758",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "962019799546",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "漫步者ZeroAirPro无线蓝牙耳机降噪运动久戴不痛续航2026新款花再",
+      "price_text": "278.00",
+      "original_price_text": "",
+      "sales_text": "20000",
+      "seller_name": "漫步者官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=962019799546",
+      "product_url": "https://detail.tmall.com/item.htm?id=962019799546",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522693",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "903241447903",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "【漫步者】atomdot降噪豆式无线蓝牙耳机入耳式运动游戏2026新款",
+      "price_text": "299.00",
+      "original_price_text": "",
+      "sales_text": "10000",
+      "seller_name": "漫步者官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=903241447903",
+      "product_url": "https://detail.tmall.com/item.htm?id=903241447903",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:50",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522700",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1002866097928",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Pro Max国行双卡正品分期双直播新款15 pro",
+      "price_text": "4277.00",
+      "original_price_text": "",
+      "sales_text": "2000",
+      "seller_name": "壹加淘店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1002866097928",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522228",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1009831222445",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果iPhone 15手机国行全网通5G双卡正品苹果iphone15苹果15手机【花呗三期免息/送碎屏险】",
+      "price_text": "3200.00",
+      "original_price_text": "",
+      "sales_text": "400",
+      "seller_name": "白笙数码专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=1002686984696",
+      "product_url": "https://item.taobao.com/item.htm?id=1009831222445",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522613",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1042695564132",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Pro 全网通5G双卡 苹果15Promax 全新手机",
+      "price_text": "2800.00",
+      "original_price_text": "",
+      "sales_text": "300",
+      "seller_name": "腾飞数码主营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1032485786389",
+      "product_url": "https://item.taobao.com/item.htm?id=1042695564132",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522543",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "975789434918",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Pro国行双卡正品分期顺丰iPhone15 Pro max",
+      "price_text": "4301.00",
+      "original_price_text": "",
+      "sales_text": "1000",
+      "seller_name": "壹加淘店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=975789434918",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522796",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1042018152046",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15正品国行5G全网通双卡双待顺丰现货速发",
+      "price_text": "2898.00",
+      "original_price_text": "",
+      "sales_text": "82",
+      "seller_name": "珊美商贸3",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1042018152046",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522228",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1004259833723",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果iPhone 15手机国行全网通5G双卡正品苹果iphone15苹果15手机【花呗三期免息/送碎屏险】",
+      "price_text": "3260.00",
+      "original_price_text": "",
+      "sales_text": "16",
+      "seller_name": "伊宏数码专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=1002686984696",
+      "product_url": "https://item.taobao.com/item.htm?id=1004259833723",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522964",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1039027563526",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Pro Max国行双卡全网通5G预激活正品手机",
+      "price_text": "4398.00",
+      "original_price_text": "",
+      "sales_text": "100",
+      "seller_name": "草莓到底甜不甜",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1039027563526",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522497",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1023926641826",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Pro Max 手机iPhone苹果15Pro手机5G全网通",
+      "price_text": "3491.00",
+      "original_price_text": "",
+      "sales_text": "500",
+      "seller_name": "萌果数码",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1023926641826",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522057",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1050000162202",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【转转】国行正品 Apple/苹果 iPhone 15 Plus苹果15双卡双待手机",
+      "price_text": "2816.00",
+      "original_price_text": "",
+      "sales_text": "0",
+      "seller_name": "徽州绿色原生态农家店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1050000162202",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522857",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1042216303965",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Pro Max苹果15Pro原封 15 Plus 全新手机",
+      "price_text": "3760.00",
+      "original_price_text": "",
+      "sales_text": "58",
+      "seller_name": "陈骏涛8815",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1042216303965",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522008",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1016434793482",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15手机国行正品5G苹果iphone15手机苹果15现货",
+      "price_text": "3270.00",
+      "original_price_text": "",
+      "sales_text": "700",
+      "seller_name": "简优璨电器专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1028603733436",
+      "product_url": "https://detail.tmall.com/item.htm?id=1016434793482",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522212",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1047200237166",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Pro 手机 苹果15ProMax 5G全网通120Hz高刷",
+      "price_text": "3562.00",
+      "original_price_text": "",
+      "sales_text": "43",
+      "seller_name": "tb937115899",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1047200237166",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522273",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "916607697608",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Plus 手机",
+      "price_text": "6999.00",
+      "original_price_text": "",
+      "sales_text": "40",
+      "seller_name": "apple授权专营店-国家补贴",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=916607697608",
+      "product_url": "https://detail.tmall.com/item.htm?id=916607697608",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522245",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1021300287328",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Plus 原封 苹果15苹果15plus国行512G手机",
+      "price_text": "3150.00",
+      "original_price_text": "",
+      "sales_text": "1000",
+      "seller_name": "草莓到底甜不甜",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1027680318504",
+      "product_url": "https://item.taobao.com/item.htm?id=1021300287328",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522653",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1039552224862",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "国行正品 Apple/苹果 iPhone 15 苹果15Plus/14Plus全网通5G手机",
+      "price_text": "3930.00",
+      "original_price_text": "",
+      "sales_text": "400",
+      "seller_name": "tb2157337379",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1039552224862",
+      "product_url": "https://item.taobao.com/item.htm?id=1039552224862",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522613",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1032485786389",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Pro 全网通5G双卡 苹果15Promax 全新手机",
+      "price_text": "5288.00",
+      "original_price_text": "",
+      "sales_text": "500",
+      "seller_name": "crazy精神",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1032485786389",
+      "product_url": "https://item.taobao.com/item.htm?id=1032485786389",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522292",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1050314284555",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Pro 国行移动联通电信5G双卡全网通6.1手机",
+      "price_text": "4090.00",
+      "original_price_text": "",
+      "sales_text": "18",
+      "seller_name": "构想与科技同步",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1050314284555",
+      "product_url": "https://item.taobao.com/item.htm?id=1050314284555",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522726",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1003347638465",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone15 国行正品 全网通5G双卡苹果15plus 15promax",
+      "price_text": "2326.00",
+      "original_price_text": "",
+      "sales_text": "100",
+      "seller_name": "tb009243640710",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1003347638465",
+      "product_url": "https://item.taobao.com/item.htm?id=1003347638465",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522617",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "985125066308",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 国行正品 苹果14 苹果13 手机双卡全网通5G",
+      "price_text": "2895.00",
+      "original_price_text": "",
+      "sales_text": "100",
+      "seller_name": "tb931121280803",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=985125066308",
+      "product_url": "https://item.taobao.com/item.htm?id=985125066308",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522608",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "668866326407",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【二手】Apple/苹果 iPhone 15 国行5G手机 15Plus正品14/14Plus",
+      "price_text": "2199.00",
+      "original_price_text": "",
+      "sales_text": "1000",
+      "seller_name": "二宝贝商城",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=668866326407",
+      "product_url": "https://item.taobao.com/item.htm?id=668866326407",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522228",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1002686984696",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果iPhone 15手机国行全网通5G双卡正品苹果iphone15苹果15手机【花呗三期免息/送碎屏险】",
+      "price_text": "4270.00",
+      "original_price_text": "",
+      "sales_text": "29",
+      "seller_name": "白笙数码专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://detail.tmall.com/item.htm?id=1002686984696",
+      "product_url": "https://detail.tmall.com/item.htm?id=1002686984696",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522782",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1041591995026",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Plus 苹果15 原封 全新正品 手机iPhone15",
+      "price_text": "7190.00",
+      "original_price_text": "",
+      "sales_text": "100",
+      "seller_name": "萌妈diy",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1041591995026",
+      "product_url": "https://item.taobao.com/item.htm?id=1041591995026",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522008",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1029770306246",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15手机国行正品5G苹果iphone15手机苹果15现货",
+      "price_text": "3270.00",
+      "original_price_text": "",
+      "sales_text": "100",
+      "seller_name": "简优璨电器专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1028603733436",
+      "product_url": "https://detail.tmall.com/item.htm?id=1029770306246",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522268",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1047870146838",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Plus 苹果15全网通iPhone15双卡灵动岛手机",
+      "price_text": "2726.00",
+      "original_price_text": "",
+      "sales_text": "100",
+      "seller_name": "tb211875617",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1047870146838",
+      "product_url": "https://item.taobao.com/item.htm?id=1047870146838",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522245",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1027680318504",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Plus 原封 苹果15苹果15plus国行512G手机",
+      "price_text": "3150.00",
+      "original_price_text": "",
+      "sales_text": "900",
+      "seller_name": "草莓到底甜不甜",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1027680318504",
+      "product_url": "https://item.taobao.com/item.htm?id=1027680318504",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522806",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1051015982575",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "苹果iphone15国行双卡苹果13苹果14苹果15正品iphone14现货5G手机",
+      "price_text": "2318.00",
+      "original_price_text": "",
+      "sales_text": "16",
+      "seller_name": "淘行天下wb",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1051015982575",
+      "product_url": "https://item.taobao.com/item.htm?id=1051015982575",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522992",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1022602731664",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "【重磅新品】倍思MC2s耳夹式蓝牙耳机2026新款开放气骨传导AI翻译",
+      "price_text": "4038.00",
+      "original_price_text": "",
+      "sales_text": "700",
+      "seller_name": "夜幕降临只剩我一个人",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https:",
+      "product_url": "https://item.taobao.com/item.htm?id=1022602731664",
+      "category_text": "数码配件-耳机音频",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522008",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1028603733436",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15手机国行正品5G苹果iphone15手机苹果15现货",
+      "price_text": "3980.00",
+      "original_price_text": "",
+      "sales_text": "400",
+      "seller_name": "浪花旳泡沫",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1028603733436",
+      "product_url": "https://item.taobao.com/item.htm?id=1028603733436",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522899",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1022455629765",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Pro全新正品5G双卡苹果15promax手机全网通",
+      "price_text": "9250.00",
+      "original_price_text": "",
+      "sales_text": "600",
+      "seller_name": "方晓煌",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1022455629765",
+      "product_url": "https://item.taobao.com/item.htm?id=1022455629765",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522115",
+      "platform_code": "taobao",
+      "platform_name": "淘宝",
+      "source_sku_id": "1020518530773",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 Plus 苹果15 plus 原封全新未拆封正品手机",
+      "price_text": "7190.00",
+      "original_price_text": "",
+      "sales_text": "600",
+      "seller_name": "萌妈diy",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://item.taobao.com/item.htm?id=1020518530773",
+      "product_url": "https://item.taobao.com/item.htm?id=1020518530773",
+      "category_text": "手机-智能手机",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 13:43:40",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    }
+  ]
+}

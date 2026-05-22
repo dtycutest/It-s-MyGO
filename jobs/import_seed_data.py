@@ -24,7 +24,7 @@ def main() -> None:
     parser.add_argument("--keyword", action="append", help="Only import records matching this keyword. Can repeat.")
     parser.add_argument("--keyword-file", default="", help="UTF-8 keyword file, one keyword per line.")
     parser.add_argument("--use-default-keywords", action="store_true", help="Use the built-in JD demo keyword set.")
-    parser.add_argument("--platform", default="jd", choices=["jd", "jingdong", "taobao"])
+    parser.add_argument("--platform", default="jd", choices=["jd", "jingdong", "taobao", "all"])
     parser.add_argument("--limit-per-keyword", type=int, default=5)
     parser.add_argument("--only-missing", action="store_true", help="Skip keywords that already have enough cached rows.")
     parser.add_argument("--min-count", type=int, default=1, help="Used with --only-missing.")
@@ -56,25 +56,36 @@ def main() -> None:
 
 
 def _records_to_import(settings, seed_records, keywords: list[str], args) -> list[dict]:
+    if args.platform == "all":
+        platforms = ["jd", "taobao"]
+    else:
+        platforms = [args.platform]
+
     if not keywords:
-        return select_seed_records(seed_records, platform=args.platform, limit_per_keyword=args.limit_per_keyword)
+        selected = []
+        for platform in platforms:
+            selected.extend(select_seed_records(seed_records, platform=platform, limit_per_keyword=args.limit_per_keyword))
+        return selected
 
     selected: list[dict] = []
     seen: set[tuple[str, str]] = set()
     for keyword in keywords:
-        if args.only_missing and count_cached_products(settings, keyword, args.platform) >= args.min_count:
+        if args.only_missing and all(count_cached_products(settings, keyword, platform) >= args.min_count for platform in platforms):
             print(f"cache already warm: keyword={keyword}")
             continue
 
-        keyword_records = select_seed_records(seed_records, [keyword], args.platform, args.limit_per_keyword)
-        if not keyword_records and args.generate_missing:
-            try:
-                keyword_records = build_generated_records(keyword, args.platform, args.generated_count)
-            except ValueError as exc:
-                print(f"skip generated fallback: keyword={keyword}, reason={exc}")
-                keyword_records = []
-            else:
-                print(f"generated local fallback records: keyword={keyword}, records={len(keyword_records)}")
+        keyword_records = []
+        for platform in platforms:
+            platform_records = select_seed_records(seed_records, [keyword], platform, args.limit_per_keyword)
+            if not platform_records and args.generate_missing:
+                try:
+                    platform_records = build_generated_records(keyword, platform, args.generated_count)
+                except ValueError as exc:
+                    print(f"skip generated fallback: keyword={keyword}, platform={platform}, reason={exc}")
+                    platform_records = []
+                else:
+                    print(f"generated local fallback records: keyword={keyword}, platform={platform}, records={len(platform_records)}")
+            keyword_records.extend(platform_records)
 
         for record in keyword_records:
             key = (record.get("platform_code", ""), record.get("source_sku_id", "") or record.get("product_id", ""))

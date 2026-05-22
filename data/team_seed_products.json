@@ -1,0 +1,2503 @@
+{
+  "version": 1,
+  "source": "onebuy exported cache",
+  "exported_at": "2026-05-22T12:15:27.198494+00:00",
+  "records": [
+    {
+      "product_id": "SKU20260522018",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "seed-jd-monitor-003",
+      "keyword": "显示器",
+      "keywords": [
+        "显示器"
+      ],
+      "title": "Redmi 小米 27英寸 1080P 低蓝光 办公 显示器",
+      "price_text": "599.00",
+      "original_price_text": "699.00",
+      "sales_text": "30000",
+      "seller_name": "小米京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "",
+      "product_url": "https://search.jd.com/Search",
+      "category_text": "显示器",
+      "promo_info": "课程种子缓存，用于联调演示",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:15:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522017",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "seed-jd-monitor-002",
+      "keyword": "显示器",
+      "keywords": [
+        "显示器"
+      ],
+      "title": "Dell 戴尔 27英寸 4K Type-C 办公 显示器",
+      "price_text": "2499.00",
+      "original_price_text": "2999.00",
+      "sales_text": "10000",
+      "seller_name": "戴尔京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "",
+      "product_url": "https://search.jd.com/Search",
+      "category_text": "显示器",
+      "promo_info": "课程种子缓存，用于联调演示",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:15:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522016",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "seed-jd-monitor-001",
+      "keyword": "显示器",
+      "keywords": [
+        "显示器"
+      ],
+      "title": "AOC 27英寸 2K 165Hz IPS 电竞 显示器",
+      "price_text": "1099.00",
+      "original_price_text": "1399.00",
+      "sales_text": "50000",
+      "seller_name": "AOC京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "",
+      "product_url": "https://search.jd.com/Search",
+      "category_text": "显示器",
+      "promo_info": "课程种子缓存，用于联调演示",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:15:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522012",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "seed-jd-earbuds-003",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "JBL TUNE BUDS 真无线入耳式运动 蓝牙耳机",
+      "price_text": "399.00",
+      "original_price_text": "599.00",
+      "sales_text": "10000",
+      "seller_name": "JBL京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "",
+      "product_url": "https://search.jd.com/Search",
+      "category_text": "蓝牙耳机",
+      "promo_info": "课程种子缓存，用于联调演示",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:15:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522011",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "seed-jd-earbuds-002",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "Sony 索尼 WF-1000XM5 真无线降噪 蓝牙耳机",
+      "price_text": "1699.00",
+      "original_price_text": "1999.00",
+      "sales_text": "20000",
+      "seller_name": "索尼京东自营官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "",
+      "product_url": "https://search.jd.com/Search",
+      "category_text": "蓝牙耳机",
+      "promo_info": "课程种子缓存，用于联调演示",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:15:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522010",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "seed-jd-earbuds-001",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "Apple AirPods Pro 第二代 主动降噪 蓝牙耳机",
+      "price_text": "1499.00",
+      "original_price_text": "1899.00",
+      "sales_text": "100000",
+      "seller_name": "京东自营",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "",
+      "product_url": "https://search.jd.com/Search",
+      "category_text": "蓝牙耳机",
+      "promo_info": "课程种子缓存，用于联调演示",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:15:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522006",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "seed-jd-huawei-003",
+      "keyword": "华为 手机",
+      "keywords": [
+        "华为 手机"
+      ],
+      "title": "HUAWEI 华为 nova 12 活力版 256GB 轻薄拍照手机",
+      "price_text": "2199.00",
+      "original_price_text": "2499.00",
+      "sales_text": "30000",
+      "seller_name": "京东自营",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "",
+      "product_url": "https://search.jd.com/Search",
+      "category_text": "手机",
+      "promo_info": "课程种子缓存，用于联调演示",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:15:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522005",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "seed-jd-huawei-002",
+      "keyword": "华为 手机",
+      "keywords": [
+        "华为 手机"
+      ],
+      "title": "HUAWEI 华为 Mate 60 Pro 12GB+512GB 雅川青 手机",
+      "price_text": "6999.00",
+      "original_price_text": "7499.00",
+      "sales_text": "80000",
+      "seller_name": "华为京东自营官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "",
+      "product_url": "https://search.jd.com/Search",
+      "category_text": "手机",
+      "promo_info": "课程种子缓存，用于联调演示",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:15:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522004",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "seed-jd-huawei-001",
+      "keyword": "华为 手机",
+      "keywords": [
+        "华为 手机"
+      ],
+      "title": "HUAWEI 华为 Pura 70 12GB+256GB 雪域白 5G手机",
+      "price_text": "4999.00",
+      "original_price_text": "5499.00",
+      "sales_text": "50000",
+      "seller_name": "华为京东自营官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "",
+      "product_url": "https://search.jd.com/Search",
+      "category_text": "手机",
+      "promo_info": "课程种子缓存，用于联调演示",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:15:18",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522011",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10193565435018",
+      "keyword": "蓝牙耳机",
+      "keywords": [
+        "蓝牙耳机"
+      ],
+      "title": "Sony 索尼 WF-1000XM5 真无线降噪 蓝牙耳机",
+      "price_text": "4999.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "京一手机旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "",
+      "product_url": "https://item.jd.com/10193565435018.html",
+      "category_text": "蓝牙耳机",
+      "promo_info": "课程种子缓存，用于联调演示",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522816",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10184690946961",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "VENIDER【热销1000W+丨2026新款超级快充】充电宝国家3C安全认证可上飞机高铁小巧自带双线适用于苹果华为 云朵白丨Mini自带双线10000mAh Mini便携大容量丨最新国标3C认证丨双",
+      "price_text": "120.99",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "VENIDER官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10184690946961.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522714",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100280743354",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15",
+        "小米 手机",
+        "充电宝"
+      ],
+      "title": "小米（MI）MI【3C认证】金沙江充电宝磁吸超薄500015W手机17ProiPhone17ProAir适用22.5W户外",
+      "price_text": "299.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100280743354.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522494",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10095890025157",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "CUKTECH酷态科【3C认证|可上飞机】CP13充电宝30W快充电芯10000毫安时移动电源小巧便携适用苹果华为小米 【沙滩粉】Mini口袋版小巧便携 10000毫安/小巧便携/30w快充",
+      "price_text": "89.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "酷态科官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10095890025157.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522340",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100056125714",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "品胜【国标3C认证可上飞机】充电宝自带双线20000毫安22.5W快充移动电源适用苹果iphone17promax华为黑",
+      "price_text": "79.80",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "品胜京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100056125714.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522256",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10076413730633",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "小米自带线充电宝10000mAh 口袋版 移动电源 可上飞机Type-C双向快充 22.5W大功率 随身便携 安全耐用 灰蓝色",
+      "price_text": "89.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米小家电官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10076413730633.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522425",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10135128501117",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "Qieo【3c认证丨可上飞机高铁】充电宝10000/20000毫安自带线大容量移动电源 超级快充小米华为苹果适用 新3C【1万毫安|超级快充】标准版 【新国家3C认证|最快今日达】",
+      "price_text": "109.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "严选智能买手店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10135128501117.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522027",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10182031739407",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "努比亚红魔氘锋胶囊充电宝22.5W快充自带线 便携小巧移动电源适用散热背夹苹果17华为小米【3C认证可上飞机】 5千毫安",
+      "price_text": "129.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "红魔官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10182031739407.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522607",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10092902603858",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "酷态科CP13充电宝小巧便携",
+      "price_text": "89.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "酷态科官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10092902603858.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522955",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100133826752",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "京东京造35W充电宝自带线20000毫安大容量小巧轻薄3c认证京东自营可上飞机移动电源适用苹果小米华为户外 京东自营",
+      "price_text": "89.90",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "京东京造自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100133826752.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522163",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10135700011833",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15",
+        "充电宝"
+      ],
+      "title": "爱沃可（iWALK）可上飞机口袋充电宝钻石版迷你便携胶囊轻奢高颜值无线应急电源小巧适用华为小米苹果iPhone17/16 黑钻版【苹果15-17/安卓Type-C接口】",
+      "price_text": "149.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "爱沃可手机配件旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10135700011833.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522715",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10207218686599",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "iWALK【3C认证】胶囊充电宝20W快充双头切换5500mAh迷你充电宝直插充电口红应急电源便携可爱可上飞机 顶配丨5500毫安丨双接口丨即插即充丨藕粉",
+      "price_text": "159.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "爱沃可手机配件旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10207218686599.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522541",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100267282344",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "安克黑神话联名充电宝三合一",
+      "price_text": "287.05",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "Anker京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100267282344.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522168",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10170176555693",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "ANKER安克能量舱【3C认证可上飞机，苹果17】25000mAh移动电源165W高功率充电宝自带伸缩线差旅苹果华为 【充电宝+充电器套装】银色 新国家3C认证|可上飞机|热销百万",
+      "price_text": "718.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "Anker官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10170176555693.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522869",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10144680331079",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "CUKTECH酷态科【3C认证|可上飞机】10号Mini充电宝小巧便携55W快充电芯10000毫安时移动电源适用苹果小米 【钛灰】送6A快充线+挂绳 小巧便携丨55w快充",
+      "price_text": "159.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "酷态科官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10144680331079.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522871",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10119956611544",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "威顿【120W超级快充丨新国家3C认证】充电宝20000毫安大容量可上飞机十大排位自带线移动电源适用小米 【皓月白】20000毫安+超级快充+提速999% 新国标3C双认证丨自带三快充线丨可上飞机高铁",
+      "price_text": "126.30",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "波奇影音娱乐专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10119956611544.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522262",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10207978599146",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "酷态科CP13充电宝10000毫安",
+      "price_text": "89.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "CUKTECH酷态科旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10207978599146.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522750",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10211123359345",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "ANKER安克【央视报道首批通过2026新国标测试充电宝】3C认证可上飞机45W带线10000毫安移动电源苹果华为 【黑】新国标充电宝|针刺测试|1万毫安|安克智能盾",
+      "price_text": "264.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "Anker官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10211123359345.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522827",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10113587573862",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "iWALK【3C认证】胶囊充电宝20W快充双头切换5500mAh迷你充电宝直插充电口红应急电源便携可爱可上飞机 旗舰丨5000毫安丨双接口丨即插即充丨白色",
+      "price_text": "129.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "爱沃可手机配件旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10113587573862.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522163",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10135700011832",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15",
+        "充电宝"
+      ],
+      "title": "爱沃可（iWALK）可上飞机口袋充电宝钻石版迷你便携胶囊轻奢高颜值无线应急电源小巧适用华为小米苹果iPhone17/16 黑钻版【苹果15-17/安卓Type-C接口】",
+      "price_text": "149.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "爱沃可手机配件旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10135700011832.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522607",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10095890025158",
+      "keyword": "充电宝",
+      "keywords": [
+        "充电宝"
+      ],
+      "title": "酷态科CP13充电宝小巧便携",
+      "price_text": "89.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "酷态科官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10095890025158.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:14:11",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522771",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100293447464",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "ATKRS6Air磁轴键盘 RT客制化电竞游戏机械键盘有线全键热插拔办公无畏契约68键 RS6Air 粉色冰刃轴",
+      "price_text": "428.30",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "ATK京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100293447464.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522800",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10146805255927",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼途T98机械键盘客制化有线静音键盘游戏电竞办公码字台式电脑笔记本三模蓝牙无线键盘键鼠套装98键配 【三模】硝基玩家/青轴5000mAh",
+      "price_text": "175.28",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "狼途外设产品旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10146805255927.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522021",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10196359608070",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "PMO P75客制化机械键盘三模2.4G/有线/蓝牙gasket旋钮点阵屏结构全键热插拔电竞游戏办公 霜雪白侧刻【三模-RGB】太极轴8000mAh",
+      "price_text": "199.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "PMO旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10196359608070.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522226",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10100997530987",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "ROG【520礼物】游侠2 98无线版 有线/无线/蓝牙三模游戏机械键盘 热插拔客制化 游侠2 98月曜白 雪武白轴 PBT",
+      "price_text": "1528.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "华硕电竞官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10100997530987.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522246",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10123659748799",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼途LT84机械键盘有线蓝牙无线三模旋钮客制化84键平板电脑笔记本办公游戏电竞键鼠套装全键热插拔618 【有线】白冰蓝-青轴",
+      "price_text": "99.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "狼途官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10123659748799.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522768",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10127955410850",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "迈从（MCHOSE）G87 V2三模旋钮无线机械键盘电竞游戏客制化有线/蓝牙87键配列gasket结构全键热插拔笔记本办公 G87 黑莓粉 炽焰轴【三模+旋钮】",
+      "price_text": "211.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "MCHOSE 迈从官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10127955410850.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522868",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100239209649",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "ATKRS6Air磁轴键盘 RT客制化电竞游戏机械键盘有线全键热插拔办公无畏契约68键 RS6Air 湖水绿冰刃轴",
+      "price_text": "429.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "ATK京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100239209649.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522944",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100219433815",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼蛛（AULA）F87ProV2无线客制化机械键盘三模蓝牙有线87键全键热插拔gasket电竞游戏办公 黑莓粉流星轴",
+      "price_text": "325.10",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "狼蛛外设京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100219433815.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522716",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10145937956365",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼途T98无线三模机械键盘98键Gasket客制化全键无冲热插拔蓝牙有线高颜值游戏电竞办公码字键鼠套装618 硝基玩家-青轴-三模5000mAh",
+      "price_text": "175.29",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "狼途官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10145937956365.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522413",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100095930509",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "达尔优（dareu）EK87pro机械键盘 有线/无线/蓝牙三模游戏键盘87键全键热插拔gasket结构白烟青大师轴",
+      "price_text": "239.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "达尔优京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100095930509.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522800",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10142221875686",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼途T98机械键盘客制化有线静音键盘游戏电竞办公码字台式电脑笔记本三模蓝牙无线键盘键鼠套装98键配 【三模】硝基玩家/青轴5000mAh",
+      "price_text": "175.28",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "狼途官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10142221875686.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522246",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10123659748800",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼途LT84机械键盘有线蓝牙无线三模旋钮客制化84键平板电脑笔记本办公游戏电竞键鼠套装全键热插拔618 【有线】白冰蓝-青轴",
+      "price_text": "109.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "狼途官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10123659748800.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522164",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10150117438454",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "迈从（MCHOSE） G98 V2客制化机械键盘gasket结构三模无线2.4G/有线/蓝牙98键配列电竞游戏办公带数字区计算器键 G98 V2 雾桃渐变-烈焰橙轴【三模+旋钮】",
+      "price_text": "352.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "MCHOSE 迈从官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10150117438454.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522987",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100194644857",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼蛛（AULA）F87Pro无线客制化机械键盘蓝牙有线三模87键全键热插拔gasket结构电竞游戏专用 紫晶微光 灰木轴V4",
+      "price_text": "249.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "狼蛛外设京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100194644857.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522028",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10123603507405",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼途S69有线客制化机械键盘高颜值办公电竞游戏青轴红轴电脑笔记本专用无冲键鼠套装69键 奶白橙-青轴 有线 69键",
+      "price_text": "89.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "狼途官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10123603507405.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522671",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10157564723530",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "前行者草莓小猫无线蓝牙三模机械键盘女生高颜值可爱87键白光电脑笔记本办公游戏电竞外设通用 104键白色小猫主题【白光】有线款 红轴【轻声舒适】",
+      "price_text": "199.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "前行者 EWEADN旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10157564723530.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522164",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10161969244359",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "迈从（MCHOSE） G98 V2客制化机械键盘gasket结构三模无线2.4G/有线/蓝牙98键配列电竞游戏办公带数字区计算器键 G98 V2 雾桃渐变-烈焰橙轴【三模+旋钮】",
+      "price_text": "434.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "MCHOSE 迈从官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10161969244359.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522987",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100194644841",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼蛛（AULA）F87Pro无线客制化机械键盘蓝牙有线三模87键全键热插拔gasket结构电竞游戏专用 紫晶微光 灰木轴V4",
+      "price_text": "269.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "狼蛛外设京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100194644841.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522606",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10202325845567",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼途T87Ultra三模无线机械键盘ARGB灯箱87键电竞游戏客制化有线蓝牙连接gasket结构全键热插拔电脑键盘 黑莓粉Ultra【抹茶冰萃轴】12000mAh",
+      "price_text": "299.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "狼途官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10202325845567.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522685",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10115481558454",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "ROG游侠2 RX 98无线版机械键盘 无线三模热插拔RX电竞游戏键盘 98键小键盘 RGB背光 家用/办公键盘 游侠2RX 98无线PBT 月耀白 红轴",
+      "price_text": "1528.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "华硕（ASUS）电脑配件旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10115481558454.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:33",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522944",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100278751432",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼蛛（AULA）F87ProV2无线客制化机械键盘三模蓝牙有线87键全键热插拔gasket电竞游戏办公 黑莓粉流星轴",
+      "price_text": "5589.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100278751432.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522944",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100209621667",
+      "keyword": "机械键盘",
+      "keywords": [
+        "机械键盘"
+      ],
+      "title": "狼蛛（AULA）F87ProV2无线客制化机械键盘三模蓝牙有线87键全键热插拔gasket电竞游戏办公 黑莓粉流星轴",
+      "price_text": "6289.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100209621667.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522084",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100215651233",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米REDMI K90 Pro Max 第五代骁龙8至尊版 BOSE联合调音黑色 16GB+1TB 红米5G手机国家补贴",
+      "price_text": "5299.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100215651233.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:12",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522818",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100278751452",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）小米 17 Pro 妙享背屏 光影大师 第五代骁龙8至尊版 白色 16GB+512GB 5G手机 国家补贴",
+      "price_text": "5589.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100278751452.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522407",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100209621677",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）小米 17 第五代骁龙8至尊版 光影猎人950 7000mAh 金沙江电池 冰融蓝 12GB+512GB 5G手机 国家补贴",
+      "price_text": "5289.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100209621677.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522643",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100286014420",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）小米 17 第五代 骁龙8至尊版 光影猎人950 7000mAh小米金沙江电池 冰融蓝16GB+1TB 5G手机国家补贴",
+      "price_text": "5289.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100286014420.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522730",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10135867218935",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）Redmi 红米Note14 5G 国家补贴 天玑7025-Ultra 小米红米手机 子夜黑 8GB+256GB 【官方标配】",
+      "price_text": "1099.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米优选专卖店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10135867218935.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522962",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10183649860613",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）Xiaomi 17 旗舰影像小米手机 徕卡光学镜头大师人像 第五代骁龙8至尊版 超窄四等边 7000mAh大电池 白色 12GB+256GB",
+      "price_text": "4299.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米手机官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10183649860613.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522655",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10183633842347",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）小米17 手机5G新品上市 白色 12GB+256GB 官方标配",
+      "price_text": "4499.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "京御旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10183633842347.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522726",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10208519817870",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）小米 17 Pro 【补贴】5G手机 妙享背屏 第五代骁龙8至尊版 徕卡光影大师 白色 12G+256G",
+      "price_text": "4999.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米享机惠专卖店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10208519817870.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522507",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10135867261114",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）Redmi 红米Note14 Pro 5G 天玑7300-Ultra 小米红米手机 子夜黑 12GB+512GB 【官方标配】",
+      "price_text": "1699.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米优选专卖店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10135867261114.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522876",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100316653558",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）REDMI Turbo 5 Max 天玑9500s 9000mAh大电池 1.5K阳光屏 12+256祥云白 小米红米5G手机",
+      "price_text": "2199.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100316653558.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522559",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10208970581081",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）REDMI Turbo 5 Max 小米手机官方旗舰店 turbo5max 9000mAh大电池天玑9500s旗舰芯 1.5K超级阳光屏 阳光橙 12GB+512GB 官方标配",
+      "price_text": "2599.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米手机官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10208970581081.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522407",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100278751426",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）小米 17 第五代骁龙8至尊版 光影猎人950 7000mAh 金沙江电池 冰融蓝 12GB+512GB 5G手机 国家补贴",
+      "price_text": "4489.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100278751426.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522426",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10192726542895",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米17/15/14/13promax/ultra/mix/fold折叠屏二手手机详见质检报告国行优惠券补贴 小米 17 Pro",
+      "price_text": "3599.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "拍拍二手自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10192726542895.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522781",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10191514047182",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）红米K90 新品骁龙®8至尊版 小米5G手机REDMI K90 黑色 16GB+512GB 官方标配",
+      "price_text": "3722.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "京御旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10191514047182.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522260",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100287758124",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米REDMI K90 Pro Max 第五代骁龙8至尊版 BOSE联合调音丹宁色 16GB+1TB 红米5G手机国家补贴",
+      "price_text": "5299.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100287758124.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522251",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10191514047192",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）红米K90 新品骁龙®8至尊版 小米5G手机REDMI K90 浅紫色 12GB+512GB 官方标配",
+      "price_text": "3084.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "京御旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10191514047192.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522499",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10183649860617",
+      "keyword": "小米 手机",
+      "keywords": [
+        "小米 手机"
+      ],
+      "title": "小米（MI）Xiaomi 17 旗舰影像小米手机 徕卡光学镜头大师人像 第五代骁龙8至尊版 超窄四等边 7000mAh大电池 冰融蓝 12GB+256GB",
+      "price_text": "4299.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "小米手机官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10183649860617.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:13:02",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522747",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10199163018294",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【准新机】Apple苹果【分期0首付】苹果iPhone16/15/14/13 iphone16plus/16e/15plus双卡双待 全网通5G 智能手机 苹果15 蓝色 256GB+全网通+质保2年+配件礼包",
+      "price_text": "6118.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "旺莱晗手机买手店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10199163018294.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522147",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10215828896659",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "苹果AppleiPhone15promax苹果15pro国行全网通5G激活双卡无使用 【iPhone15】蓝色 6.1寸 128G【国行双卡 磁吸快充套装】",
+      "price_text": "4499.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "灵动数码通讯店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10215828896659.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522456",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10205463624616",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple【24期免息】Apple iPhone 15 Pro 苹果15pro国行5G全网通 苹果二手机 原色钛金属【人气推荐】 【99新】256G【低价好物+超长质保+大礼包】",
+      "price_text": "4299.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "迅麦二手手机专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10205463624616.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522625",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10213822072662",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "AppleiPhone15/15Pro/苹果15ProMax全网通5G激活无使用手机 【iPhone15】蓝色 6.1寸 256G【国行双卡 磁吸快充套装】",
+      "price_text": "4198.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "科优数码通讯店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10213822072662.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522597",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10138987709572",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "苹果 iPhone 15手机",
+      "price_text": "2339.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "拍拍二手自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10138987709572.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522893",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10205463624613",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple【24期免息】Apple iPhone 15 Pro 苹果15pro国行5G全网通 苹果二手机 原色钛金属【人气推荐】 【99新】128G【低价好物+超长质保+大礼包】",
+      "price_text": "3899.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "迅麦二手手机专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10205463624613.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522009",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10141989827074",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【准新机】Apple【分期0首付】苹果15promax iPhone15pro 双卡双待 全网通 5G手机 苹果15pro 白色钛金属 256GB 全网通+质保2年+配件礼包",
+      "price_text": "5818.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "Apple优选买手店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10141989827074.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522739",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10215828896662",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "苹果AppleiPhone15promax苹果15pro国行全网通5G激活双卡无使用 【iPhone15】粉色 6.1寸 128G【国行双卡 磁吸快充套装】",
+      "price_text": "4499.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "灵动数码通讯店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10215828896662.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522072",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10207293264568",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "苹果15Plus Apple iPhone15plus 苹果14plus 苹果15Plus二手 二手苹果手机 国行 第三方屏幕 苹果15Plus 绿色【第三方屏幕】 9新 256G【国行双卡+顺丰快递",
+      "price_text": "2699.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "齐心二手手机专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10207293264568.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522190",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10137606656095",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【准新机】Apple【分期0首付】苹果15 iPhone 15 双卡双待5G苹果手机apple 苹果15蓝色 128GB【全网通+配件礼包】",
+      "price_text": "5358.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "乐机严选数码买手店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10137606656095.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522354",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10214095941235",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【准新机】Apple资源机【限时补贴】苹果15 proiPhone15promax 15promax 苹果手机 iPhone15蓝色(6.1英寸) 128GB【公开版+豪华大礼包】",
+      "price_text": "6427.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "Apple专售买手店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10214095941235.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522281",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "100068388537",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple/苹果 iPhone 15 (A3092) 256GB 黄色 支持移动联通电信5G 双卡双待手机",
+      "price_text": "5399.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "Apple产品京东自营旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/100068388537.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522911",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10205210607151",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【准新机】Apple/苹果【分期0首付】苹果iPhone15promax iphone15promax双卡双待 全网通5G 智能手机 苹果15promax 原色钛金属 256G【店保720天+配件大礼包】",
+      "price_text": "6088.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "光年通讯买手店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10205210607151.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522970",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10137606656068",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【准新机】Apple【分期0首付】苹果15 iPhone 15 双卡双待5G苹果手机apple 苹果15粉色 128GB【全网通+配件礼包】",
+      "price_text": "5358.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "乐机严选数码买手店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10137606656068.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522123",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10045630106970",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple 苹果 iPhone 15 二手手机A16国行优惠券补贴 粉色 128G",
+      "price_text": "2609.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "爱回收严选官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10045630106970.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522335",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10191731572080",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "苹果15ProMax iPhone 15Pro 苹果15Pro 苹果15 二手苹果手机 国行 5G 苹果15 蓝色 99新 256G【国行双卡+顺丰快递+三年质保】",
+      "price_text": "3199.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "晗露二手手机专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10191731572080.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522077",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10199163018360",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【准新机】Apple苹果【分期0首付】苹果iPhone16/15/14/13 iphone16plus/16e/15plus双卡双待 全网通5G 智能手机 苹果13 星光色 256GB+全网通+质保2年+配件礼",
+      "price_text": "2958.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "旺莱晗手机买手店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10199163018360.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522431",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10207293264561",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "苹果15Plus Apple iPhone15plus 苹果14plus 苹果15Plus二手 二手苹果手机 国行 第三方屏幕 苹果15Plus 粉色【第三方屏幕】 95新 128G【国行双卡+顺丰快",
+      "price_text": "2549.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "齐心二手手机专营店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10207293264561.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522578",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10045630106994",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "Apple 苹果 iPhone 15 二手手机A16国行优惠券补贴 蓝色 128G",
+      "price_text": "2619.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "爱回收严选官方旗舰店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10045630106994.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    },
+    {
+      "product_id": "SKU20260522977",
+      "platform_code": "jingdong",
+      "platform_name": "京东",
+      "source_sku_id": "10199163018293",
+      "keyword": "iPhone 15",
+      "keywords": [
+        "iPhone 15"
+      ],
+      "title": "【准新机】Apple苹果【分期0首付】苹果iPhone16/15/14/13 iphone16plus/16e/15plus双卡双待 全网通5G 智能手机 苹果15 蓝色 128GB+全网通+质保2年+配件礼包",
+      "price_text": "5418.00",
+      "original_price_text": "",
+      "sales_text": "",
+      "seller_name": "旺莱晗手机买手店",
+      "seller_rating_text": "",
+      "seller_id": "",
+      "image_url": "https://img10.360buyimg.com/",
+      "product_url": "https://item.jd.com/10199163018293.html",
+      "category_text": "未分类",
+      "promo_info": "",
+      "specs": {},
+      "in_stock": true,
+      "stock_quantity": null,
+      "crawl_time": "2026-05-22 12:12:29",
+      "raw_payload": {
+        "source": "exported_cache_seed"
+      }
+    }
+  ]
+}

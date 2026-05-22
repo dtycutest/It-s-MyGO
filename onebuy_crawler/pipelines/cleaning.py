@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from onebuy_crawler.constants import DEFAULT_CATEGORY_ID, DEFAULT_CATEGORY_NAME, PLATFORMS
 from onebuy_crawler.item_adapter import ItemAdapter
 from onebuy_crawler.items import CleanProductItem
+from onebuy_crawler.services.categories import infer_category
 from onebuy_crawler.services.matcher import build_match_fingerprint
 from onebuy_crawler.services.normalizer import (
     calculate_discount_rate,
@@ -34,6 +35,7 @@ class CleaningPipeline:
         price = parse_price(adapter.get("price_text") or adapter.get("price"))
         original_price = parse_price(adapter.get("original_price_text") or adapter.get("original_price"))
         specs = adapter.get("specs") or {}
+        category = infer_category(title, adapter.get("category_text"), adapter.get("keyword"))
 
         clean = CleanProductItem()
         if adapter.get("product_id"):
@@ -45,8 +47,8 @@ class CleaningPipeline:
         clean["platform_name"] = platform["platform_name"]
         clean["source_sku_id"] = source_sku_id
         clean["title"] = title
-        clean["category_id"] = adapter.get("category_id") or DEFAULT_CATEGORY_ID
-        clean["category_name"] = clean_text(adapter.get("category_text")) or DEFAULT_CATEGORY_NAME
+        clean["category_id"] = adapter.get("category_id") or category.category_id or DEFAULT_CATEGORY_ID
+        clean["category_name"] = category.category_name or DEFAULT_CATEGORY_NAME
         clean["image_url"] = normalize_image_url(adapter.get("image_url"), adapter.get("product_url") or "")
         clean["images"] = [clean["image_url"]] if clean["image_url"] else []
         clean["description"] = clean_text(adapter.get("description") or adapter.get("promo_info"))

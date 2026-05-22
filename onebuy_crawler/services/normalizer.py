@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from decimal import Decimal, InvalidOperation
 from typing import Any
 from urllib.parse import parse_qs, unquote, urljoin, urlparse, urlunparse
@@ -20,7 +21,7 @@ def clean_text(value: Any) -> str:
 
 
 def normalize_title(value: Any) -> str:
-    title = clean_text(value)
+    title = unicodedata.normalize("NFKC", clean_text(value))
     title = re.sub(r"[\u200b\xa0]+", " ", title)
     return SPACE_RE.sub(" ", title).strip()
 
@@ -128,7 +129,31 @@ def decimal_to_float(value: Decimal | None) -> float | None:
 def compact_fingerprint_text(value: Any) -> str:
     text = normalize_title(value).lower()
     text = re.sub(r"[^\w\u4e00-\u9fff]+", "", text)
-    noise_words = ("官方", "旗舰店", "自营", "正品", "包邮", "现货", "新品")
+    noise_words = (
+        "官方",
+        "旗舰店",
+        "官方旗舰",
+        "自营",
+        "京东",
+        "淘宝",
+        "天猫",
+        "正品",
+        "包邮",
+        "现货",
+        "新品",
+        "全新",
+        "国行",
+        "原装",
+        "授权",
+        "旗舰",
+        "百亿补贴",
+        "限时",
+        "秒杀",
+        "套餐",
+        "赠品",
+        "到手价",
+        "全国联保",
+    )
     for word in noise_words:
         text = text.replace(word, "")
     return text

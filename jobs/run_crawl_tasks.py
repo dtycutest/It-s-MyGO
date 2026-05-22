@@ -12,16 +12,25 @@ from pathlib import Path
 from scrapy.utils.project import get_project_settings
 
 from onebuy_crawler.services.crawl_tasks import (
+    BLOCKED_FAILURE_REASONS,
     CrawlTask,
     load_due_tasks,
     mark_failed,
     mark_running,
     mark_success,
+    reset_stale_running_tasks,
     task_platform_to_capture_platform,
 )
 
 
 FINISH_RE = re.compile(r"browser_capture finished: .*?items=(\d+)(?:,\s*reason=([^,\r\n]+))?")
+JD_SESSION_BLOCK_REASONS = {
+    "jd_access_too_frequent",
+    "jd_captcha_or_security_check",
+    "jd_login_required",
+    "jd_risk_handler",
+    "jd_search_redirected_to_home",
+}
 
 
 def main() -> None:
@@ -37,6 +46,16 @@ def main() -> None:
     parser.add_argument("--jd-cdp-url", default="", help="Optional CDP URL for JD, for example http://127.0.0.1:9222")
     parser.add_argument("--taobao-cdp-url", default="", help="Optional CDP URL for Taobao.")
     parser.add_argument("--manual-search-wait", action="store_true", help="Pause for manual search before each task.")
+    parser.add_argument("--manual-search-only", action="store_true", help="Never auto-submit search during manual search mode.")
+    parser.add_argument(
+        "--open-strategy",
+        default="direct-first",
+        choices=["direct-first", "home-first"],
+        help="Search navigation strategy for page 1.",
+    )
+    parser.add_argument("--typing-delay-ms", type=int, default=120, help="Delay between search keyword characters.")
+    parser.add_argument("--pre-search-delay-ms", type=int, default=800, help="Delay before typing on the home page.")
+    parser.add_argument("--post-search-delay-ms", type=int, default=1500, help="Delay after submitting a search.")
     parser.add_argument("--login-wait", action="store_true", help="Pause for manual login before each task.")
     parser.add_argument(
         "--manual-verify-on-failure",
@@ -46,10 +65,24 @@ def main() -> None:
     parser.add_argument("--keep-open-on-failure", action="store_true", help="Keep browser open after failed capture.")
     parser.add_argument("--headless", action="store_true", help="Run browser capture in headless mode when CDP is not used.")
     parser.add_argument("--keyword", action="append", help="Only run due tasks for this exact keyword. Can repeat.")
+    parser.add_argument(
+        "--stale-running-minutes",
+        type=int,
+        default=30,
+        help="Reset tasks left in running state longer than this many minutes.",
+    )
     args = parser.parse_args()
 
     settings = get_project_settings()
     platform = "" if args.platform == "all" else args.platform
+    reset_count = reset_stale_running_tasks(
+        settings,
+        stale_minutes=args.stale_running_minutes,
+        platform=platform,
+        keywords=args.keyword,
+    )
+    if reset_count:
+        print(f"reset stale running crawl tasks: {reset_count}")
     tasks = load_due_tasks(settings, args.limit, platform=platform, max_retries=args.max_retries, keywords=args.keyword)
     if not tasks:
         print("no due crawl tasks")
@@ -75,6 +108,12 @@ def main() -> None:
                 blocked_delay_minutes=args.blocked_delay_minutes,
             )
             _safe_print(f"crawl task deferred: id={task.id}, retry_count={next_retry_count}, reason={reason or 'capture_no_items'}")
+            if _should_stop_platform_batch(task, reason):
+                _safe_print(
+                    "JD capture appears blocked for the current browser profile/IP; "
+                    "stopping this run to avoid burning the remaining queued tasks."
+                )
+                break
 
 
 def _run_capture(task: CrawlTask, args) -> tuple[int, str, str]:
@@ -94,6 +133,14 @@ def _run_capture(task: CrawlTask, args) -> tuple[int, str, str]:
         str(args.item_limit),
         "--timeout",
         str(args.timeout),
+        "--open-strategy",
+        args.open_strategy,
+        "--typing-delay-ms",
+        str(args.typing_delay_ms),
+        "--pre-search-delay-ms",
+        str(args.pre_search_delay_ms),
+        "--post-search-delay-ms",
+        str(args.post_search_delay_ms),
         "--summary-file",
         str(summary_path),
     ]
@@ -104,8 +151,10 @@ def _run_capture(task: CrawlTask, args) -> tuple[int, str, str]:
         command.append("--headless")
     if args.login_wait:
         command.append("--login-wait")
-    if args.manual_search_wait:
+    if args.manual_search_wait or args.manual_search_only:
         command.append("--manual-search-wait")
+    if args.manual_search_only:
+        command.append("--manual-search-only")
     if args.manual_verify_on_failure:
         command.append("--manual-verify-on-failure")
     if args.keep_open_on_failure:
@@ -146,6 +195,15 @@ def _run_capture(task: CrawlTask, args) -> tuple[int, str, str]:
             summary_path.unlink(missing_ok=True)
         except Exception:
             pass
+
+
+def _should_stop_platform_batch(task: CrawlTask, reason: str) -> bool:
+    if task.platform_code != "jingdong":
+        return False
+    normalized_reason = (reason or "").strip()
+    if normalized_reason in JD_SESSION_BLOCK_REASONS:
+        return True
+    return normalized_reason in BLOCKED_FAILURE_REASONS and normalized_reason.startswith("jd_")
 
 
 def _new_summary_path() -> Path:

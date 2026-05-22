@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import unittest
+from types import SimpleNamespace
 
 from onebuy_crawler.pipelines.dedup import DedupPipeline
 from onebuy_crawler.pipelines.cleaning import CleaningPipeline
+from jobs.import_seed_data import _records_to_import
 from onebuy_crawler.services.search_query import title_keyword_clause
 from onebuy_crawler.services.seed_data import (
     build_generated_records,
@@ -44,6 +46,15 @@ class SeedDataTests(unittest.TestCase):
         clause, params = title_keyword_clause("华为 手机")
         self.assertEqual(clause, "p.title LIKE %s AND p.title LIKE %s")
         self.assertEqual(params, ["%华为%", "%手机%"])
+
+    def test_import_all_platforms_selects_both_platforms_without_keywords(self):
+        records = [
+            {"platform_code": "jingdong", "source_sku_id": "jd1", "title": "iPhone 15", "price_text": "1"},
+            {"platform_code": "taobao", "source_sku_id": "tb1", "title": "iPhone 15", "price_text": "1"},
+        ]
+        args = SimpleNamespace(platform="all", limit_per_keyword=10)
+        selected = _records_to_import(None, records, [], args)
+        self.assertEqual({record["platform_code"] for record in selected}, {"jingdong", "taobao"})
 
 
 if __name__ == "__main__":

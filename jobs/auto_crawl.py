@@ -45,11 +45,24 @@ def main() -> None:
     parser.add_argument("--pages", type=int, default=1)
     parser.add_argument("--item-limit", type=int, default=20)
     parser.add_argument("--timeout", type=int, default=30)
+    parser.add_argument(
+        "--open-strategy",
+        default="direct-first",
+        choices=["direct-first", "home-first"],
+        help="Search navigation strategy for page 1.",
+    )
+    parser.add_argument("--typing-delay-ms", type=int, default=120, help="Delay between search keyword characters.")
+    parser.add_argument("--pre-search-delay-ms", type=int, default=800, help="Delay before typing on the home page.")
+    parser.add_argument("--post-search-delay-ms", type=int, default=1500, help="Delay after submitting a search.")
     parser.add_argument("--max-retries", type=int, default=3)
     parser.add_argument("--failed-delay-minutes", type=int, default=15)
     parser.add_argument("--blocked-delay-minutes", type=int, default=60)
     parser.add_argument("--headless", action="store_true", help="Run browser capture headlessly.")
+    parser.add_argument("--jd-cdp-url", default="", help="Optional CDP URL for JD, for example http://127.0.0.1:9222.")
+    parser.add_argument("--taobao-cdp-url", default="", help="Optional CDP URL for Taobao, for example http://127.0.0.1:9223.")
     parser.add_argument("--login-wait", action="store_true", help="Pause for manual login before each capture task.")
+    parser.add_argument("--manual-search-wait", action="store_true", help="Pause for manual search before each task.")
+    parser.add_argument("--manual-search-only", action="store_true", help="Never auto-submit search during manual search mode.")
     parser.add_argument(
         "--manual-verify-on-failure",
         action="store_true",
@@ -90,6 +103,14 @@ def main() -> None:
             str(args.item_limit),
             "--timeout",
             str(args.timeout),
+            "--open-strategy",
+            args.open_strategy,
+            "--typing-delay-ms",
+            str(args.typing_delay_ms),
+            "--pre-search-delay-ms",
+            str(args.pre_search_delay_ms),
+            "--post-search-delay-ms",
+            str(args.post_search_delay_ms),
             "--max-retries",
             str(args.max_retries),
             "--failed-delay-minutes",
@@ -97,10 +118,18 @@ def main() -> None:
             "--blocked-delay-minutes",
             str(args.blocked_delay_minutes),
         ]
+        if args.jd_cdp_url:
+            command.extend(["--jd-cdp-url", args.jd_cdp_url])
+        if args.taobao_cdp_url:
+            command.extend(["--taobao-cdp-url", args.taobao_cdp_url])
         if args.headless:
             command.append("--headless")
         if args.login_wait:
             command.append("--login-wait")
+        if args.manual_search_wait or args.manual_search_only:
+            command.append("--manual-search-wait")
+        if args.manual_search_only:
+            command.append("--manual-search-only")
         taobao_visible = args.platform in {"taobao", "all"} and not args.headless
         if args.manual_verify_on_failure or taobao_visible:
             command.append("--manual-verify-on-failure")
