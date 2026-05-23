@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from jobs.browser_capture_search import _detect_browser_failure_reason
+from jobs.browser_capture_search import _current_page_looks_search_page, _detect_browser_failure_reason, _mark_exact_url_item
 
 
 class FakeLocator:
@@ -39,6 +39,10 @@ class BrowserCaptureSearchTests(unittest.TestCase):
         page = FakePage("https://www.jd.com/?from=pc_search_sd", "京东", "京东首页")
         self.assertEqual(_detect_browser_failure_reason(page, "jd"), "jd_search_redirected_to_home")
 
+    def test_re_jd_url_counts_as_jd_search_page(self):
+        page = FakePage("https://re.jd.com/search?keyword=Apple%20iPhone%2015%20128GB", "京东搜索", "")
+        self.assertTrue(_current_page_looks_search_page(page, "jd"))
+
     def test_detect_captcha_or_login(self):
         captcha_page = FakePage("https://search.jd.com", "安全验证", "请完成验证码")
         login_page = FakePage("https://passport.jd.com/new/login.aspx", "登录", "京东登录")
@@ -50,6 +54,19 @@ class BrowserCaptureSearchTests(unittest.TestCase):
         security_page = FakePage("https://sec.taobao.com/query.htm", "访问受限", "请完成滑块验证")
         self.assertEqual(_detect_browser_failure_reason(login_page, "taobao"), "taobao_login_required")
         self.assertEqual(_detect_browser_failure_reason(security_page, "taobao"), "taobao_captcha_or_security_check")
+
+    def test_exact_jd_url_keeps_matching_keyword(self):
+        item = {"title": "Apple iPhone 15 128GB 手机", "keyword": "", "raw_payload": {}}
+        _mark_exact_url_item(item, "iPhone 15")
+        self.assertEqual(item["keyword"], "iPhone 15")
+        self.assertEqual(item["raw_payload"]["source"], "jd_exact_detail_url")
+
+    def test_exact_jd_url_does_not_apply_unrelated_keyword(self):
+        item = {"title": "茅台飞天 53度 500ml", "keyword": "", "raw_payload": {}}
+        _mark_exact_url_item(item, "iPhone 15")
+        self.assertEqual(item["keyword"], "")
+        self.assertEqual(item["raw_payload"]["requested_keyword"], "iPhone 15")
+        self.assertEqual(item["raw_payload"]["keyword_filter"], "skipped_mismatch")
 
 
 if __name__ == "__main__":

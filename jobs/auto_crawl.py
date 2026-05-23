@@ -64,6 +64,11 @@ def main() -> None:
     parser.add_argument("--manual-search-wait", action="store_true", help="Pause for manual search before each task.")
     parser.add_argument("--manual-search-only", action="store_true", help="Never auto-submit search during manual search mode.")
     parser.add_argument(
+        "--manual-open-search-url",
+        action="store_true",
+        help="Open the direct search URL before manual confirmation.",
+    )
+    parser.add_argument(
         "--manual-verify-on-failure",
         action="store_true",
         help="Keep browser open on login/security failure, wait for manual verification, then retry once.",
@@ -130,6 +135,8 @@ def main() -> None:
             command.append("--manual-search-wait")
         if args.manual_search_only:
             command.append("--manual-search-only")
+        if args.manual_open_search_url:
+            command.append("--manual-open-search-url")
         taobao_visible = args.platform in {"taobao", "all"} and not args.headless
         if args.manual_verify_on_failure or taobao_visible:
             command.append("--manual-verify-on-failure")

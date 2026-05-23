@@ -1,0 +1,6 @@
+# Four concrete products for cross-platform comparison demos.
+# Keep one product per line; include brand, model, and core spec. Do not include color.
+Apple iPhone 15 128GB
+HUAWEI FreeBuds Pro 3
+Logitech K380 蓝牙键盘
+小米自带线充电宝 10000mAh 22.5W

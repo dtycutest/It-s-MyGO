@@ -17,6 +17,10 @@ class CategoryTests(unittest.TestCase):
         self.assertEqual(infer_category("罗技 K380 蓝牙键盘").category_name, "电脑办公-键盘鼠标")
         self.assertEqual(infer_category("20000毫安 充电宝").category_name, "数码配件-移动电源")
 
+    def test_title_category_beats_noisy_search_keyword(self):
+        category = infer_category("Apple iPhone 15 128GB 蓝色 6.1英寸 手机", keyword="显示器")
+        self.assertEqual(category.category_name, "手机-智能手机")
+
     def test_cleaning_pipeline_infers_category_when_generic(self):
         item = {
             "platform_code": "jingdong",

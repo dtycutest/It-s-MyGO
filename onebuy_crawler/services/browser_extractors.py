@@ -6,9 +6,11 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from typing import Any
-from urllib.parse import urljoin
+from urllib.parse import parse_qs, urljoin, urlparse
 
 from onebuy_crawler.items import RawProductItem
+from onebuy_crawler.constants import DEFAULT_CATEGORY_NAME
+from onebuy_crawler.services.categories import infer_category
 from onebuy_crawler.services.normalizer import clean_text
 
 
@@ -79,6 +81,10 @@ def extract_from_dom(platform: str, rows: Iterable[dict[str, Any]], keyword: str
         if item:
             items.append(item)
     return items
+
+
+def matches_keyword(title: Any, keyword: str) -> bool:
+    return _matches_keyword(title, keyword)
 
 
 def failure_item(platform: str, url: str, keyword: str, reason: str, payload: dict[str, Any] | None = None) -> RawProductItem:
@@ -158,8 +164,21 @@ def _jd_item_from_mapping(data: dict[str, Any], keyword: str) -> RawProductItem 
         return None
     if not _matches_keyword(title, keyword):
         return None
-    image = _first(data, "imageUrl", "image", "imgUrl", "pictureUrl", "skuPicUrl")
+    image = _first(
+        data,
+        "imageUrl",
+        "image",
+        "img",
+        "imgUrl",
+        "imageurl",
+        "pictureUrl",
+        "skuPicUrl",
+        "image_url",
+        "picUrl",
+    )
     url = _first(data, "materialUrl", "itemUrl", "url", "link")
+    if not image:
+        image = _image_from_url(url)
     return _raw_item(
         platform_code="jingdong",
         platform_name="京东",
@@ -170,7 +189,7 @@ def _jd_item_from_mapping(data: dict[str, Any], keyword: str) -> RawProductItem 
         original_price_text=_first(data, "originalPrice", "marketPrice", "m", "op", "wlPrice"),
         sales_text=_first(data, "comments", "commentCount", "sales", "inOrderCount30Days"),
         seller_name=_first(data, "shopName", "sellerName", "owner"),
-        image_url=_url(image, "https://img10.360buyimg.com/"),
+        image_url=_jd_image_url(image),
         product_url=_url(url, f"https://item.jd.com/{sku}.html"),
         promo_info=_first(data, "couponInfo", "discount", "promotionLabel"),
         raw_payload={"source": "browser_response"},
@@ -232,6 +251,34 @@ def _url(value: Any, default_or_base: str) -> str:
     return text
 
 
+def _jd_image_url(value: Any) -> str:
+    text = clean_text(value)
+    if not text or text.startswith("data:"):
+        return ""
+    if text.startswith("//"):
+        return "https:" + text
+    if text.startswith("http"):
+        return text
+    if text.startswith("/"):
+        return "https://img10.360buyimg.com" + text
+    return urljoin("https://img10.360buyimg.com/n7/", text)
+
+
+def _image_from_url(value: Any) -> str:
+    text = clean_text(value)
+    if not text:
+        return ""
+    try:
+        query = parse_qs(urlparse(_url(text, "")).query)
+    except ValueError:
+        return ""
+    for key in ("cover", "image", "img", "pic"):
+        values = query.get(key)
+        if values:
+            return values[0]
+    return ""
+
+
 def _normalize_jd_sku(value: Any) -> str:
     text = clean_text(value)
     if not text:
@@ -253,11 +300,73 @@ def _dedupe(items: list[RawProductItem]) -> list[RawProductItem]:
 
 
 def _matches_keyword(title: Any, keyword: str) -> bool:
-    title_text = clean_text(title).lower()
-    keyword_text = clean_text(keyword).lower()
+    title_text = _normalize_match_text(title)
+    keyword_text = _normalize_match_text(keyword)
     if not keyword_text:
         return True
-    tokens = [token for token in re.split(r"\s+", keyword_text) if len(token) >= 2]
+    tokens = _keyword_tokens(keyword_text)
     if not tokens:
         return keyword_text in title_text
-    return all(token in title_text for token in tokens)
+    compact_title = re.sub(r"\s+", "", title_text)
+    if not all(_token_matches_title(token, title_text, compact_title) for token in tokens):
+        return False
+
+    keyword_category = infer_category(keyword)
+    title_category = infer_category(title)
+    if (
+        keyword_category.category_name != DEFAULT_CATEGORY_NAME
+        and title_category.category_name != DEFAULT_CATEGORY_NAME
+        and keyword_category.category_name != title_category.category_name
+    ):
+        return False
+    return True
+
+
+def _keyword_tokens(keyword_text: str) -> list[str]:
+    raw_tokens = [token for token in re.split(r"\s+", keyword_text) if len(token) >= 2]
+    if not raw_tokens:
+        return []
+    tokens: list[str] = []
+    for token in raw_tokens:
+        tokens.extend(_split_product_phrase_token(token))
+    return list(dict.fromkeys(tokens))
+
+
+def _split_product_phrase_token(token: str) -> list[str]:
+    parts: list[str] = []
+    remainder = token
+    for word in ("自带线", "内置线", "充电宝", "移动电源", "蓝牙键盘", "蓝牙耳机", "小米", "华为", "罗技"):
+        if word in remainder:
+            parts.append(word)
+            remainder = remainder.replace(word, " ")
+    for part in re.split(r"\s+", remainder):
+        if len(part) >= 2:
+            parts.append(part)
+    return parts or [token]
+
+
+def _normalize_match_text(value: Any) -> str:
+    text = clean_text(value).lower()
+    text = text.replace("ｇ", "g").replace("Ｇ", "g")
+    text = re.sub(r"(\d+)\s*(?:gb|g)\b", r"\1gb", text, flags=re.I)
+    text = re.sub(r"(\d+)\s*(?:tb|t)\b", r"\1tb", text, flags=re.I)
+    text = re.sub(r"(\d+)\s*(?:mah|毫安)\b", r"\1mah", text, flags=re.I)
+    text = re.sub(r"(\d+(?:\.\d+)?)\s*w\b", r"\1w", text, flags=re.I)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def _token_matches_title(token: str, title_text: str, compact_title: str) -> bool:
+    if token in title_text or token in compact_title:
+        return True
+    number_unit_match = re.fullmatch(r"(\d+)(mah)", token)
+    if number_unit_match and number_unit_match.group(1) in compact_title:
+        return True
+    aliases = {
+        "apple": ("苹果",),
+        "iphone": ("苹果",),
+        "huawei": ("华为",),
+        "logitech": ("罗技",),
+        "xiaomi": ("小米",),
+        "mi": ("小米",),
+    }.get(token, ())
+    return any(alias in title_text or alias in compact_title for alias in aliases)

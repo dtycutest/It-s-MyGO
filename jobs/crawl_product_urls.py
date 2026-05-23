@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import os
-import re
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
@@ -10,6 +9,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
 from onebuy_crawler.services.normalizer import normalize_url
+from onebuy_crawler.services.product_urls import extract_jd_sku, extract_product_urls
 
 
 def main() -> None:
@@ -45,23 +45,27 @@ def main() -> None:
 
 
 def collect_urls(url_args: list[str], url_file: str) -> list[str]:
-    urls = list(url_args)
+    urls = []
+    for value in url_args:
+        extracted = extract_product_urls(value)
+        urls.extend(extracted or [value])
     if url_file:
         path = Path(url_file)
         if not path.exists():
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(
-                "# Add one product detail URL per line, for example:\n"
+                "# Add one product detail URL per line, or paste copied search-result HTML/text.\n"
                 "# https://item.jd.com/100144527620.html\n"
                 "# https://item.taobao.com/item.htm?id=123456789\n",
                 encoding="utf-8",
             )
             raise SystemExit(f"URL file not found, so a template was created: {path}")
-        urls.extend(
-            line.strip()
-            for line in path.read_text(encoding="utf-8").splitlines()
-            if line.strip() and not line.lstrip().startswith("#")
-        )
+        text = "\n".join(line for line in path.read_text(encoding="utf-8").splitlines() if not line.lstrip().startswith("#"))
+        extracted = extract_product_urls(text)
+        if extracted:
+            urls.extend(extracted)
+        else:
+            urls.extend(line.strip() for line in text.splitlines() if line.strip())
     return list(dict.fromkeys(urls))
 
 
@@ -81,8 +85,7 @@ def normalize_platform(platform: str) -> str:
 def extract_source_sku_id(url: str, platform: str) -> str:
     parsed = urlparse(url)
     if platform == "jd":
-        match = re.search(r"/(\d{5,})\.html", parsed.path)
-        return match.group(1) if match else ""
+        return extract_jd_sku(url)
     if platform == "taobao":
         return parse_qs(parsed.query).get("id", [""])[0]
     return ""

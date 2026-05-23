@@ -66,7 +66,13 @@ class JdDetailSpider(BaseProductSpider):
         yield scrapy.Request(
             f"https://p.3.cn/prices/mgets?skuIds=J_{sku}",
             callback=self.parse_price_api,
-            meta={"base_item": dict(base_item), "platform_code": self.platform_code},
+            errback=self.price_api_failed,
+            meta={
+                "base_item": dict(base_item),
+                "platform_code": self.platform_code,
+                "download_timeout": 8,
+                "dont_retry": True,
+            },
             dont_filter=True,
         )
 
@@ -78,6 +84,14 @@ class JdDetailSpider(BaseProductSpider):
                 base_item["price_text"] = payload[0].get("p") or payload[0].get("op")
                 base_item["original_price_text"] = payload[0].get("m")
         except (json.JSONDecodeError, KeyError, TypeError):
-            base_item["parse_status"] = "failed"
-            base_item["failure_reason"] = "price_api_parse_failed"
+            raw_payload = dict(base_item.get("raw_payload") or {})
+            raw_payload["price_api_error"] = "price_api_parse_failed"
+            base_item["raw_payload"] = raw_payload
+        yield base_item
+
+    def price_api_failed(self, failure):
+        base_item = failure.request.meta["base_item"]
+        raw_payload = dict(base_item.get("raw_payload") or {})
+        raw_payload["price_api_error"] = failure.getErrorMessage()
+        base_item["raw_payload"] = raw_payload
         yield base_item

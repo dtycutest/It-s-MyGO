@@ -11,13 +11,16 @@ from urllib.parse import quote_plus
 
 from scrapy.utils.project import get_project_settings
 
+from onebuy_crawler.item_adapter import ItemAdapter
 from onebuy_crawler.services.browser_extractors import (
     extract_from_dom,
     extract_jd_price_map,
     extract_from_response,
     failure_item,
+    matches_keyword,
 )
 from onebuy_crawler.services.pipeline_runner import PipelineRunner
+from onebuy_crawler.services.product_urls import extract_product_urls
 from onebuy_crawler.services.proxy_pool import ProxyPool, load_proxies_from_settings, playwright_proxy_config
 
 
@@ -25,6 +28,8 @@ SEARCH_URLS = {
     "taobao": "https://s.taobao.com/search?q={keyword}&s={offset}",
     "jd": "https://search.jd.com/Search?keyword={keyword}&enc=utf-8&page={page}",
 }
+
+JD_DETAIL_URL_RE = re.compile(r"https?://(?:item|item\.m)\.jd\.com/(?:product/)?(\d+)\.html")
 
 JD_SEARCH_INPUT_SELECTORS = (
     "input.jd_pc_search_bar_react_search_input",
@@ -85,6 +90,16 @@ def main() -> None:
         action="store_true",
         help="With --manual-search-wait, never auto-submit search; only capture after the current page is a search result page.",
     )
+    parser.add_argument(
+        "--manual-open-search-url",
+        action="store_true",
+        help="Open the direct search URL in the connected browser before waiting for manual confirmation.",
+    )
+    parser.add_argument(
+        "--search-url",
+        default="",
+        help="Open this already working search result URL for page 1 instead of building a normal search URL.",
+    )
     parser.add_argument("--timeout", type=int, default=25, help="Seconds to wait for network responses per page")
     parser.add_argument(
         "--open-strategy",
@@ -100,9 +115,41 @@ def main() -> None:
         action="store_true",
         help="Disable supplemental JD price fetch for SKUs found in the DOM.",
     )
+    parser.add_argument(
+        "--no-jd-mobile-fallback",
+        action="store_true",
+        help="Do not open m.jd.com as a fallback when the JD PC search page renders no products.",
+    )
+    parser.add_argument(
+        "--allow-jd-recommend-fallback",
+        action="store_true",
+        help="Allow JD m.jd.com recommendation feeds when exact keyword search is unavailable. Off by default.",
+    )
+    parser.add_argument(
+        "--allow-jd-home-fallback",
+        action="store_true",
+        help="Allow collecting visible JD home-page products when search is redirected to home. Off by default.",
+    )
+    parser.add_argument(
+        "--jd-url",
+        action="append",
+        default=[],
+        help="JD product detail URL to capture exactly. Can be used multiple times.",
+    )
+    parser.add_argument("--jd-url-file", default="", help="UTF-8 text file with one JD product detail URL per line.")
     parser.add_argument("--debug-dir", default="output/browser_debug", help="Directory for zero-item debug snapshots.")
     parser.add_argument("--no-debug-dump", action="store_true", help="Do not save HTML/screenshot when no items are captured.")
     parser.add_argument("--summary-file", default="", help="Optional JSON file for machine-readable capture summary.")
+    parser.add_argument(
+        "--output-file",
+        default="",
+        help="Optional JSONL export file. Defaults to output/browser_capture/*.jsonl when MySQL is disabled.",
+    )
+    parser.add_argument(
+        "--no-visible-fallback",
+        action="store_true",
+        help="Do not collect visible JD page products when keyword search is redirected to the home page.",
+    )
     parser.add_argument(
         "--manual-verify-on-failure",
         action="store_true",
@@ -116,9 +163,11 @@ def main() -> None:
     args = parser.parse_args()
     if args.manual_search_only:
         args.manual_search_wait = True
+    args.jd_url = _collect_jd_urls(args.jd_url, args.jd_url_file)
 
     settings = get_project_settings()
     runner = PipelineRunner(settings)
+    export_path = _resolve_output_file(args.output_file, args.platform, args.keyword)
     profile_dir = Path(args.profile_dir or f"browser_profiles/{args.platform}").resolve()
     if not args.cdp_url:
         profile_dir.mkdir(parents=True, exist_ok=True)
@@ -129,6 +178,8 @@ def main() -> None:
     last_dom_row_count = 0
     debug_snapshot = ""
     jd_price_cache: dict[str, dict[str, str]] = {}
+    network_keyword_override: str | None = None
+    network_fallback_reason = ""
     browser_proxy = args.proxy
     if args.use_proxy_pool and not browser_proxy:
         browser_proxy = ProxyPool(
@@ -178,7 +229,7 @@ def main() -> None:
             if collected_count >= args.limit:
                 return
             url = response.url
-            if not _looks_like_product_response(args.platform, url):
+            if not _looks_like_product_response(args.platform, url, args.allow_jd_recommend_fallback):
                 return
             try:
                 body = response.text()
@@ -186,7 +237,8 @@ def main() -> None:
                 return
             if args.platform == "jd":
                 jd_price_cache.update(extract_jd_price_map(body))
-            result = extract_from_response(args.platform, url, body, args.keyword)
+            response_keyword = args.keyword if network_keyword_override is None else network_keyword_override
+            result = extract_from_response(args.platform, url, body, response_keyword)
             for item in result.items:
                 if collected_count >= args.limit:
                     break
@@ -194,12 +246,36 @@ def main() -> None:
                 if key in collected_keys:
                     continue
                 collected_keys.add(key)
-                runner.process(item)
+                if network_fallback_reason:
+                    _mark_visible_fallback_item(item, args.keyword, network_fallback_reason)
+                _process_and_export(runner, item, export_path)
                 collected_count += 1
 
         page.on("response", handle_response)
 
-        def collect_dom_items_until(timeout_seconds: int) -> None:
+        if args.platform == "jd" and args.jd_url:
+            for detail_url in args.jd_url:
+                if collected_count >= args.limit:
+                    break
+                try:
+                    _goto_search_url(page, detail_url, PlaywrightError, PlaywrightTimeoutError)
+                    _wait_for_navigation_settle(page, PlaywrightTimeoutError)
+                    page.wait_for_timeout(2000)
+                    for row in _extract_jd_detail_rows(page):
+                        if collected_count >= args.limit:
+                            break
+                        for item in extract_from_dom(args.platform, [row], ""):
+                            key = (item.get("platform_code"), item.get("source_sku_id"))
+                            if key in collected_keys:
+                                continue
+                            collected_keys.add(key)
+                            _mark_exact_url_item(item, args.keyword or row.get("skuId", ""))
+                            _process_and_export(runner, item, export_path)
+                            collected_count += 1
+                except PlaywrightError:
+                    continue
+
+        def collect_dom_items_until(timeout_seconds: int, keyword_override: str | None = None, fallback_reason: str = "") -> None:
             nonlocal collected_count, last_dom_row_count, jd_price_cache
             deadline = time.time() + timeout_seconds
             while time.time() < deadline and collected_count < args.limit:
@@ -215,35 +291,63 @@ def main() -> None:
                         dom_rows = _merge_jd_prices(dom_rows, jd_price_cache)
                 except PlaywrightError:
                     break
-                dom_items = extract_from_dom(args.platform, dom_rows, args.keyword)
+                dom_items = extract_from_dom(args.platform, dom_rows, args.keyword if keyword_override is None else keyword_override)
                 for item in dom_items:
                     key = (item.get("platform_code"), item.get("source_sku_id"))
                     if key in collected_keys:
                         continue
                     collected_keys.add(key)
-                    runner.process(item)
+                    if keyword_override == "" and args.platform == "taobao":
+                        _mark_relaxed_manual_item(item, args.keyword)
+                    if fallback_reason:
+                        _mark_visible_fallback_item(item, args.keyword, fallback_reason)
+                    _process_and_export(runner, item, export_path)
                     collected_count += 1
                     if collected_count >= args.limit:
                         break
 
-        if args.manual_search_wait:
-            if getattr(page, "url", "").lower().startswith("about:"):
+        if args.jd_url:
+            pass
+        elif args.manual_search_wait:
+            if args.manual_open_search_url:
+                _goto_search_url(
+                    page,
+                    args.search_url or _search_url(args.platform, args.keyword, 1),
+                    PlaywrightError,
+                    PlaywrightTimeoutError,
+                )
+                _wait_for_navigation_settle(page, PlaywrightTimeoutError)
+            elif getattr(page, "url", "").lower().startswith("about:"):
                 page.goto(_home_url(args.platform), wait_until="domcontentloaded")
             _wait_for_manual_search_page(
                 page,
                 args.platform,
                 args.keyword,
                 PlaywrightTimeoutError,
+                custom_search_url=args.search_url,
                 allow_auto_search=not args.manual_search_only,
             )
+            if args.cdp_url:
+                selected_page = _select_context_page(context, args.platform)
+                if selected_page != page:
+                    try:
+                        page.remove_listener("response", handle_response)
+                    except Exception:
+                        pass
+                    page = selected_page
+                    page.set_default_timeout(args.timeout * 1000)
+                    page.on("response", handle_response)
 
         for page_no in range(1, args.pages + 1):
             if collected_count >= args.limit:
                 break
+            if args.jd_url:
+                break
             if args.manual_search_wait and page_no == 1:
-                collect_dom_items_until(args.timeout)
+                keyword_override = "" if args.platform == "taobao" else None
+                collect_dom_items_until(args.timeout, keyword_override=keyword_override)
                 continue
-            url = _search_url(args.platform, args.keyword, page_no)
+            url = args.search_url if page_no == 1 and args.search_url else _search_url(args.platform, args.keyword, page_no)
             _open_search_page(
                 page,
                 args.platform,
@@ -257,11 +361,77 @@ def main() -> None:
                 args.pre_search_delay_ms,
                 args.post_search_delay_ms,
             )
-            if _page_has_failure_marker(page, args.platform):
+            opening_failure_reason = _detect_browser_failure_reason(page, args.platform)
+            if _is_hard_failure_reason(opening_failure_reason):
                 break
             _wait_for_product_signals(page, args.platform, PlaywrightTimeoutError, timeout_ms=min(12000, args.timeout * 1000))
             _nudge_page(page)
             collect_dom_items_until(args.timeout)
+
+        if (
+            collected_count == 0
+            and not args.no_visible_fallback
+            and args.platform == "jd"
+            and args.allow_jd_home_fallback
+            and last_dom_row_count > 0
+            and not _is_hard_failure_reason(_detect_browser_failure_reason(page, args.platform))
+        ):
+            collect_dom_items_until(
+                min(8, args.timeout),
+                keyword_override="",
+                fallback_reason=_detect_browser_failure_reason(page, args.platform),
+            )
+
+        if (
+            collected_count == 0
+            and args.platform == "jd"
+            and not args.no_jd_mobile_fallback
+            and args.allow_jd_recommend_fallback
+        ):
+            mobile_fallback_reason = _detect_browser_failure_reason(page, args.platform)
+            try:
+                network_keyword_override = ""
+                network_fallback_reason = f"{mobile_fallback_reason}_mobile_visible_fallback"
+                page.set_viewport_size({"width": 390, "height": 844})
+                _goto_search_url(
+                    page,
+                    _mobile_search_url(args.keyword),
+                    PlaywrightError,
+                    PlaywrightTimeoutError,
+                )
+                _wait_for_navigation_settle(page, PlaywrightTimeoutError)
+                _nudge_page(page)
+                collect_dom_items_until(min(12, args.timeout), keyword_override="", fallback_reason=network_fallback_reason)
+            except PlaywrightError:
+                pass
+            finally:
+                network_keyword_override = None
+                network_fallback_reason = ""
+
+        if (
+            collected_count == 0
+            and not args.no_visible_fallback
+            and args.platform == "jd"
+            and args.allow_jd_home_fallback
+        ):
+            home_fallback_reason = _detect_browser_failure_reason(page, args.platform)
+            try:
+                page.goto(_home_url(args.platform), wait_until="domcontentloaded")
+                _wait_for_navigation_settle(page, PlaywrightTimeoutError)
+                _wait_for_product_signals(
+                    page,
+                    args.platform,
+                    PlaywrightTimeoutError,
+                    timeout_ms=min(12000, args.timeout * 1000),
+                )
+                _nudge_page(page)
+                collect_dom_items_until(
+                    min(12, args.timeout),
+                    keyword_override="",
+                    fallback_reason=f"{home_fallback_reason}_home_visible_fallback",
+                )
+            except PlaywrightError:
+                pass
 
         if collected_count == 0:
             failure_reason = _detect_browser_failure_reason(page, args.platform)
@@ -279,6 +449,7 @@ def main() -> None:
                             args.platform,
                             args.keyword,
                             PlaywrightTimeoutError,
+                            custom_search_url=args.search_url,
                             allow_auto_search=False,
                         )
                     else:
@@ -332,6 +503,8 @@ def main() -> None:
         message += f", jd_prices={len(jd_price_cache)}"
     if debug_snapshot:
         message += f", debug={debug_snapshot}"
+    if export_path:
+        message += f", output={export_path}"
     print(message)
     if args.summary_file:
         _write_summary(
@@ -344,6 +517,7 @@ def main() -> None:
                 "dom_rows": last_dom_row_count,
                 "jd_prices": len(jd_price_cache),
                 "debug": debug_snapshot,
+                "output": str(export_path) if export_path else "",
             },
         )
 
@@ -375,20 +549,39 @@ def _select_context_page(context, platform: str):
     if not pages:
         return context.new_page()
 
-    platform_tokens = {
+    search_url_tokens = {
+        "jd": ("search.jd.com", "re.jd.com/search"),
+        "taobao": ("s.taobao.com", "list.taobao.com"),
+    }.get(platform, ())
+    detail_url_tokens = {
+        "jd": ("item.jd.com",),
+        "taobao": ("item.taobao.com", "detail.tmall.com"),
+    }.get(platform, ())
+    site_tokens = {
         "jd": ("jd.com", "京东"),
         "taobao": ("taobao.com", "tmall.com", "淘宝", "天猫"),
     }.get(platform, ())
+
+    for token_group in (search_url_tokens, detail_url_tokens, site_tokens):
+        selected = _find_latest_context_page(pages, token_group)
+        if selected:
+            return selected
+    return pages[-1]
+
+
+def _find_latest_context_page(pages: list, tokens: tuple[str, ...]):
+    if not tokens:
+        return None
     for page in reversed(pages):
         url = getattr(page, "url", "")
         title = _safe_title(page)
-        if any(token in url or token in title for token in platform_tokens):
+        if any(token in url or token in title for token in tokens):
             try:
                 page.bring_to_front()
             except Exception:
                 pass
             return page
-    return pages[-1]
+    return None
 
 
 def _search_url(platform: str, keyword: str, page_no: int) -> str:
@@ -396,6 +589,35 @@ def _search_url(platform: str, keyword: str, page_no: int) -> str:
     if platform == "taobao":
         return SEARCH_URLS[platform].format(keyword=encoded, offset=(page_no - 1) * 44)
     return SEARCH_URLS[platform].format(keyword=encoded, page=page_no * 2 - 1)
+
+
+def _mobile_search_url(keyword: str) -> str:
+    return f"https://m.jd.com/search?keyword={quote_plus(keyword)}"
+
+
+def _collect_jd_urls(url_args: list[str], url_file: str) -> list[str]:
+    urls = []
+    for value in url_args or []:
+        extracted = extract_product_urls(value, platform="jd")
+        urls.extend(extracted or [value])
+    if url_file:
+        path = Path(url_file)
+        if path.exists():
+            text = "\n".join(line for line in path.read_text(encoding="utf-8").splitlines() if not line.lstrip().startswith("#"))
+            extracted = extract_product_urls(text, platform="jd")
+            if extracted:
+                urls.extend(extracted)
+            else:
+                urls.extend(line.strip() for line in text.splitlines() if line.strip())
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(
+                "# One JD product detail URL per line, or paste copied search-result HTML/text.\n"
+                "# https://item.jd.com/100278221862.html\n",
+                encoding="utf-8",
+            )
+            raise SystemExit(f"JD URL file not found, so a template was created: {path}")
+    return list(dict.fromkeys(urls))
 
 
 def _open_search_page(
@@ -453,7 +675,7 @@ def _open_jd_direct_search(
     post_search_delay_ms: int = 1500,
 ) -> bool:
     _goto_search_url(page, direct_url, playwright_error, timeout_error)
-    return "search.jd.com" in getattr(page, "url", "").lower()
+    return _current_page_looks_search_page(page, "jd")
 
 
 def _open_jd_home_search(
@@ -528,11 +750,19 @@ def _ensure_manual_search_page(page, platform: str, keyword: str, timeout_error)
     _wait_for_navigation_settle(page, timeout_error)
 
 
-def _wait_for_manual_search_page(page, platform: str, keyword: str, timeout_error, allow_auto_search: bool) -> None:
+def _wait_for_manual_search_page(
+    page,
+    platform: str,
+    keyword: str,
+    timeout_error,
+    allow_auto_search: bool,
+    custom_search_url: str = "",
+) -> None:
     while True:
+        search_url = custom_search_url or _search_url(platform, keyword, 1)
         input(
-            "Manual search mode: finish the search in the browser and make sure the product list is visible, "
-            "then press Enter here to capture the current page..."
+            f"Manual search mode: open this direct search URL in the browser if the page is still home:\n{search_url}\n"
+            "Make sure the product list is visible, then press Enter here to capture the current page..."
         )
         if _current_page_looks_search_page(page, platform) or _page_has_failure_marker(page, platform):
             return
@@ -692,7 +922,7 @@ def _home_url(platform: str) -> str:
 def _current_page_looks_search_page(page, platform: str) -> bool:
     lowered = getattr(page, "url", "").lower()
     if platform == "jd":
-        return "search.jd.com" in lowered or "item.jd.com" in lowered
+        return "search.jd.com" in lowered or "re.jd.com/search" in lowered or "item.jd.com" in lowered
     if platform == "taobao":
         return (
             "s.taobao.com" in lowered
@@ -703,7 +933,7 @@ def _current_page_looks_search_page(page, platform: str) -> bool:
     return False
 
 
-def _looks_like_product_response(platform: str, url: str) -> bool:
+def _looks_like_product_response(platform: str, url: str, allow_jd_recommend_fallback: bool = False) -> bool:
     lowered = url.lower()
     if platform == "taobao":
         return any(
@@ -720,7 +950,21 @@ def _looks_like_product_response(platform: str, url: str) -> bool:
             )
         )
     if platform == "jd":
-        return any(token in lowered for token in ("search", "prices", "goods", "ware", "sku", "item"))
+        search_tokens = (
+            "search",
+            "prices",
+            "goods",
+            "ware",
+            "sku",
+            "item",
+            "pctradesoa_mixer",
+            "pc_search_searchware",
+            "pc_search_getshopandware",
+            "pc_search_adv_search",
+        )
+        if any(token in lowered for token in search_tokens):
+            return True
+        return allow_jd_recommend_fallback and "recommend_like_m" in lowered
     return False
 
 
@@ -738,8 +982,20 @@ def _extract_dom_rows(page, platform: str) -> list[dict]:
               const cards = Array.from(document.querySelectorAll('[data-nid], [data-item-id], [data-auction-id], a[href*="item.taobao"], a[href*="detail.tmall"], a[href*="item.htm?id="]'));
               const seen = new Set();
               const rows = [];
+              const looksPriced = (node) => {
+                const text = (node && node.innerText) || '';
+                return /[¥￥]\\s*\\d+(?:\\.\\d+)?|\\d+(?:\\.\\d+)?\\s*元/.test(text) || !!(node && node.querySelector && node.querySelector('[class*="price"], [class*="Price"], [class*="PRICE"]'));
+              };
+              const findCard = (node) => {
+                let current = node;
+                for (let depth = 0; current && depth < 8; depth += 1, current = current.parentElement) {
+                  const text = current.innerText || '';
+                  if (looksPriced(current) && text.length >= 20) return current;
+                }
+                return node.closest('[data-nid], [data-item-id], [data-auction-id], [class*="item"], [class*="Item"], [class*="Card"], [class*="card"], li, div') || node;
+              };
               for (const el of cards) {
-                const card = el.closest('[data-nid], [data-item-id], [data-auction-id], [class*="item"], [class*="Item"], [class*="Card"], [class*="card"], li, div') || el;
+                const card = findCard(el);
                 const hrefEl = card.querySelector('a[href*="item.taobao"], a[href*="detail.tmall"], a[href*="item.htm?id="]') || el;
                 if (!hrefEl || !hrefEl.href) continue;
                 let itemId = card.getAttribute('data-nid') || card.getAttribute('data-item-id') || card.getAttribute('data-auction-id') || '';
@@ -753,9 +1009,10 @@ def _extract_dom_rows(page, platform: str) -> list[dict]:
                 const price = (priceEl && priceEl.innerText) || (text.match(/¥\\s*\\d+(?:\\.\\d+)?|￥\\s*\\d+(?:\\.\\d+)?|\\d+(?:\\.\\d+)?\\s*元/) || [''])[0];
                 const lines = text.split('\\n').map((line) => line.trim()).filter(Boolean);
                 const titleFromLines = lines.find((line) => !/[¥￥]\\s*\\d|销量|付款|评价|包邮|进店|相似/.test(line) && line.length >= 4) || '';
+                const titleEl = card.querySelector('[class*="title"], [class*="Title"], [class*="name"], [class*="Name"]');
                 rows.push({
                   item_id: itemId,
-                  title: hrefEl.getAttribute('title') || hrefEl.getAttribute('aria-label') || (card.querySelector('[title]') || {}).title || (img && img.alt) || titleFromLines,
+                  title: hrefEl.getAttribute('title') || hrefEl.getAttribute('aria-label') || (card.querySelector('[title]') || {}).title || (titleEl && titleEl.innerText) || (img && img.alt) || titleFromLines,
                   price: price,
                   pic_url: img ? (img.currentSrc || img.src || img.getAttribute('data-src')) : '',
                   detail_url: hrefEl.href,
@@ -771,23 +1028,73 @@ def _extract_dom_rows(page, platform: str) -> list[dict]:
         """
         () => Array.from(document.querySelectorAll('li.gl-item, [data-sku], a[href*="item.jd.com"]'))
           .map((el) => {
-            const card = el.closest('li.gl-item, [data-sku], .goods-item') || el;
+            const card = el.closest('li.gl-item, [data-sku], .goods-item, .more2_item, .more2_lk') || el;
             const hrefEl = card.querySelector('a[href*="item.jd.com"]') || el;
             const img = card.querySelector('img');
             const text = card.innerText || '';
             const sku = card.getAttribute('data-sku') || (hrefEl.href.match(/item\\.jd\\.com\\/(\\d+)\\.html/) || [,''])[1] || hrefEl.href;
-            const priceEl = card.querySelector('.p-price i, .p-price strong, [class*="price"] i, [class*="Price"]');
-            const price = (priceEl && priceEl.innerText) || (text.match(/¥\\s*\\d+(?:\\.\\d+)?|￥\\s*\\d+(?:\\.\\d+)?/) || [''])[0];
+            const imageAttr = (image) => {
+              if (!image) return '';
+              for (const name of ['data-lazy-img', 'source-data-lazy-img', 'data-src', 'data-original', 'src']) {
+                const value = image.getAttribute(name);
+                if (value && !value.startsWith('data:')) return value;
+              }
+              if (image.currentSrc && !image.currentSrc.startsWith('data:')) return image.currentSrc;
+              return '';
+            };
+            const priceText = (node) => {
+              const value = (node && node.innerText) || '';
+              const match = value.match(/[¥￥]\\s*\\d+(?:\\.\\d+)?/);
+              return match ? match[0] : '';
+            };
+            const priceEl = card.querySelector('.p-price, .more2_info_price, [class*="price"], [class*="Price"]');
+            const price = priceText(priceEl) || (text.match(/[¥￥]\\s*\\d+(?:\\.\\d+)?/) || [''])[0];
+            const salesText = /评论|销量/.test(text) ? text : '';
             return {
               skuId: sku,
-              skuName: (card.querySelector('.p-name em, .p-name a, [title]') || {}).innerText || hrefEl.getAttribute('title') || text.split('\\n')[0],
+              skuName: hrefEl.getAttribute('title') || hrefEl.getAttribute('aria-label') || (card.querySelector('.p-name em, .p-name a, .more2_info_name, [title]') || {}).innerText || text.split('\\n')[0],
               price: price,
-              imageUrl: img ? (img.currentSrc || img.src || img.getAttribute('data-lazy-img')) : '',
+              imageUrl: imageAttr(img),
               itemUrl: hrefEl.href,
               shopName: (card.querySelector('.p-shop a, .p-shop span') || {}).innerText || '',
-              commentCount: text
+              commentCount: salesText
             };
           })
+        """
+    )
+
+
+def _extract_jd_detail_rows(page) -> list[dict]:
+    return page.evaluate(
+        """
+        () => {
+          const url = location.href;
+          const skuMatch = url.match(/(?:item|item\\.m)\\.jd\\.com\\/(?:product\\/)?(\\d+)\\.html/);
+          const sku = skuMatch ? skuMatch[1] : '';
+          const titleEl = document.querySelector('.sku-name, .itemInfo-wrap .sku-name, [class*="goods_name"], h1, title');
+          const img = document.querySelector('#spec-img, .preview img, .goods_img img, img[src*="360buyimg"], img[data-origin]');
+          const priceEl = document.querySelector('.summary-price .price, .p-price .price, .price, [class*="price"]');
+          const bodyText = document.body ? document.body.innerText : '';
+          const priceMatch = bodyText.match(/[¥￥]\\s*\\d+(?:\\.\\d+)?/);
+          const imageAttr = (image) => {
+            if (!image) return '';
+            for (const name of ['data-origin', 'data-lazy-img', 'source-data-lazy-img', 'data-src', 'data-original', 'src']) {
+              const value = image.getAttribute(name);
+              if (value && !value.startsWith('data:')) return value;
+            }
+            if (image.currentSrc && !image.currentSrc.startsWith('data:')) return image.currentSrc;
+            return '';
+          };
+          return [{
+            skuId: sku,
+            skuName: (titleEl && titleEl.innerText) || document.title.replace(/【行情 报价 价格 评测】-京东$/, ''),
+            price: (priceEl && priceEl.innerText) || (priceMatch ? priceMatch[0] : ''),
+            imageUrl: imageAttr(img),
+            itemUrl: sku ? `https://item.jd.com/${sku}.html` : url,
+            shopName: ((document.querySelector('.name a, #popbox .mt h3 a, [class*="shop"]') || {}).innerText || ''),
+            commentCount: bodyText
+          }];
+        }
         """
     )
 
@@ -940,6 +1247,52 @@ def _normalize_sku(value) -> str:
     text = str(value or "").strip()
     match = re.search(r"(\d{5,})", text)
     return match.group(1) if match else text
+
+
+def _resolve_output_file(output_file: str, platform: str, keyword: str) -> Path | None:
+    if output_file:
+        return Path(output_file)
+    if os.getenv("CRAWLER_ENABLE_MYSQL", "0") == "1":
+        return None
+    safe_keyword = re.sub(r"[^0-9A-Za-z\u4e00-\u9fff_-]+", "_", keyword).strip("_")[:40] or "keyword"
+    stamp = time.strftime("%Y%m%d_%H%M%S")
+    return Path("output/browser_capture") / f"{platform}_{safe_keyword}_{stamp}.jsonl"
+
+
+def _process_and_export(runner: PipelineRunner, item, export_path: Path | None) -> None:
+    processed = runner.process(item)
+    if export_path:
+        export_path.parent.mkdir(parents=True, exist_ok=True)
+        with export_path.open("a", encoding="utf-8") as file:
+            file.write(json.dumps(dict(ItemAdapter(processed)), ensure_ascii=False, default=str) + "\n")
+
+
+def _mark_visible_fallback_item(item, requested_keyword: str, fallback_reason: str) -> None:
+    payload = dict(item.get("raw_payload") or {})
+    payload["source"] = "visible_dom_fallback"
+    payload["requested_keyword"] = requested_keyword
+    payload["fallback_reason"] = fallback_reason
+    item["raw_payload"] = payload
+
+
+def _mark_relaxed_manual_item(item, requested_keyword: str) -> None:
+    item["keyword"] = requested_keyword
+    payload = dict(item.get("raw_payload") or {})
+    payload["source"] = "manual_search_visible_dom"
+    payload["requested_keyword"] = requested_keyword
+    payload["keyword_filter"] = "relaxed"
+    item["raw_payload"] = payload
+
+
+def _mark_exact_url_item(item, requested_keyword: str) -> None:
+    payload = dict(item.get("raw_payload") or {})
+    payload["source"] = "jd_exact_detail_url"
+    payload["requested_keyword"] = requested_keyword
+    if requested_keyword and matches_keyword(item.get("title"), requested_keyword):
+        item["keyword"] = requested_keyword
+    elif requested_keyword:
+        payload["keyword_filter"] = "skipped_mismatch"
+    item["raw_payload"] = payload
 
 
 def _save_debug_snapshot(page, platform: str, keyword: str, debug_dir: Path) -> str:

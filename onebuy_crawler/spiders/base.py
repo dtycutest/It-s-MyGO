@@ -44,9 +44,10 @@ class BaseProductSpider(scrapy.Spider):
     @staticmethod
     def first_text(selector, *queries: str) -> str:
         for query in queries:
-            value = selector.css(query).get()
-            if value:
-                return clean_text(value)
+            for value in selector.css(query).getall():
+                text = clean_text(value)
+                if text:
+                    return text
         return ""
 
     @staticmethod

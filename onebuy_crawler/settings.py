@@ -57,6 +57,9 @@ ITEM_PIPELINES = {
     "onebuy_crawler.pipelines.raw_log.RawLogPipeline": 300,
 }
 
+if os.getenv("CRAWLER_CACHE_IMAGES", "0").lower() in {"1", "true", "yes"}:
+    ITEM_PIPELINES["onebuy_crawler.pipelines.image_cache.ImageCachePipeline"] = 250
+
 if os.getenv("CRAWLER_ENABLE_MYSQL", "0") == "1":
     ITEM_PIPELINES["onebuy_crawler.pipelines.mysql.MySqlPipeline"] = 400
 
@@ -76,6 +79,9 @@ CRAWLER_PROXY_FILE = os.getenv("CRAWLER_PROXY_FILE", "")
 CRAWLER_PROXY_MAX_FAILS = int(os.getenv("CRAWLER_PROXY_MAX_FAILS", "3"))
 CRAWLER_PROXY_COOLDOWN_SECONDS = int(os.getenv("CRAWLER_PROXY_COOLDOWN_SECONDS", "300"))
 CRAWLER_PROXY_REQUIRED = os.getenv("CRAWLER_PROXY_REQUIRED", "0").lower() in {"1", "true", "yes"}
+CRAWLER_IMAGE_STORE = os.getenv("CRAWLER_IMAGE_STORE", "output/product_images")
+CRAWLER_IMAGE_PUBLIC_BASE_URL = os.getenv("CRAWLER_IMAGE_PUBLIC_BASE_URL", "")
+CRAWLER_IMAGE_TIMEOUT = int(os.getenv("CRAWLER_IMAGE_TIMEOUT", "10"))
 
 JD_COOKIE = os.getenv("JD_COOKIE", "")
 TAOBAO_COOKIE = os.getenv("TAOBAO_COOKIE", "")

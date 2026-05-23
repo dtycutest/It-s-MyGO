@@ -27,7 +27,7 @@ def main() -> None:
     )
     parser.add_argument("--profile-directory", default="")
     parser.add_argument("--proxy", default="", help="Proxy server for the browser, for example http://host:port")
-    parser.add_argument("--url", default="https://www.jd.com/")
+    parser.add_argument("--url", default="about:blank")
     args = parser.parse_args()
 
     edge = _find_edge()

@@ -1,394 +1,453 @@
-# 一次买够爬虫模块
+﻿# 一次买够爬虫模块使用说明
 
-这是一个独立 Scrapy 工程，负责京东、淘宝商品搜索/详情采集、清洗去重、价格历史入库，并产出后端 `openapi.json` 所需的数据基础。
+本目录是“一次买够”网购比价平台的独立爬虫工程，负责采集京东、淘宝商品数据，清洗后写入 MySQL，供后端接口和前端小程序做搜索、比价、详情展示和价格历史查询。
 
-## 快速开始
+当前最稳定的工作流是：
+
+1. 京东：优先使用“手动正常浏览器搜索 + 复制搜索页 HTML + 本地解析入库”，必要时再使用浏览器自动化或详情页 URL 补采。
+2. 淘宝：使用持久化浏览器登录态，Playwright 监听 Network 响应并结合 DOM 兜底解析。
+3. 数据入库：统一走 `CleaningPipeline -> DedupPipeline -> RawLogPipeline -> MySqlPipeline`，写入 `products`、`platform_offers`、`price_history`、`raw_crawl_records`。
+
+## 目录结构
+
+```text
+onebuy_crawler/
+  jobs/                         # 可直接运行的任务入口
+    init_schema.py              # 初始化 MySQL 表和视图
+    import_copied_search_html.py# 从手动复制的京东搜索页 HTML 导入商品
+    browser_capture_search.py   # Playwright 浏览器采集入口
+    auto_crawl.py               # 自动入队并处理补采任务
+    query_products.py           # 查询 MySQL 中的商品缓存
+    export_seed_data.py         # 导出可交付给前后端的测试数据包
+    import_seed_data.py         # 导入测试数据包
+  onebuy_crawler/
+    services/                   # 解析、归一化、数据库、任务等服务代码
+    pipelines/                  # 清洗、去重、原始日志、MySQL 入库
+    spiders/                    # Scrapy spider
+  data/
+    exact_product_keywords.txt  # 型号级关键词
+    compare_keywords.txt        # 宽泛比价关键词
+    jd_urls.txt                 # 临时粘贴京东 HTML 或商品 URL
+```
+
+## 环境准备
+
+在 Windows PowerShell 中运行。先进入你自己电脑上的项目目录，也就是包含 `scrapy.cfg`、`requirements.txt`、`jobs`、`onebuy_crawler` 这些文件和文件夹的目录：
 
 ```powershell
-cd onebuy_crawler
+cd <你的项目路径>\onebuy_crawler
+
 py -m venv .venv
 .\.venv\Scripts\pip install -r requirements.txt
-.\.venv\Scripts\scrapy list
+.\.venv\Scripts\python.exe -m playwright install chromium
 ```
 
-## 是否使用 Scrapy
-
-本项目已经使用 Scrapy，而且是标准 Scrapy 工程结构：
-
-- `scrapy.cfg` 指向默认配置 `onebuy_crawler.settings`。
-- `onebuy_crawler/settings.py` 配置 spider、middleware、pipeline、feed 导出和 MySQL 开关。
-- `onebuy_crawler/spiders/` 下注册了 `jd_search`、`jd_detail`、`taobao_search`、`taobao_detail`。
-- `jobs/run_search.py` 使用 `scrapy.crawler.CrawlerProcess` 启动 Scrapy spider。
-- `onebuy_crawler/pipelines/` 负责清洗、去重、原始记录和 MySQL 入库。
-
-可以用下面两条命令验证：
+检查 Scrapy 项目是否能加载：
 
 ```powershell
-.\.venv\Scripts\scrapy list
-.\.venv\Scripts\python -m jobs.verify_scrapy
+.\.venv\Scripts\scrapy.exe list
 ```
 
-同时项目保留了 `jobs/browser_capture_search.py` 作为浏览器采集入口。它不是替代 Scrapy，而是在京东/淘宝搜索页出现动态渲染、风控页或空结构页时，用 Playwright 获取数据，然后复用同一套 Scrapy item 与 pipeline 完成清洗和入库。
+应看到：
 
-## 常用任务
-
-```powershell
-# 搜索采集
-.\.venv\Scripts\python -m jobs.run_search --keyword "iPhone 15" --platform jd --pages 1
-
-# 详情补采
-.\.venv\Scripts\python -m jobs.backfill_details --input urls.txt
-
-# 价格刷新
-.\.venv\Scripts\python -m jobs.refresh_prices --limit 100
-
-# 前端查不到数据时，创建京东后台补采任务
-.\.venv\Scripts\python -m jobs.enqueue_crawl_task --keyword "iPhone 15"
-
-# 处理待补采任务
-.\.venv\Scripts\python -m jobs.run_crawl_tasks --limit 5
-
-# 全自动流程：初始化表、关键词入队、后台采集、可选刷新价格
-.\.venv\Scripts\python -m jobs.auto_crawl --use-default-keywords --rounds 2 --task-limit 4 --refresh-prices
-
-# 首次使用前准备京东登录态；后续自动采集会复用 browser_profiles/jd
-.\.venv\Scripts\python -m jobs.prepare_browser_profile --platform jd
-
-# 模拟后端按关键词查询数据库；查不到时可顺手创建补采任务
-.\.venv\Scripts\python -m jobs.query_products --keyword "iPhone 15" --enqueue-missing
-
-# 初始化数据库表
-.\.venv\Scripts\python -m jobs.init_schema
-
-# 联调保障：先尝试京东实时采集，失败时导入种子缓存/本地演示数据
-.\.venv\Scripts\python -m jobs.ensure_cache --use-default-keywords --rounds 1 --min-count 3
-
-# 只导入内置京东种子缓存，不访问京东
-.\.venv\Scripts\python -m jobs.import_seed_data --use-default-keywords --only-missing
+```text
+jd_detail
+jd_search
+taobao_detail
+taobao_search
 ```
 
-## 环境变量
+## MySQL 配置
+
+复制 `.env.example` 为 `.env`，填写自己的数据库密码：
 
 ```text
 MYSQL_HOST=127.0.0.1
 MYSQL_PORT=3306
 MYSQL_USER=root
-MYSQL_PASSWORD=
+MYSQL_PASSWORD=你的密码
 MYSQL_DATABASE=onebuy
-CRAWLER_ENABLE_MYSQL=0
-CRAWLER_PROXY_LIST=
-CRAWLER_PROXY_FILE=
-CRAWLER_PROXY_MAX_FAILS=3
-CRAWLER_PROXY_COOLDOWN_SECONDS=300
-CRAWLER_PROXY_REQUIRED=0
-CRAWLER_OBEY_ROBOTS=1
-CRAWLER_USE_COOKIES=0
+CRAWLER_ENABLE_MYSQL=1
 ```
 
-`CRAWLER_ENABLE_MYSQL=0` 时爬虫只会清洗并打印/导出数据，适合本地测试和答辩演示；设置为 `1` 后启用 MySQL pipeline。
-
-## IP 代理池
-
-项目支持代理池轮换，用来降低单一出口 IP 触发访问频繁的概率。代理需要使用你自己购买、授权或课程实验允许使用的代理资源，项目不会自动抓取免费代理。
-
-可以直接用环境变量配置：
+初始化数据库：
 
 ```powershell
-$env:CRAWLER_PROXY_LIST="http://user:pass@1.2.3.4:8000,http://5.6.7.8:9000"
-$env:CRAWLER_PROXY_MAX_FAILS="3"
-$env:CRAWLER_PROXY_COOLDOWN_SECONDS="300"
+.\.venv\Scripts\python.exe -m jobs.init_schema
 ```
 
-也可以把代理写入文件，每行一个：
+成功时输出：
 
 ```text
-# proxies.txt
-http://user:pass@1.2.3.4:8000
-http://5.6.7.8:9000
+Database schema initialized.
 ```
 
-然后启用：
-
-```powershell
-$env:CRAWLER_PROXY_FILE="proxies.txt"
-```
-
-Scrapy 采集会为请求分配代理；当代理触发 403、407、429、5xx 或页面包含验证码/风控标记时，代理会累计失败次数，超过阈值后进入冷却期。
-
-浏览器采集也可以使用代理池，但一个浏览器上下文只能使用一个代理：
-
-```powershell
-.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "华为 手机" --pages 1 --limit 20 --use-proxy-pool --login-wait
-```
-
-如果使用 CDP 连接已启动浏览器，需要在启动浏览器时设置代理：
-
-```powershell
-.\.venv\Scripts\python -m jobs.launch_debug_browser --port 9222 --proxy http://user:pass@1.2.3.4:8000 --url https://www.jd.com/
-.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "华为 手机" --pages 1 --limit 20 --cdp-url http://127.0.0.1:9222 --login-wait
-```
-
-如果普通 Edge 浏览器能正常搜索，但 Playwright 独立 profile 显示访问频繁，可以关闭所有 Edge 窗口后，复用默认 Edge 用户数据目录启动调试浏览器：
-
-```powershell
-.\.venv\Scripts\python -m jobs.launch_debug_browser --port 9222 --use-default-user-data --url https://www.jd.com/
-.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "华为 手机" --pages 1 --limit 20 --cdp-url http://127.0.0.1:9222 --login-wait
-```
-
-注意：第一条命令必须看到 `debug browser launched and verified` 后，才能运行第二条命令。如果提示 Edge 已经在运行，请先关闭所有 Edge 窗口和后台进程。
-
-## 无 Cookie 抓取
-
-当前默认不使用 Cookie：
+主要数据表和视图：
 
 ```text
-CRAWLER_USE_COOKIES=0
-JD_COOKIE=
-TAOBAO_COOKIE=
+products            聚合后的商品主表
+platform_offers     各平台报价、店铺、链接、销量
+price_history       价格历史
+raw_crawl_records   失败原因和原始采集记录
+crawl_tasks         后台补采任务
+jd_products         京东商品查询视图
+taobao_products     淘宝商品查询视图
 ```
 
-直接抓公开搜索页：
+## 京东采集方案
 
-```powershell
-$env:CRAWLER_USE_COOKIES="0"
-$env:CRAWLER_OBEY_ROBOTS="0"
-.\.venv\Scripts\python -m jobs.run_search --keyword "iPhone 15" --platform jd --pages 1
-```
+京东搜索页容易因为账号、IP、浏览器自动化特征触发“当前页面异常”“访问频繁”“切换账号”等页面。不要反复用脚本硬刷搜索页。当前推荐三种方式，按稳定性排序。
 
-注意：无 Cookie 模式只能抓目标站公开返回的内容。如果目标站返回登录页、验证码页或空结构页，爬虫会记录失败原因，不做验证码破解或登录绕过。
+### 方案 A：复制京东搜索页 HTML 导入（推荐）
 
-## 浏览器采集模式（课程作业推荐）
+这是当前最稳定的京东方案。它不让爬虫打开京东网页，而是你用正常浏览器手动搜索，复制已经渲染出来的搜索结果 HTML，本地解析商品卡片。
 
-对于淘宝、京东这类动态渲染页面，Scrapy 直接请求经常只能拿到风控页或骨架页。课程作业中更稳的方式是使用真实浏览器打开页面，监听 Network 响应并提取商品 JSON，同时从 DOM 做兜底提取。
-
-安装浏览器采集依赖：
-
-```powershell
-.\.venv\Scripts\pip install -r requirements.txt
-```
-
-首次采集前，建议先为京东准备一次持久化登录态：
-
-```powershell
-.\.venv\Scripts\python -m jobs.prepare_browser_profile --platform jd
-```
-
-命令会打开一个浏览器窗口。你在里面登录账号、选择地区并完成必要验证，回到终端按 Enter 后，登录态会保存在：
+适合：
 
 ```text
-browser_profiles/jd
+HUAWEI FreeBuds Pro 3
+Logitech K380 蓝牙键盘
+小米自带线充电宝 10000mAh 22.5W
+Apple iPhone 15 128GB
 ```
 
-后续 `jobs.browser_capture_search`、`jobs.run_crawl_tasks` 和 `jobs.auto_crawl` 默认都会复用这个目录，因此一般不需要重复登录。不要删除 `browser_profiles/jd` 目录，也不要同时用多个进程打开同一个 profile。
+步骤：
 
-首次运行建议打开京东浏览器界面：
+1. 用平时能正常登录京东的浏览器打开京东，搜索一个具体商品。
+2. 等商品列表显示出来。
+3. 按 `F12` 打开开发者工具，在 Console 执行：
 
-```powershell
-.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --login-wait
+```javascript
+(() => {
+  const html = document.documentElement.outerHTML;
+  copy(html);
+  console.log("已复制页面HTML，长度：", html.length);
+})();
 ```
 
-`--login-wait` 会先打开平台首页，并在终端等待你按 Enter。你可以在浏览器里手动完成登录、定位或人机验证。程序不会读取 Cookie 文件，也不会破解验证码；它只复用浏览器自己的用户目录：
+控制台显示 `undefined` 是正常的，`copy()` 没有返回值。只要能看到 `已复制页面HTML，长度：xxxx`，说明已经复制成功。
+
+4. 把剪贴板内容粘贴到：
 
 ```text
-browser_profiles/jd
+data\jd_urls.txt
 ```
 
-后续如果 profile 已经可用，可以去掉 `--login-wait`。需要后台运行时加 `--headless`：
+可以整页 HTML 全部粘贴进去。文件末尾出现“显示更多”“购物车”“客服”“插件版”等内容没有关系，解析器会只提取商品卡片。
 
-```powershell
-.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --open-strategy direct-first
-```
-
-如果自动采集曾经出现 `items=0`，优先使用当前增强版浏览器采集入口重新验证：
+5. 运行导入命令：
 
 ```powershell
 $env:CRAWLER_ENABLE_MYSQL="1"
-.\.venv\Scripts\python -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --timeout 30 --open-strategy direct-first --headless
-.\.venv\Scripts\python -m jobs.query_products --keyword "iPhone 15" --limit 10
+
+.\.venv\Scripts\python.exe -m jobs.import_copied_search_html `
+  --keyword "Logitech K380 蓝牙键盘" `
+  --input data\jd_urls.txt `
+  --limit 20
 ```
 
-增强版会同时做三件事：优先直接打开京东搜索结果页；等待京东商品卡片出现；监听并补抓京东异步价格响应，再按 SKU 把 DOM 中的商品标题和价格接口中的价格合并。若仍然没有商品，会把页面 HTML 和截图保存到 `output/browser_debug/`，便于判断是登录态失效、验证码、访问频繁、首页重定向还是页面结构变化。
-
-入库前确认：
+换商品时只改 `--keyword`：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.init_schema
+.\.venv\Scripts\python.exe -m jobs.import_copied_search_html --keyword "HUAWEI FreeBuds Pro 3" --input data\jd_urls.txt --limit 20
+.\.venv\Scripts\python.exe -m jobs.import_copied_search_html --keyword "小米自带线充电宝 10000mAh 22.5W" --input data\jd_urls.txt --limit 20
 ```
 
-## 淘宝采集模式
-
-淘宝搜索比京东更容易触发登录、安全验证或访问受限。当前实现采用与京东一致的浏览器采集管线，但针对淘宝补充了三路提取：
+导入成功示例：
 
 ```text
-监听淘宝 mtop/h5api/search 等 Network JSON/JSONP 响应
-扫描页面全局状态对象中的 auctions/itemlist 数据
-从 DOM 商品卡片兜底提取 item_id/title/price/shop/url
+copied search HTML import finished: keyword=Logitech K380 蓝牙键盘, rows=25, matched=5, imported=5, mysql=1
 ```
 
-首次建议先准备淘宝持久化登录态：
+说明：
 
-```powershell
-.\.venv\Scripts\python -m jobs.prepare_browser_profile --platform taobao
+```text
+rows     从 HTML 中解析到的商品卡片数量
+matched 通过关键词过滤后的商品数量
+imported 实际送入 pipeline 的商品数量
+mysql=1 表示写入 MySQL；mysql=0 表示只走本地导出/测试
 ```
 
-在打开的浏览器中完成淘宝登录和必要验证后，再运行：
+如果某个商品匹配数量太少，常见原因是关键词太严格。可以先用更宽松的关键词导入或查询，例如：
 
 ```powershell
-$env:CRAWLER_ENABLE_MYSQL="1"
-.\.venv\Scripts\python -m jobs.auto_crawl --platform taobao --keyword "蓝牙耳机" --force --rounds 1 --task-limit 1 --pages 1 --item-limit 20 --timeout 35
-.\.venv\Scripts\python -m jobs.query_products --keyword "蓝牙耳机" --limit 10
+.\.venv\Scripts\python.exe -m jobs.import_copied_search_html --keyword "小米 充电宝" --input data\jd_urls.txt --limit 20
 ```
 
-`auto_crawl --platform taobao` 在非 `--headless` 模式下默认会启用人工验证兜底：如果淘宝跳到登录/安全验证页，浏览器不会立刻关闭，终端会提示你在浏览器中完成验证并按 Enter，程序随后会重试一次采集。如果你只想后台失败记录，不希望停下来等待人工处理，可以加 `--headless`。
+### 方案 B：浏览器自动采集
 
-也可以直接调浏览器采集入口：
+如果京东没有弹异常页，可以使用 Playwright 浏览器采集。首次使用先保存登录态：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.browser_capture_search --platform taobao --keyword "蓝牙耳机" --pages 1 --limit 20 --timeout 35
+.\.venv\Scripts\python.exe -m jobs.prepare_browser_profile --platform jd --profile-dir browser_profiles\jd_new
 ```
 
-如果返回 `taobao_login_required`、`taobao_captcha_or_security_check` 或 `items=0`，程序不会破解或绕过验证，会保存 HTML/截图到 `output/browser_debug/` 便于判断原因。淘宝采集不要高频并发运行，建议每次 1 页、低频、复用 `browser_profiles/taobao`。
+在弹出的浏览器里登录京东、选择地区、确认搜索能正常显示商品，然后回终端按 Enter 保存。
 
-## 可选：手动登录抓取
-
-如果需要抓取登录后的京东/淘宝页面：
-
-1. 在浏览器里手动登录目标平台。
-2. 使用 Cookie 编辑器扩展导出 Cookie，或在开发者工具 Network 请求里复制完整 `Cookie` 请求头。
-3. 设置 `CRAWLER_USE_COOKIES=1`，并将京东 Cookie 写入 `cookies/jd.cookie`，淘宝 Cookie 写入 `cookies/taobao.cookie`。文件内容可以是 `a=b; c=d` 字符串，也可以是浏览器扩展导出的 JSON 列表。
-4. 需要入库时配置 MySQL 并开启：
+采集：
 
 ```powershell
-$env:CRAWLER_ENABLE_MYSQL="1"
+.\.venv\Scripts\python.exe -m jobs.browser_capture_search `
+  --platform jd `
+  --keyword "HUAWEI FreeBuds Pro 3" `
+  --profile-dir browser_profiles\jd_new `
+  --pages 1 `
+  --limit 20 `
+  --timeout 35 `
+  --manual-verify-on-failure `
+  --keep-open-on-failure
+```
+
+如果换账号，建议新建 profile，不要覆盖旧目录：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.prepare_browser_profile --platform jd --profile-dir browser_profiles\jd_new
+```
+
+后续所有命令都带上：
+
+```text
+--profile-dir browser_profiles\jd_new
+```
+
+### 方案 C：商品详情 URL 补采
+
+如果已经有具体商品详情链接，也可以补采。把链接放到：
+
+```text
+data\jd_urls.txt
+```
+
+一行一个，例如：
+
+```text
+https://item.jd.com/10078322255876.html
+https://item.jd.com/10222031807639.html
+```
+
+运行：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.browser_capture_search `
+  --platform jd `
+  --keyword "Logitech K380 蓝牙键盘" `
+  --jd-url-file data\jd_urls.txt `
+  --limit 20 `
+  --timeout 25 `
+  --headless
+```
+
+注意：详情页补采会逐个打开商品页，比“复制 HTML 导入”慢，也更容易被详情页加载或风控卡住。能用方案 A 时优先用方案 A。
+
+## 淘宝采集方案
+
+淘宝比京东更容易触发登录或安全验证。当前实现同样使用真实浏览器登录态，监听淘宝 `mtop/h5api/search` 等 Network 响应，并结合 DOM 兜底解析。
+
+首次准备淘宝登录态：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.prepare_browser_profile --platform taobao
+```
+
+在弹出的浏览器中登录淘宝并完成必要验证，确认能搜索并看到商品后，回终端按 Enter 保存。
+
+采集：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.browser_capture_search `
+  --platform taobao `
+  --keyword "Logitech K380 蓝牙键盘" `
+  --pages 1 `
+  --limit 20 `
+  --timeout 35 `
+  --manual-verify-on-failure `
+  --keep-open-on-failure
+```
+
+也可以用自动任务入口：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.auto_crawl `
+  --platform taobao `
+  --keyword "Logitech K380 蓝牙键盘" `
+  --force `
+  --rounds 1 `
+  --task-limit 1 `
+  --pages 1 `
+  --item-limit 20 `
+  --timeout 35
+```
+
+如果淘宝跳到登录、安全验证、访问受限页面，程序不会破解验证码。请在浏览器里手动完成验证后继续。
+
+## 查询和验收
+
+查询京东结果：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.query_products --keyword "Logitech K380 蓝牙键盘" --platform jd --page 1 --page-size 10
+```
+
+查询淘宝结果：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.query_products --keyword "Logitech K380 蓝牙键盘" --platform taobao --page 1 --page-size 10
+```
+
+查询全部平台：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.query_products --keyword "Logitech K380 蓝牙键盘" --platform all --page 1 --page-size 10
+```
+
+项目里有一份型号级关键词文件：
+
+```text
+data\exact_product_keywords.txt
+```
+
+当前包含：
+
+```text
+Apple iPhone 15 128GB
+HUAWEI FreeBuds Pro 3
+Logitech K380 蓝牙键盘
+小米自带线充电宝 10000mAh 22.5W
+```
+
+## 导出数据给前后端测试
+
+前后端联调不建议依赖实时爬虫。推荐先把你本机已经抓到的 MySQL 数据导出成 JSON 数据包，交给其他同学导入。
+
+### 导出测试数据包
+
+导出型号级测试数据：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.export_seed_data `
+  --keyword-file data\exact_product_keywords.txt `
+  --platform all `
+  --limit 500 `
+  --output data\seed.json
+```
+
+只导出京东：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.export_seed_data `
+  --keyword-file data\exact_product_keywords.txt `
+  --platform jd `
+  --limit 500 `
+  --output data\team_seed_products_jd.json
+```
+
+导出后，把下面文件发给前后端同学：
+
+```text
+data\seed.json
+data\exact_product_keywords.txt
+README.md
+requirements.txt
+.env.example
+```
+
+如果前后端只需要看数据结构，可以直接打开 JSON；如果要在他们本机后端联调，按下一节导入 MySQL。
+
+### 同学导入测试数据包
+
+同学拿到数据包后，在自己的项目目录运行：
+
+```powershell
+# 示例：把路径替换成自己本机实际保存 onebuy_crawler 的位置
+cd <你的项目路径>\onebuy_crawler
+
 $env:MYSQL_HOST="127.0.0.1"
 $env:MYSQL_PORT="3306"
 $env:MYSQL_USER="root"
-$env:MYSQL_PASSWORD="你的密码"
+$env:MYSQL_PASSWORD="他们自己的 MySQL 密码"
 $env:MYSQL_DATABASE="onebuy"
-.\.venv\Scripts\python -m jobs.init_schema
+$env:CRAWLER_ENABLE_MYSQL="1"
+
+.\.venv\Scripts\python.exe -m jobs.init_schema
+
+.\.venv\Scripts\python.exe -m jobs.import_seed_data `
+  --seed-file data\seed.json `
+  --platform all
 ```
 
-5. 运行采集：
+如果数据库中已有数据，只想补缺：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.run_search --keyword "iPhone 15" --platform jd --pages 1
+.\.venv\Scripts\python.exe -m jobs.import_seed_data `
+  --seed-file data\seed.json `
+  --platform all `
+  --only-missing `
+  --min-count 3
 ```
 
-默认 `CRAWLER_OBEY_ROBOTS=1`。如果你确认有课程演示、授权测试或自担风险的本地实验需求，可以临时设置 `CRAWLER_OBEY_ROBOTS=0`，但不要用于绕过验证码、登录风控或高频访问。
-
-## 数据表
-
-- `products`：聚合商品，面向后端搜索和详情接口。
-- `platform_offers`：单平台报价和店铺信息。
-- `price_history`：价格历史，用于 90 天趋势和降价提醒。
-- `raw_crawl_records`：原始抓取摘要、解析状态、失败原因。
-- `crawl_tasks`：后台补采任务，当前端搜索缺失或数据过期时写入。
-
-## 缺失数据补采流程
-
-前端和后端联调时，不建议在用户搜索请求里同步启动爬虫。推荐流程是：
-
-```text
-前端搜索关键词
-后端先查 products/platform_offers
-有数据则立即返回
-无数据则写入 crawl_tasks，并返回“暂未收录，正在补充”
-后台脚本低频处理 crawl_tasks
-采集成功后写入 products/platform_offers/price_history
-```
-
-手动创建京东补采任务：
+导入后验证：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.enqueue_crawl_task --keyword "iPhone 15"
+.\.venv\Scripts\python.exe -m jobs.query_products --keyword "Apple iPhone 15 128GB" --platform all --page 1 --page-size 10
+.\.venv\Scripts\python.exe -m jobs.query_products --keyword "Logitech K380 蓝牙键盘" --platform all --page 1 --page-size 10
 ```
 
-模拟后端查库；没有缓存时创建补采任务：
+## 常见问题
+
+### 京东页面出现“当前页面异常”
+
+这是京东风控页，页面里没有商品数据。不要继续用脚本刷新。改用“方案 A：复制京东搜索页 HTML 导入”。
+
+### `copy(...)` 后控制台显示 `undefined`
+
+正常。浏览器控制台的 `copy()` 没有返回值，但已经把内容复制到剪贴板。
+
+### `jd_urls.txt` 末尾有“显示更多”“购物车”
+
+正常。整页 HTML 包含很多非商品区域，解析器会只读取商品卡片里的 `data-sku`、标题、价格、图片、销量等字段。
+
+### 小米充电宝只导入很少
+
+通常是关键词过严。现在代码已经兼容 `小米自带线充电宝`、`小米 充电宝 自带线`、`10000mAh`、`10000毫安`、`22.5W/22.5w` 等写法。仍然太少时，可以先用宽关键词导入：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.query_products --keyword "iPhone 15" --enqueue-missing
+.\.venv\Scripts\python.exe -m jobs.import_copied_search_html --keyword "小米 充电宝" --input data\jd_urls.txt --limit 20
 ```
 
-处理任务：
+### 想离线测试，不写 MySQL
+
+设置：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.run_crawl_tasks --limit 5 --platform jd --pages 1 --item-limit 20 --open-strategy direct-first
+$env:CRAWLER_ENABLE_MYSQL="0"
 ```
 
-如果京东需要复用已打开的 Edge 调试浏览器：
+然后导出 JSONL：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.launch_debug_browser --port 9222 --use-default-user-data --url https://www.jd.com/?country=CN
-.\.venv\Scripts\python -m jobs.run_crawl_tasks --limit 1 --jd-cdp-url http://127.0.0.1:9222 --manual-search-wait
+.\.venv\Scripts\python.exe -m jobs.import_copied_search_html `
+  --keyword "Logitech K380 蓝牙键盘" `
+  --input data\jd_urls.txt `
+  --limit 10 `
+  --output-file output\k380_debug.jsonl
 ```
 
-任务失败时不会删除旧商品数据。遇到 `jd_access_too_frequent`、`jd_search_redirected_to_home`、验证码或风控页时，任务会进入延迟重试状态，并停止当前这一轮京东任务，避免继续消耗同一个浏览器 profile/IP。前端继续使用数据库中的历史有效数据。
+## 开发检查
 
-## 联调缓存保障
-
-京东实时页面采集受登录态、地区、验证码、访问频率和页面结构影响，不能作为“每个同学第一次运行必定有数据”的唯一来源。项目现在提供缓存保障层：
+运行单元测试：
 
 ```powershell
-# 推荐给联调同学使用：先跑实时京东采集，失败时自动补内置种子缓存；
-# 如果关键词不在种子文件中，会生成带“课程演示数据”标记的本地兜底记录。
-.\.venv\Scripts\python -m jobs.ensure_cache --keyword "显示器" --min-count 3 --rounds 1
-
-# 批量保障默认关键词
-.\.venv\Scripts\python -m jobs.ensure_cache --use-default-keywords --min-count 3 --rounds 1
-
-# 完全离线，只导入内置种子缓存，不访问京东
-.\.venv\Scripts\python -m jobs.import_seed_data --use-default-keywords --only-missing
+.\.venv\Scripts\python.exe -m unittest discover -s tests
 ```
 
-如果你自己的数据库已经抓到较好的真实数据，可以导出一份给其他同学导入：
+编译检查：
 
 ```powershell
-.\.venv\Scripts\python -m jobs.export_seed_data --use-default-keywords --output data/team_seed_products.json
-.\.venv\Scripts\python -m jobs.import_seed_data --seed-file data/team_seed_products.json --use-default-keywords --only-missing
+.\.venv\Scripts\python.exe -m compileall jobs onebuy_crawler tests
 ```
-
-这条链路的目标是保证前端/后端联调稳定：前端永远先查 MySQL；实时采集只负责刷新缓存；当京东触发风控时，缓存或种子数据继续支撑搜索、比价、价格历史等功能。内置或生成的兜底数据会通过 `promo_info`/`seller_name` 标记来源，不应当声称为实时京东价格。
-
-## 全自动采集流程
-
-不需要人工打开搜索页时，推荐使用全自动入口：
-
-```powershell
-.\.venv\Scripts\python -m jobs.auto_crawl --use-default-keywords --rounds 2 --task-limit 4 --pages 1 --item-limit 20 --refresh-prices
-```
-
-也可以指定关键词，默认只跑京东：
-
-```powershell
-.\.venv\Scripts\python -m jobs.auto_crawl --keyword "iPhone 15" --keyword "蓝牙耳机" --rounds 1
-```
-
-或使用关键词文件，每行一个关键词：
-
-```text
-# keywords.txt
-iPhone 15
-华为 手机
-小米 手机
-蓝牙耳机
-机械键盘
-```
-
-```powershell
-.\.venv\Scripts\python -m jobs.auto_crawl --keyword-file keywords.txt --rounds 2 --task-limit 5
-```
-
-全自动流程会做四件事：
-
-```text
-初始化 MySQL 表结构
-把关键词写入 crawl_tasks
-自动处理到期任务并写入 products/platform_offers/price_history
-可选刷新已有商品详情价格
-```
-
-如果京东返回验证码、访问频繁、搜索被重定向等情况，程序不会破解或绕过验证，而是把任务标记为 `blocked` 或 `failed`，按延迟时间自动重试。前端仍然读取数据库里的历史有效数据。
 
 ## 合规边界
 
-工程内置 robots、限速、重试、代理和失败记录。若目标站点禁止抓取、出现验证码或访问阻断，爬虫会记录失败原因，不实现验证码破解、登录绕过或违反目标站规则的行为。
+本项目用于课程设计和联调演示。采集时应低频运行，优先使用已正常显示的页面内容，不实现验证码破解、登录绕过或高频请求。目标站点提示访问异常、验证码或访问频繁时，应停止自动化采集，使用本地缓存、导出的测试数据包或手动复制 HTML 的方式保障前后端联调。
+
+

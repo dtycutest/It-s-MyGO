@@ -2,8 +2,11 @@ from __future__ import annotations
 
 import unittest
 
+from scrapy import Selector
 from scrapy.spiderloader import SpiderLoader
 from scrapy.utils.project import get_project_settings
+
+from onebuy_crawler.spiders.base import BaseProductSpider
 
 
 class ScrapyProjectTests(unittest.TestCase):
@@ -23,6 +26,11 @@ class ScrapyProjectTests(unittest.TestCase):
         self.assertIn("onebuy_crawler.pipelines.cleaning.CleaningPipeline", pipelines)
         self.assertIn("onebuy_crawler.pipelines.dedup.DedupPipeline", pipelines)
         self.assertIn("onebuy_crawler.pipelines.raw_log.RawLogPipeline", pipelines)
+
+    def test_first_text_skips_empty_text_nodes(self):
+        selector = Selector(text="<div class='sku-name'>\n <img/> 京东商品标题 </div><title>兜底标题</title>")
+
+        self.assertEqual(BaseProductSpider.first_text(selector, ".sku-name::text", "title::text"), "京东商品标题")
 
 
 if __name__ == "__main__":

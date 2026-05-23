@@ -95,6 +95,74 @@ SCHEMA_SQL = [
         KEY idx_task_keyword (keyword)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     """,
+    """
+    CREATE OR REPLACE VIEW jd_products AS
+    SELECT
+        p.product_id,
+        p.title,
+        p.category_id,
+        p.category_name,
+        p.image_url,
+        p.images,
+        p.description,
+        p.specs,
+        p.min_price,
+        p.max_price,
+        p.price_diff,
+        p.best_platform,
+        o.platform_id,
+        o.platform_name,
+        o.platform_code,
+        o.source_sku_id,
+        o.price,
+        o.original_price,
+        o.discount_rate,
+        o.sales_volume,
+        o.seller_name,
+        o.seller_rating,
+        o.seller_id,
+        o.product_url,
+        o.in_stock,
+        o.stock_quantity,
+        o.update_at
+    FROM products p
+    JOIN platform_offers o ON p.product_id = o.product_id
+    WHERE o.platform_code = 'jingdong';
+    """,
+    """
+    CREATE OR REPLACE VIEW taobao_products AS
+    SELECT
+        p.product_id,
+        p.title,
+        p.category_id,
+        p.category_name,
+        p.image_url,
+        p.images,
+        p.description,
+        p.specs,
+        p.min_price,
+        p.max_price,
+        p.price_diff,
+        p.best_platform,
+        o.platform_id,
+        o.platform_name,
+        o.platform_code,
+        o.source_sku_id,
+        o.price,
+        o.original_price,
+        o.discount_rate,
+        o.sales_volume,
+        o.seller_name,
+        o.seller_rating,
+        o.seller_id,
+        o.product_url,
+        o.in_stock,
+        o.stock_quantity,
+        o.update_at
+    FROM products p
+    JOIN platform_offers o ON p.product_id = o.product_id
+    WHERE o.platform_code = 'taobao';
+    """,
 ]
 
 

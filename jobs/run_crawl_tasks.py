@@ -48,6 +48,11 @@ def main() -> None:
     parser.add_argument("--manual-search-wait", action="store_true", help="Pause for manual search before each task.")
     parser.add_argument("--manual-search-only", action="store_true", help="Never auto-submit search during manual search mode.")
     parser.add_argument(
+        "--manual-open-search-url",
+        action="store_true",
+        help="Open the direct search URL before manual confirmation.",
+    )
+    parser.add_argument(
         "--open-strategy",
         default="direct-first",
         choices=["direct-first", "home-first"],
@@ -155,6 +160,8 @@ def _run_capture(task: CrawlTask, args) -> tuple[int, str, str]:
         command.append("--manual-search-wait")
     if args.manual_search_only:
         command.append("--manual-search-only")
+    if args.manual_open_search_url:
+        command.append("--manual-open-search-url")
     if args.manual_verify_on_failure:
         command.append("--manual-verify-on-failure")
     if args.keep_open_on_failure:
@@ -163,7 +170,13 @@ def _run_capture(task: CrawlTask, args) -> tuple[int, str, str]:
     env = os.environ.copy()
     env.setdefault("CRAWLER_ENABLE_MYSQL", "1")
     env.setdefault("PYTHONIOENCODING", "utf-8")
-    interactive = args.login_wait or args.manual_search_wait or args.manual_verify_on_failure or args.keep_open_on_failure
+    interactive = (
+        args.login_wait
+        or args.manual_search_wait
+        or args.manual_open_search_url
+        or args.manual_verify_on_failure
+        or args.keep_open_on_failure
+    )
     try:
         if interactive:
             completed = subprocess.run(command, text=True, env=env)

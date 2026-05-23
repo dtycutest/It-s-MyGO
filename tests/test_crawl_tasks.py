@@ -43,6 +43,8 @@ class CrawlTaskTests(unittest.TestCase):
         self.assertIn("uk_task_keyword_platform", schema)
         self.assertIn("product_url TEXT", schema)
         self.assertIn("url TEXT", schema)
+        self.assertIn("CREATE OR REPLACE VIEW jd_products", schema)
+        self.assertIn("CREATE OR REPLACE VIEW taobao_products", schema)
 
     def test_load_due_tasks_can_filter_keywords(self):
         fake_cursor = FakeCursor([])
