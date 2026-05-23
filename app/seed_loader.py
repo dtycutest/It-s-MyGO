@@ -9,7 +9,7 @@ from typing import Dict, List
 
 from .schemas import Category, Platform, Product
 
-SEED_PATH = Path(__file__).parent / "seed.json"
+SEED_PATH = Path(__file__).resolve().parent.parent.parent / "crawler" / "data" / "seed.json"
 
 PLATFORM_CODE_TO_ID: Dict[str, int] = {
     "taobao": 1,
