@@ -86,6 +86,37 @@ def healthcheck() -> ApiResponse[str]:
     return ApiResponse.success("ok", message="服务正常")
 
 
+@app.get("/crawler/seed", summary="获取爬虫原始数据", tags=["爬虫"])
+def get_seed_records(
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=100),
+    platform: Optional[str] = Query(None, description="按平台筛选: taobao, jingdong"),
+):
+    records = data.seed_records
+    if platform:
+        records = [r for r in records if r.get("platform_code") == platform]
+    paged = paginate(records, page, page_size)
+    return ApiResponse.success(paged)
+
+
+@app.get("/crawler/stats", summary="获取爬虫数据统计", tags=["爬虫"])
+def get_seed_stats():
+    records = data.seed_records
+    platform_counts: dict = {}
+    category_counts: dict = {}
+    for r in records:
+        pc = r.get("platform_code", "unknown")
+        platform_counts[pc] = platform_counts.get(pc, 0) + 1
+        cat = r.get("category_text", "未分类")
+        category_counts[cat] = category_counts.get(cat, 0) + 1
+    return ApiResponse.success({
+        "total_records": len(records),
+        "total_products": len(data.products),
+        "platforms": platform_counts,
+        "categories": category_counts,
+    })
+
+
 @app.post("/auth/login", summary="微信登录", tags=["认证"], response_model=ApiResponse[TokenPair], include_in_schema=True)
 def login(payload: dict = Body(...)) -> ApiResponse[TokenPair]:
     code = payload.get("code")
