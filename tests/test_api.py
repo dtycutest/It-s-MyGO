@@ -22,7 +22,17 @@ def test_login_and_profile():
 
 
 def test_product_search():
-    resp = client.get("/products/search", params={"keyword": "iphone"})
+    # 先登录获取 token
+    login_resp = client.post(
+        "/auth/login",
+        json={"code": "demo", "raw_data": "raw", "signature": "sig"},
+    )
+    token = login_resp.json()["data"]["access_token"]
+    resp = client.get(
+        "/products/search",
+        params={"keyword": "iphone"},
+        headers={"Authorization": f"Bearer {token}"},
+    )
     assert resp.status_code == 200
     payload = resp.json()
     assert payload["code"] == 0

@@ -126,8 +126,9 @@ def search_products(
     max_price: Optional[float] = Query(None, ge=0),
     platform: Optional[str] = Query(None),
     sort: str = Query("price_asc", pattern="^(price_asc|price_desc|sales_desc|rating_desc)$"),
+    user: User = Depends(get_current_user),
 ):
-    data.record_search(keyword)
+    data.record_search(user.user_id, keyword)
     keyword_lower = keyword.lower()
     results = [p for p in data.products if keyword_lower in p.title.lower()]
     if category_id:
@@ -345,7 +346,8 @@ def list_browse_history(
     page_size: int = Query(20, ge=1, le=100),
     user: User = Depends(get_current_user),
 ):
-    history = sorted(data.browse_history, key=lambda h: h.viewed_at, reverse=True)
+    user_history = [h for h in data.browse_history if h.user_id == user.user_id]
+    history = sorted(user_history, key=lambda h: h.viewed_at, reverse=True)
     paged = paginate(history, page, page_size)
     return ApiResponse.success(paged)
 
@@ -363,6 +365,7 @@ def add_browse_history(
         raise_api_error(404008, "商品不存在", status_code=404)
     item = BrowseHistoryItem(
         history_id=data.next_history_id(),
+        user_id=user.user_id,
         product_id=product_id,
         product_title=product.title,
         viewed_at=datetime.now(timezone.utc),
@@ -373,7 +376,7 @@ def add_browse_history(
 
 @app.delete("/users/browse-history", summary="清除浏览历史", tags=["浏览历史"], response_model=ApiResponse[None])
 def clear_browse_history(user: User = Depends(get_current_user)):
-    data.browse_history.clear()
+    data.browse_history = [h for h in data.browse_history if h.user_id != user.user_id]
     return ApiResponse.success(None, message="清除成功")
 
 
@@ -383,7 +386,8 @@ def list_search_records(
     page_size: int = Query(20, ge=1, le=100),
     user: User = Depends(get_current_user),
 ):
-    sorted_records = sorted(data.search_records, key=lambda r: r.searched_at, reverse=True)
+    user_records = [r for r in data.search_records if r.user_id == user.user_id]
+    sorted_records = sorted(user_records, key=lambda r: r.searched_at, reverse=True)
     paged = paginate(sorted_records, page, page_size)
     return ApiResponse.success(paged)
 

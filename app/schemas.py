@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Dict, Generic, List, Optional, TypeVar
+from typing import Any, Dict, Generic, List, Literal, Optional, TypeVar
 
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field
 
 """
 Schema definitions aligned with openapi.json.
@@ -13,14 +13,14 @@ see README for the English overview of each domain object.
 
 
 class Platform(BaseModel):
-    platform_id: int = Field(..., description="平台ID")
-    platform_name: str = Field(..., description="平台名称")
-    platform_code: str = Field(..., description="平台代码")
+    platform_id: int = Field(..., ge=1, le=5, description="平台ID (1=淘宝, 2=京东, 3=拼多多, 4=亚马逊, 5=其他)")
+    platform_name: Literal["淘宝", "京东", "拼多多", "亚马逊", "其他"] = Field(..., description="平台名称")
+    platform_code: Literal["taobao", "jingdong", "pinduoduo", "amazon", "other"] = Field(..., description="平台代码")
     price: float = Field(..., ge=0, description="当前价格")
     original_price: Optional[float] = Field(None, ge=0, description="原价")
     discount_rate: Optional[int] = Field(None, ge=0, le=100, description="折扣率")
     in_stock: bool = True
-    product_url: Optional[HttpUrl] = None
+    product_url: Optional[str] = None
     seller_id: Optional[str] = None
     seller_name: Optional[str] = None
     seller_rating: Optional[float] = Field(None, ge=0, le=5)
@@ -35,8 +35,8 @@ class Product(BaseModel):
     category_id: int
     category_name: Optional[str] = None
     description: Optional[str] = None
-    image_url: Optional[HttpUrl] = None
-    images: List[HttpUrl] = []
+    image_url: Optional[str] = None
+    images: List[str] = []
     min_price: float
     max_price: float
     best_platform: Optional[str] = None
@@ -57,13 +57,13 @@ class User(BaseModel):
     user_id: int
     openid: str
     nick_name: str
-    avatar_url: Optional[HttpUrl] = None
+    avatar_url: Optional[str] = None
     gender: int = 2
     province: Optional[str] = None
     city: Optional[str] = None
     created_at: datetime
     updated_at: datetime
-    vip_level: int = 0
+    vip_level: int = Field(0, ge=0, le=1)
     vip_expire_at: Optional[datetime] = None
 
 
@@ -72,7 +72,7 @@ class Favorite(BaseModel):
     user_id: int
     product_id: str
     product_title: str
-    product_image: Optional[HttpUrl] = None
+    product_image: Optional[str] = None
     product_min_price: Optional[float] = None
     notes: Optional[str] = None
     created_at: datetime
@@ -96,12 +96,14 @@ class PriceAlert(BaseModel):
 
 class BrowseHistoryItem(BaseModel):
     history_id: int
+    user_id: int
     product_id: str
     product_title: str
     viewed_at: datetime
 
 
 class SearchRecord(BaseModel):
+    user_id: int
     keyword: str
     searched_at: datetime
 

@@ -231,12 +231,14 @@ price_alerts: List[PriceAlert] = [
 browse_history: List[BrowseHistoryItem] = [
     BrowseHistoryItem(
         history_id=1,
+        user_id=default_user.user_id,
         product_id=products[2].product_id,
         product_title=products[2].title,
         viewed_at=now - timedelta(hours=12),
     ),
     BrowseHistoryItem(
         history_id=2,
+        user_id=default_user.user_id,
         product_id=products[0].product_id,
         product_title=products[0].title,
         viewed_at=now - timedelta(hours=6),
@@ -244,9 +246,9 @@ browse_history: List[BrowseHistoryItem] = [
 ]
 
 search_records: List[SearchRecord] = [
-    SearchRecord(keyword="iPhone 15", searched_at=now - timedelta(days=1)),
-    SearchRecord(keyword="MacBook Air", searched_at=now - timedelta(days=2)),
-    SearchRecord(keyword="Dyson 吸尘器", searched_at=now - timedelta(days=2, hours=5)),
+    SearchRecord(keyword="iPhone 15", searched_at=now - timedelta(days=1), user_id=default_user.user_id),
+    SearchRecord(keyword="MacBook Air", searched_at=now - timedelta(days=2), user_id=default_user.user_id),
+    SearchRecord(keyword="Dyson 吸尘器", searched_at=now - timedelta(days=2, hours=5), user_id=default_user.user_id),
 ]
 
 analytics_events: List[AnalyticsEvent] = []
@@ -276,8 +278,8 @@ def get_categories_by_parent(parent_id: int) -> List[Category]:
     return [c for c in categories if c.parent_id == parent_id]
 
 
-def record_search(keyword: str) -> None:
-    search_records.insert(0, SearchRecord(keyword=keyword, searched_at=datetime.now(timezone.utc)))
+def record_search(user_id: int, keyword: str) -> None:
+    search_records.insert(0, SearchRecord(user_id=user_id, keyword=keyword, searched_at=datetime.now(timezone.utc)))
     if len(search_records) > 100:
         del search_records[100:]
 
