@@ -2,14 +2,13 @@
 
 ## 当前目标
 
-项目是“**一次买够**”网购比价平台。当前重点是实现爬虫模块，先聚焦 **京东数据获取**，后续再扩展淘宝。
+项目是“**一次买够**”网购比价平台。爬虫模块负责采集京东、淘宝商品数据，清洗后写入 MySQL，供后端接口和前端小程序做搜索、比价、详情展示、价格历史和购买跳转。
 
-用户负责爬虫部分，要求能够抓取商品数据并写入 MySQL，供后端接口查询：
+当前验收重点已经从“尽量自动爬任意搜索词”调整为“稳定准备一批可展示的真实商品数据”：
 
-- `products`
-- `platform_offers`
-- `price_history`
-- `raw_crawl_records`
+- 京东：使用 **正常浏览器手动搜索 + 复制搜索结果 HTML + 本地解析入库** 作为主路径。
+- 淘宝：使用 **CDP 连接真实 Edge + 手动搜索到结果页 + 当前页采集** 作为主路径。
+- 商品：先准备 10 个价格相对稳定、配置差异少的验收商品，每个平台每个商品抓约 10 条。
 
 ## 当前工作目录
 
@@ -23,65 +22,7 @@ D:\study_file\Junior\ComprehensiveComputerProject\onebuy_crawler
 D:\study_file\Junior\ComprehensiveComputerProject\onebuy_crawler\.venv
 ```
 
-Python：
-
-```text
-Python 3.14.2
-```
-
-## 已实现内容
-
-已经从零实现了一个独立爬虫工程：
-
-```text
-onebuy_crawler/
-  jobs/
-    browser_capture_search.py
-    run_search.py
-    init_schema.py
-    refresh_prices.py
-    backfill_details.py
-  onebuy_crawler/
-    spiders/
-      jd_search.py
-      jd_detail.py
-      taobao_search.py
-      taobao_detail.py
-    pipelines/
-      cleaning.py
-      dedup.py
-      mysql.py
-      raw_log.py
-    services/
-      browser_extractors.py
-      pipeline_runner.py
-      db.py
-      matcher.py
-      normalizer.py
-      sku.py
-```
-
-其中最关键的是：
-
-- `jobs/browser_capture_search.py`
-  - 使用 Playwright 打开真实浏览器。
-  - 监听浏览器 Network Response。
-  - 同时从页面 DOM 做兜底提取。
-  - 提取商品标题、价格、链接、店铺、图片等字段。
-  - 继续复用现有 pipeline 写入 MySQL。
-
-- `onebuy_crawler/services/browser_extractors.py`
-  - 负责从京东/淘宝响应 JSON 或 DOM 行中提取 `RawProductItem`。
-  - 已加入关键词过滤，防止京东推荐流脏数据混入。
-
-- `onebuy_crawler/services/pipeline_runner.py`
-  - 让非 Scrapy 入口也能复用：
-    - `CleaningPipeline`
-    - `DedupPipeline`
-    - `RawLogPipeline`
-    - `MySqlPipeline`
-
-## 当前数据库状态
+## 数据库和入库流程
 
 MySQL 数据库名：
 
@@ -89,229 +30,186 @@ MySQL 数据库名：
 onebuy
 ```
 
-`.env` 中已经开启：
+`.env` 中应开启：
 
 ```text
 CRAWLER_ENABLE_MYSQL=1
-CRAWLER_USE_COOKIES=0
 ```
 
 不要在交接内容里暴露数据库密码。需要时直接读取项目 `.env`。
 
-数据库初始化命令：
+初始化数据库：
 
 ```powershell
 .\.venv\Scripts\python.exe -m jobs.init_schema
 ```
 
-## 已经验证通过
-
-测试通过：
-
-```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests
-```
-
-结果：
+采集到的数据统一走：
 
 ```text
-Ran 16 tests
-OK
+CleaningPipeline -> DedupPipeline -> RawLogPipeline -> MySqlPipeline
 ```
 
-编译检查通过：
-
-```powershell
-.\.venv\Scripts\python.exe -m compileall jobs onebuy_crawler tests
-```
-
-Scrapy spider 能加载：
-
-```powershell
-.\.venv\Scripts\scrapy.exe list
-```
-
-输出包括：
+主要表：
 
 ```text
-jd_detail
-jd_search
-taobao_detail
-taobao_search
+products
+platform_offers
+price_history
+raw_crawl_records
+crawl_tasks
 ```
 
-## 京东当前已成功
+## 当前稳定采集方案
 
-用户运行过：
+### 京东：HTML 导入为主
+
+京东自动浏览器搜索现在不稳定，常见现象是搜索后被重定向到首页或异常页。不要反复用脚本刷京东搜索页。
+
+推荐流程：
+
+1. 用普通浏览器打开京东并手动搜索商品。
+2. 等商品列表显示，必要时向下滚动一下。
+3. F12 打开 Console，执行：
+
+```javascript
+(() => {
+  const html = document.documentElement.outerHTML;
+  copy(html);
+  console.log("已复制页面HTML，长度：", html.length);
+})();
+```
+
+4. 保存剪贴板内容：
 
 ```powershell
-.\.venv\Scripts\python.exe -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --login-wait
+New-Item -ItemType Directory -Force data\jd_search_html
+Get-Clipboard -Raw | Set-Content -Path "data\jd_search_html\yuhua_huozhe.html" -Encoding UTF8
 ```
 
-输出：
+5. 导入：
+
+```powershell
+$env:CRAWLER_ENABLE_MYSQL="1"
+
+.\.venv\Scripts\python.exe -m jobs.import_copied_search_html `
+  --keyword "余华 活着" `
+  --input data\jd_search_html\yuhua_huozhe.html `
+  --limit 10
+```
+
+成功时重点看：
 
 ```text
-请在打开的浏览器中完成登录/定位后回到终端按 Enter 继续...
-browser_capture finished: platform=jd, keyword=iPhone 15, items=20
+rows      从 HTML 解析到的商品卡片数量
+matched   通过关键词过滤的数量
+imported  实际入库数量
+mysql=1   已写入 MySQL
 ```
 
-这表示：
+如果 `rows>0` 但 `matched=0`，通常是关键词太严格。比如京东书籍标题经常不包含 ISBN，`余华 活着 ISBN 9787530215593` 应改成 `余华 活着`。
 
-- 京东浏览器采集已经成功。
-- 成功抓到 20 条 `iPhone 15` 相关商品。
-- 如果 `.env` 中 `CRAWLER_ENABLE_MYSQL=1`，数据已经写入 MySQL。
+### 淘宝：CDP 手动当前页采集
 
-## 如何查看京东入库结果
-
-在项目目录运行：
+启动 Edge：
 
 ```powershell
-@'
-from scrapy.utils.project import get_project_settings
-from onebuy_crawler.services.db import mysql_connection
-
-settings = get_project_settings()
-with mysql_connection(settings) as conn:
-    with conn.cursor() as cur:
-        cur.execute("""
-            SELECT p.product_id, p.title, p.min_price, p.best_platform, o.product_url
-            FROM products p
-            JOIN platform_offers o ON p.product_id = o.product_id
-            WHERE p.title LIKE %s
-            ORDER BY p.updated_at DESC
-            LIMIT 20
-        """, ("%iPhone%15%",))
-        for row in cur.fetchall():
-            print(row)
-'@ | .\.venv\Scripts\python.exe -
+.\.venv\Scripts\python.exe -m jobs.launch_debug_browser `
+  --port 9223 `
+  --use-default-user-data `
+  --url https://www.taobao.com/
 ```
 
-查看表数量：
+另开 PowerShell，运行采集命令：
 
 ```powershell
-@'
-from scrapy.utils.project import get_project_settings
-from onebuy_crawler.services.db import mysql_connection
-
-settings = get_project_settings()
-with mysql_connection(settings) as conn:
-    with conn.cursor() as cur:
-        for table in ["products", "platform_offers", "price_history", "raw_crawl_records"]:
-            cur.execute(f"SELECT COUNT(*) FROM {table}")
-            print(table, cur.fetchone()[0])
-'@ | .\.venv\Scripts\python.exe -
+.\.venv\Scripts\python.exe -m jobs.browser_capture_search `
+  --platform taobao `
+  --keyword "维达 V2239 抽纸 3层130抽24包" `
+  --cdp-url http://127.0.0.1:9223 `
+  --pages 1 `
+  --limit 10 `
+  --timeout 60 `
+  --manual-search-wait `
+  --manual-search-only `
+  --keep-open-on-failure
 ```
 
-## 重要背景：为什么不用纯 Scrapy 抓京东/淘宝搜索页
+命令启动后，在 Edge 里手动搜索同一个关键词，确认商品列表可见后回终端按 Enter。淘宝首页搜索如果跳空白页，可以保留一个已经成功打开的搜索结果页，在结果页顶部搜索框里继续搜下一个商品。
 
-纯 Scrapy 请求京东搜索页时：
+## 当前验收商品
 
-- 京东会跳转到 `risk_handler` 风控页。
-- 后来改用 Playwright 浏览器采集后，京东可以成功抓到数据。
-
-纯 Scrapy 请求淘宝搜索页时：
-
-- 淘宝返回 CSR 骨架页或无商品 JSON。
-- 目前淘宝还没有重点实现，下一步可以参考京东浏览器采集方式继续增强。
-
-## 当前浏览器采集机制
-
-浏览器 profile 持久化目录：
+京东导入和最终查询建议用较短关键词：
 
 ```text
-browser_profiles/jd
-browser_profiles/taobao
+余华 活着
+维达 V2239 抽纸 24包
+蓝月亮 深层洁净 洗衣液 3kg
+云南白药 益优冰柠牙膏 145g
+海飞丝 怡神冰凉 洗发水 750ml
+多芬 深层营润 沐浴露 720g
+南孚 5号电池 40粒
+晨光 K35 中性笔 0.5mm 12支
+可口可乐 330ml 24罐
+雀巢咖啡 1+2 原味 100条
 ```
 
-这些目录已被 `.gitignore` 忽略，不要提交。
-
-使用方式：
-
-第一次建议：
-
-```powershell
-.\.venv\Scripts\python.exe -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --login-wait
-```
-
-如果浏览器 profile 已经登录/可用，之后可以：
-
-```powershell
-.\.venv\Scripts\python.exe -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --headless
-```
-
-## 已修复过的问题
-
-1. Python 找不到问题
-   - 原因不是用户 Python 损坏，而是之前 Codex 默认沙箱访问不到 `C:\Users\dl\AppData\...` 下的 Python。
-   - 现在已确认 `.venv` 能正常运行。
-
-2. Scrapy 2.15 弃用警告
-   - 已将 spider 入口从 `start_requests()` 更新为 `async start()`。
-   - 已调整中间件和 pipeline 签名。
-
-3. 京东 Playwright 报错
-   - 报错：
-     - `Page.goto interrupted by another navigation to https://global.jd.com/`
-     - `CancelledError`
-   - 已修复：
-     - 京东优先从 `https://www.jd.com/` 首页搜索框发起搜索。
-     - 如果导航被其他跳转打断，会等待页面稳定。
-     - response 回调读取响应失败时不再导致进程崩溃。
-
-4. 京东脏数据问题
-   - 之前可能抓到推荐流里和关键词无关的商品。
-   - 已在 `browser_extractors.py` 加关键词过滤。
-   - 例如 `iPhone 15` 会要求标题同时包含 `iPhone` 和 `15`。
-
-5. `--limit` 不严格问题
-   - 已修复。
-   - 单个网络响应返回很多商品时，也会严格截断到指定 limit。
-
-## 下一步建议
-
-1. 先确认京东数据入库质量：
-
-```powershell
-.\.venv\Scripts\python.exe -m jobs.browser_capture_search --platform jd --keyword "iPhone 15" --pages 1 --limit 20 --login-wait
-```
-
-然后查询 `products/platform_offers/price_history`。
-
-2. 多抓几个京东关键词，形成课程项目演示数据：
-
-```powershell
-.\.venv\Scripts\python.exe -m jobs.browser_capture_search --platform jd --keyword "华为 手机" --pages 1 --limit 20
-.\.venv\Scripts\python.exe -m jobs.browser_capture_search --platform jd --keyword "小米 手机" --pages 1 --limit 20
-.\.venv\Scripts\python.exe -m jobs.browser_capture_search --platform jd --keyword "蓝牙耳机" --pages 1 --limit 20
-```
-
-3. 清理之前误抓的京东推荐流脏数据。
-   - 注意：不要直接删除全部数据。
-   - 可以只删除标题不匹配关键词、或采集时间早于关键词过滤修复前的记录。
-   - 如需执行删除，先备份或让用户确认。
-
-4. 后续增强：
-   - 优化京东字段提取：店铺、销量、图片、评论数。
-   - 增加详情页补采。
-   - 再做淘宝浏览器采集。
-   - 给后端提供查询 SQL 或接口样例。
-
-## 写进课程报告的描述
-
-可以这样概括：
+相关文件：
 
 ```text
-本项目爬虫模块采用 Playwright 浏览器自动化方案，启动真实浏览器访问京东搜索页，
-通过手动登录和浏览器 profile 持久化保持普通用户访问状态。程序监听页面加载过程中的
-Network Response，并结合 DOM 兜底解析，提取商品标题、价格、店铺、图片、详情链接等字段。
-采集到的数据经过统一清洗、去重、SKU 生成和价格历史记录流程，最终写入 MySQL 的
-products、platform_offers、price_history 等表，为后端商品搜索、比价和价格趋势功能提供数据基础。
+data\exact_product_keywords.txt
+data\compare_keywords.txt
+data\crawl_keywords_20.txt
+data\taobao_priority_keywords_20.txt
+data\jd_search_html\README.md
 ```
+
+`data\taobao_priority_keywords_20.txt` 保留更完整的淘宝搜索词。文件名里的 `20` 是早期记录遗留，目前实际是 10 个商品。
+
+## 当前代码能力
+
+已实现：
+
+- 京东复制 HTML 导入：`jobs.import_copied_search_html`
+- 京东/淘宝浏览器采集：`jobs.browser_capture_search`
+- CDP 调试浏览器启动：`jobs.launch_debug_browser`
+- 商品查询：`jobs.query_products`
+- 测试数据导出/导入：`jobs.export_seed_data`、`jobs.import_seed_data`
+- 清洗、去重、价格历史、失败日志入库
+- 商品 URL 保留到 `platform_offers.product_url`，前端可以用它跳转到淘宝或京东购买
+- 稳定验收商品分类规则已扩展到图书、纸品、衣物清洁、口腔护理、洗护沐浴、电池、文具、饮料、咖啡冲饮
+
+## 查询和导出
+
+查询某个商品：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.query_products --keyword "维达 V2239 抽纸 24包" --platform all --page 1 --page-size 10
+```
+
+导出给前后端测试：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.export_seed_data `
+  --keyword-file data\exact_product_keywords.txt `
+  --platform all `
+  --limit 500 `
+  --output data\seed.json
+```
+
+仓库里已有的旧 seed JSON 可能仍是早期数码类样例。等 10 个验收商品完成入库后，需要重新导出 `data\seed.json` 或团队要用的 seed 文件。
+
+## 注意事项
+
+- 不要把 `.env`、`browser_profiles/`、`output/` 提交。
+- `data/jd_search_html/*.html` 已加入 `.gitignore`，避免提交大段复制 HTML。
+- 采集时不实现验证码破解、登录绕过或高频请求。
+- 如果目标站点提示访问异常、验证码或访问频繁，应停止自动化采集，使用 HTML 导入、本地缓存或 seed 数据保障验收和联调。
 
 ## 新对话继续时可以直接说
 
 ```text
 请读取 onebuy_crawler/NEXT_CONVERSATION_HANDOFF.md，继续“一次买够”爬虫任务。
-当前京东 browser_capture_search 已经能抓到数据并入库，下一步请帮我检查数据库结果、
-清理脏数据，并继续完善京东字段质量或淘宝采集。
+当前京东主路径已经切换为手动复制搜索结果 HTML 后本地导入；淘宝主路径是 CDP 手动搜索当前页采集。
+请优先围绕 10 个稳定验收商品检查数据入库、分类、查询和前端比价展示。
 ```

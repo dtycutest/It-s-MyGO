@@ -22,6 +22,15 @@ class RebuildCategoriesTests(unittest.TestCase):
         self.assertEqual(len(update_calls), 1)
         self.assertEqual(update_calls[0][1], (100, "手机-智能手机", "SKU1"))
 
+    def test_rebuild_categories_updates_new_stable_demo_rows(self):
+        cursor = FakeCursor([("SKU1", "可口可乐 330ml 24罐 整箱", "未分类")])
+        with patch("jobs.rebuild_categories.get_project_settings", return_value=None), patch(
+            "jobs.rebuild_categories.mysql_connection", return_value=FakeConnection(cursor)
+        ), patch("sys.argv", ["rebuild_categories", "--apply"]):
+            rebuild_categories.main()
+        update_calls = [call for call in cursor.calls if call[0].lstrip().upper().startswith("UPDATE")]
+        self.assertEqual(update_calls[0][1], (700, "食品饮料-碳酸饮料", "SKU1"))
+
     def test_force_rebuild_ignores_existing_category(self):
         cursor = FakeCursor([("SKU1", "罗技 K380 蓝牙键盘", "旧分类")])
         with patch("jobs.rebuild_categories.get_project_settings", return_value=None), patch(

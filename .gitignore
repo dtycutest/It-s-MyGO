@@ -6,6 +6,7 @@ __pycache__/
 cookies/
 browser_profiles/
 output/
+data/jd_search_html/*.html
 
 .scrapy/
 .pytest_cache/

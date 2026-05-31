@@ -1,0 +1,23 @@
+# Taobao acceptance dataset keywords for stable comparison demos.
+# The file name keeps "20" only for compatibility with earlier notes.
+# Taobao is collected manually via CDP, so slightly fuller product specs are OK.
+# Product type: 图书
+余华 活着 ISBN 9787530215593
+# Product type: 纸品
+维达 V2239 抽纸 3层130抽24包
+# Product type: 衣物清洁
+蓝月亮 深层洁净护理洗衣液 3kg
+# Product type: 口腔护理
+云南白药 益优冰柠牙膏 145g
+# Product type: 洗护沐浴
+海飞丝 怡神冰凉去屑洗发水 750ml
+# Product type: 洗护沐浴
+多芬 深层营润沐浴露 720g
+# Product type: 家用电池
+南孚 5号电池 聚能环4代 40粒
+# Product type: 书写工具
+晨光 K35 中性笔 0.5mm 黑色 12支
+# Product type: 碳酸饮料
+可口可乐 330ml 24罐 整箱
+# Product type: 咖啡冲饮
+雀巢咖啡 1+2 原味 15g 100条
