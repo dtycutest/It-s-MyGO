@@ -25,7 +25,7 @@ onebuy_crawler/
     pipelines/                  # 清洗、去重、原始日志、MySQL 入库
     spiders/                    # Scrapy spider
   data/
-    exact_product_keywords.txt  # 当前 10 个验收商品关键词
+    exact_product_keywords.txt  # 验收商品关键词记录，当前导出以前端测试包为准
     compare_keywords.txt        # 前端比价查询关键词
     crawl_keywords_20.txt       # 验收抓取关键词，文件名保留兼容旧记录
     taobao_priority_keywords_20.txt
@@ -97,6 +97,31 @@ jd_products         京东商品查询视图
 taobao_products     淘宝商品查询视图
 ```
 
+## 当前数据进度
+
+截至最近一次清洗和导出，当前 MySQL 数据已经完成手动价格清洗和一致性修复，可直接交给前后端做联调测试。
+
+```text
+products=194
+platform_offers=229
+price_history=247
+京东报价=106
+淘宝报价=123
+products_without_offers=0
+offers_without_product=0
+history_without_product=0
+missing_url=0
+bad_price=0
+summary_mismatch=0
+```
+
+说明：
+
+- `products.min_price`、`max_price`、`price_diff`、`best_platform` 已重新汇总。
+- 手动删除后没有残留孤儿商品、孤儿报价或孤儿价格历史。
+- 商品详情链接保存在 `platform_offers.product_url`，前端可以用它跳转到淘宝或京东购买。
+- `南孚 5号电池 40粒` 已不再作为当前验收商品，不需要补抓。
+
 ## 京东采集方案
 
 京东搜索页容易因为账号、IP、浏览器自动化特征触发“当前页面异常”“访问频繁”“切换账号”等页面。不要反复用脚本硬刷搜索页。当前推荐三种方式，按稳定性排序。
@@ -105,7 +130,7 @@ taobao_products     淘宝商品查询视图
 
 这是当前最稳定的京东方案。它不让爬虫打开京东网页，而是你用正常浏览器手动搜索，复制已经渲染出来的搜索结果 HTML，本地解析商品卡片。
 
-当前验收数据集建议先抓这些低配置差异商品：
+当前验收数据集建议优先保留这些低配置差异商品。`南孚 5号电池 40粒` 已从当前验收范围移除，不需要补抓：
 
 ```text
 余华 活着
@@ -114,7 +139,6 @@ taobao_products     淘宝商品查询视图
 云南白药 益优冰柠牙膏 145g
 海飞丝 怡神冰凉 洗发水 750ml
 多芬 深层营润 沐浴露 720g
-南孚 5号电池 40粒
 晨光 K35 中性笔 0.5mm 12支
 可口可乐 330ml 24罐
 雀巢咖啡 1+2 原味 100条
@@ -156,7 +180,7 @@ $env:CRAWLER_ENABLE_MYSQL="1"
   --limit 10
 ```
 
-连续导入 10 个商品时，每个商品先保存一个 HTML 文件，然后运行：
+连续导入当前验收商品时，每个商品先保存一个 HTML 文件，然后运行：
 
 ```powershell
 $env:CRAWLER_ENABLE_MYSQL="1"
@@ -168,7 +192,6 @@ $items = @(
   @{ keyword = "云南白药 益优冰柠牙膏 145g"; file = "data\jd_search_html\yunnanbaiyao_toothpaste.html" },
   @{ keyword = "海飞丝 怡神冰凉 洗发水 750ml"; file = "data\jd_search_html\head_shoulders_750ml.html" },
   @{ keyword = "多芬 深层营润 沐浴露 720g"; file = "data\jd_search_html\dove_bodywash_720g.html" },
-  @{ keyword = "南孚 5号电池 40粒"; file = "data\jd_search_html\nanfu_aa_40.html" },
   @{ keyword = "晨光 K35 中性笔 0.5mm 12支"; file = "data\jd_search_html\chenguang_k35.html" },
   @{ keyword = "可口可乐 330ml 24罐"; file = "data\jd_search_html\cocacola_330ml_24.html" },
   @{ keyword = "雀巢咖啡 1+2 原味 100条"; file = "data\jd_search_html\nescafe_1plus2_100.html" }
@@ -320,7 +343,7 @@ https://item.jd.com/10222031807639.html
 
 为了验收展示，建议每个具体商品只抓 `1` 页、`10` 条左右，关键词尽量写到型号、容量、规格或包装数，减少不同配置商品混入。例如：
 
-当前验收数据集已从原来的 20 个数码类商品，替换为 10 个价格更稳定、配置更少的商品类型：
+当前验收数据集已从原来的 20 个数码类商品，替换为更稳定、配置更少的商品类型。现在有效验收商品不再包含南孚电池：
 
 ```text
 图书       余华 活着
@@ -329,13 +352,12 @@ https://item.jd.com/10222031807639.html
 口腔护理   云南白药 益优冰柠牙膏 145g
 洗护沐浴   海飞丝 怡神冰凉 洗发水 750ml
 洗护沐浴   多芬 深层营润沐浴露 720g
-家用电池   南孚 5号电池 40粒
 书写工具   晨光 K35 中性笔 0.5mm 12支
 碳酸饮料   可口可乐 330ml 24罐
 咖啡冲饮   雀巢咖啡 1+2 原味 100条
 ```
 
-同一批关键词也记录在 `data\crawl_keywords_20.txt` 和 `data\taobao_priority_keywords_20.txt` 中；文件名保留是为了兼容已有脚本和记录。
+相关关键词记录在 `data\crawl_keywords_20.txt`、`data\taobao_priority_keywords_20.txt`、`data\exact_product_keywords.txt` 中；文件名保留是为了兼容已有脚本和记录。部分文件可能仍保留早期候选词，最终以前端测试导出包中的数据为准。
 
 ```powershell
 .\.venv\Scripts\python.exe -m jobs.browser_capture_search `
@@ -387,7 +409,6 @@ data\exact_product_keywords.txt
 云南白药 益优冰柠牙膏 145g
 海飞丝 怡神冰凉 洗发水 750ml
 多芬 深层营润 沐浴露 720g
-南孚 5号电池 40粒
 晨光 K35 中性笔 0.5mm 12支
 可口可乐 330ml 24罐
 雀巢咖啡 1+2 原味 100条
@@ -395,43 +416,85 @@ data\exact_product_keywords.txt
 
 ## 导出数据给前后端测试
 
-前后端联调不建议依赖实时爬虫。推荐先把你本机已经抓到的 MySQL 数据导出成 JSON 数据包，交给其他同学导入。
+前后端联调不建议依赖实时爬虫。推荐直接使用当前已清洗后的 JSON 导出文件。
 
-注意：仓库中已有的旧 seed 文件可能仍包含早期数码类样例。完成当前 10 个验收商品入库后，重新运行下面的导出命令，以新的 `data\exact_product_keywords.txt` 生成最新测试数据包。
-
-### 导出测试数据包
-
-导出型号级测试数据：
-
-```powershell
-.\.venv\Scripts\python.exe -m jobs.export_seed_data `
-  --keyword-file data\exact_product_keywords.txt `
-  --platform all `
-  --limit 500 `
-  --output data\seed.json
-```
-
-只导出京东：
-
-```powershell
-.\.venv\Scripts\python.exe -m jobs.export_seed_data `
-  --keyword-file data\exact_product_keywords.txt `
-  --platform jd `
-  --limit 500 `
-  --output data\team_seed_products_jd.json
-```
-
-导出后，把下面文件发给前后端同学：
+当前已经生成的最新测试导出目录：
 
 ```text
-data\seed.json
-data\exact_product_keywords.txt
-README.md
-requirements.txt
-.env.example
+output\test_exports\
 ```
 
-如果前后端只需要看数据结构，可以直接打开 JSON；如果要在他们本机后端联调，按下一节导入 MySQL。
+其中最常用的文件是：
+
+```text
+output\test_exports\products_api_response.json   前端 mock 接口响应，结构接近 openapi.json
+output\test_exports\products_list.json           纯商品数组
+output\test_exports\onebuy_seed_records_all.json 后端可重新导入 MySQL 的 seed 数据
+output\test_exports\platform_offers.csv          报价明细，方便人工检查
+output\test_exports\price_history.csv            价格历史
+output\onebuy_test_exports.zip                   以上文件的压缩包
+```
+
+前端如果只想直接拿 JSON 测页面，优先使用：
+
+```text
+output\test_exports\products_api_response.json
+```
+
+这个文件的外层结构是：
+
+```json
+{
+  "code": 0,
+  "message": "ok",
+  "data": {
+    "list": [],
+    "pagination": {}
+  }
+}
+```
+
+如果只需要商品数组，使用：
+
+```text
+output\test_exports\products_list.json
+```
+
+当前导出包包含：
+
+```text
+products=194
+offers=229
+price_history=247
+categories=12
+```
+
+### 重新导出 seed JSON
+
+如果后续数据库又发生变化，可以重新导出后端导入用 seed JSON：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.export_seed_data `
+  --platform all `
+  --limit 1000 `
+  --output output\test_exports\onebuy_seed_records_all.json
+```
+
+只导出京东 seed JSON：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.export_seed_data `
+  --platform jd `
+  --limit 1000 `
+  --output output\test_exports\onebuy_seed_records_jd.json
+```
+
+如果要把整个测试包重新压缩：
+
+```powershell
+if (Test-Path output\onebuy_test_exports.zip) { Remove-Item output\onebuy_test_exports.zip }
+Compress-Archive -Path output\test_exports\* -DestinationPath output\onebuy_test_exports.zip
+```
 
 ### 同学导入测试数据包
 
@@ -451,15 +514,16 @@ $env:CRAWLER_ENABLE_MYSQL="1"
 .\.venv\Scripts\python.exe -m jobs.init_schema
 
 .\.venv\Scripts\python.exe -m jobs.import_seed_data `
-  --seed-file data\seed.json `
-  --platform all
+  --seed-file output\test_exports\onebuy_seed_records_all.json `
+  --platform all `
+  --limit-per-keyword 100
 ```
 
 如果数据库中已有数据，只想补缺：
 
 ```powershell
 .\.venv\Scripts\python.exe -m jobs.import_seed_data `
-  --seed-file data\seed.json `
+  --seed-file output\test_exports\onebuy_seed_records_all.json `
   --platform all `
   --only-missing `
   --min-count 3

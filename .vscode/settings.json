@@ -1,0 +1,5 @@
+{
+  "files.associations": {
+    "**/data/jd_search_html/*.html": "plaintext"
+  }
+}

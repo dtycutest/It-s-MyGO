@@ -8,7 +8,7 @@
 
 - 京东：使用 **正常浏览器手动搜索 + 复制搜索结果 HTML + 本地解析入库** 作为主路径。
 - 淘宝：使用 **CDP 连接真实 Edge + 手动搜索到结果页 + 当前页采集** 作为主路径。
-- 商品：先准备 10 个价格相对稳定、配置差异少的验收商品，每个平台每个商品抓约 10 条。
+- 商品：已经完成一批真实商品数据采集、手动价格清洗和导出。`南孚 5号电池 40粒` 已不再作为当前验收商品，不需要补抓；商品数量不要求京东/淘宝完全平衡。
 
 ## 当前工作目录
 
@@ -59,6 +59,31 @@ price_history
 raw_crawl_records
 crawl_tasks
 ```
+
+## 当前数据状态
+
+最近一次整理后，数据库已经完成手动清洗后的结构修复：
+
+```text
+products=194
+platform_offers=229
+price_history=247
+京东报价=106
+淘宝报价=123
+products_without_offers=0
+offers_without_product=0
+history_without_product=0
+missing_url=0
+bad_price=0
+summary_mismatch=0
+```
+
+已处理的问题：
+
+- 合并了手动删除后残留的重复商品分组。
+- 重新汇总了 `products.min_price`、`max_price`、`price_diff`、`best_platform`。
+- 删除了最后一条规格混入的雀巢咖啡异常记录。
+- 分类重建检查为 0 个更新候选。
 
 ## 当前稳定采集方案
 
@@ -139,7 +164,7 @@ mysql=1   已写入 MySQL
 
 ## 当前验收商品
 
-京东导入和最终查询建议用较短关键词：
+京东导入和最终查询建议用较短关键词。当前有效验收商品不包含南孚电池：
 
 ```text
 余华 活着
@@ -148,7 +173,6 @@ mysql=1   已写入 MySQL
 云南白药 益优冰柠牙膏 145g
 海飞丝 怡神冰凉 洗发水 750ml
 多芬 深层营润 沐浴露 720g
-南孚 5号电池 40粒
 晨光 K35 中性笔 0.5mm 12支
 可口可乐 330ml 24罐
 雀巢咖啡 1+2 原味 100条
@@ -164,7 +188,9 @@ data\taobao_priority_keywords_20.txt
 data\jd_search_html\README.md
 ```
 
-`data\taobao_priority_keywords_20.txt` 保留更完整的淘宝搜索词。文件名里的 `20` 是早期记录遗留，目前实际是 10 个商品。
+`data\taobao_priority_keywords_20.txt` 保留更完整的淘宝搜索词。文件名里的 `20` 是早期记录遗留，当前有效验收数据以前端测试导出包为准。
+
+注意：部分关键词文件可能仍保留早期候选词，最终以前端测试导出包中的数据为准。
 
 ## 当前代码能力
 
@@ -189,15 +215,40 @@ data\jd_search_html\README.md
 
 导出给前后端测试：
 
-```powershell
-.\.venv\Scripts\python.exe -m jobs.export_seed_data `
-  --keyword-file data\exact_product_keywords.txt `
-  --platform all `
-  --limit 500 `
-  --output data\seed.json
+当前已生成最新测试包：
+
+```text
+output\test_exports\products_api_response.json
+output\test_exports\products_list.json
+output\test_exports\onebuy_seed_records_all.json
+output\test_exports\platform_offers.csv
+output\test_exports\price_history.csv
+output\test_exports\category_summary.csv
+output\onebuy_test_exports.zip
 ```
 
-仓库里已有的旧 seed JSON 可能仍是早期数码类样例。等 10 个验收商品完成入库后，需要重新导出 `data\seed.json` 或团队要用的 seed 文件。
+前端直接 mock 接口时优先用：
+
+```text
+output\test_exports\products_api_response.json
+```
+
+后端重新导入 MySQL 时使用：
+
+```text
+output\test_exports\onebuy_seed_records_all.json
+```
+
+重新导出后端 seed JSON：
+
+```powershell
+.\.venv\Scripts\python.exe -m jobs.export_seed_data `
+  --platform all `
+  --limit 1000 `
+  --output output\test_exports\onebuy_seed_records_all.json
+```
+
+仓库里已有的旧 seed JSON 可能仍是早期数码类样例。当前交付应使用 `output\test_exports` 中的最新导出文件。
 
 ## 注意事项
 
@@ -211,5 +262,5 @@ data\jd_search_html\README.md
 ```text
 请读取 onebuy_crawler/NEXT_CONVERSATION_HANDOFF.md，继续“一次买够”爬虫任务。
 当前京东主路径已经切换为手动复制搜索结果 HTML 后本地导入；淘宝主路径是 CDP 手动搜索当前页采集。
-请优先围绕 10 个稳定验收商品检查数据入库、分类、查询和前端比价展示。
+当前数据库已完成手动价格清洗和一致性修复，最新前后端测试数据在 output\test_exports 和 output\onebuy_test_exports.zip。
 ```
