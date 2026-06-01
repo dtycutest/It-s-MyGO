@@ -416,24 +416,21 @@ data\exact_product_keywords.txt
 
 ## 导出数据给前后端测试
 
-前后端联调不建议依赖实时爬虫。推荐直接使用当前已清洗后的 JSON 导出文件。
+前后端联调不建议依赖实时爬虫。推荐直接使用当前已清洗后的 seed JSON。
 
-当前已经生成的最新测试导出目录：
-
-```text
-output\test_exports\
-```
-
-其中最常用的文件是：
+仓库中已经提交的最新后端联调 seed 文件：
 
 ```text
-output\test_exports\products_api_response.json   前端 mock 接口响应，结构接近 openapi.json
-output\test_exports\products_list.json           纯商品数组
-output\test_exports\onebuy_seed_records_all.json 后端可重新导入 MySQL 的 seed 数据
-output\test_exports\platform_offers.csv          报价明细，方便人工检查
-output\test_exports\price_history.csv            价格历史
-output\onebuy_test_exports.zip                   以上文件的压缩包
+data\onebuy_seed_records_all.json
 ```
+
+这个文件用于后端重新导入 MySQL，当前包含：
+
+```text
+seed_records=229
+```
+
+`output\test_exports\` 是本机重新导出时生成的临时目录，默认不会提交到 GitHub。如果需要给前端额外提供 mock 接口响应或商品数组，可以从本机导出目录复制：
 
 前端如果只想直接拿 JSON 测页面，优先使用：
 
@@ -477,7 +474,7 @@ categories=12
 .\.venv\Scripts\python.exe -m jobs.export_seed_data `
   --platform all `
   --limit 1000 `
-  --output output\test_exports\onebuy_seed_records_all.json
+  --output data\onebuy_seed_records_all.json
 ```
 
 只导出京东 seed JSON：
@@ -514,7 +511,7 @@ $env:CRAWLER_ENABLE_MYSQL="1"
 .\.venv\Scripts\python.exe -m jobs.init_schema
 
 .\.venv\Scripts\python.exe -m jobs.import_seed_data `
-  --seed-file output\test_exports\onebuy_seed_records_all.json `
+  --seed-file data\onebuy_seed_records_all.json `
   --platform all `
   --limit-per-keyword 100
 ```
@@ -523,7 +520,7 @@ $env:CRAWLER_ENABLE_MYSQL="1"
 
 ```powershell
 .\.venv\Scripts\python.exe -m jobs.import_seed_data `
-  --seed-file output\test_exports\onebuy_seed_records_all.json `
+  --seed-file data\onebuy_seed_records_all.json `
   --platform all `
   --only-missing `
   --min-count 3
