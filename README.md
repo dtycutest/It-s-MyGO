@@ -414,56 +414,20 @@ data\exact_product_keywords.txt
 雀巢咖啡 1+2 原味 100条
 ```
 
-## 导出数据给前后端测试
+## 数据给前后端测试
 
-前后端联调不建议依赖实时爬虫。推荐直接使用当前已清洗后的 seed JSON。
+GitHub 上不会有 `output` 目录；`output` 只用于本机运行时生成临时结果，不作为团队拉取代码后的测试数据来源。
 
-仓库中已经提交的最新后端联调 seed 文件：
+前后端同学从 GitHub 拉取 `crawler-module` 分支后，统一使用仓库里的 seed 数据：
 
 ```text
 data\onebuy_seed_records_all.json
 ```
 
-这个文件用于后端重新导入 MySQL，当前包含：
+这个文件已经提交到仓库，用于后端重新导入 MySQL，也可以给前端临时读取其中的 `records` 数组做页面 mock。当前包含：
 
 ```text
 seed_records=229
-```
-
-`output\test_exports\` 是本机重新导出时生成的临时目录，默认不会提交到 GitHub。如果需要给前端额外提供 mock 接口响应或商品数组，可以从本机导出目录复制：
-
-前端如果只想直接拿 JSON 测页面，优先使用：
-
-```text
-output\test_exports\products_api_response.json
-```
-
-这个文件的外层结构是：
-
-```json
-{
-  "code": 0,
-  "message": "ok",
-  "data": {
-    "list": [],
-    "pagination": {}
-  }
-}
-```
-
-如果只需要商品数组，使用：
-
-```text
-output\test_exports\products_list.json
-```
-
-当前导出包包含：
-
-```text
-products=194
-offers=229
-price_history=247
-categories=12
 ```
 
 ### 重新导出 seed JSON
@@ -483,19 +447,12 @@ categories=12
 .\.venv\Scripts\python.exe -m jobs.export_seed_data `
   --platform jd `
   --limit 1000 `
-  --output output\test_exports\onebuy_seed_records_jd.json
-```
-
-如果要把整个测试包重新压缩：
-
-```powershell
-if (Test-Path output\onebuy_test_exports.zip) { Remove-Item output\onebuy_test_exports.zip }
-Compress-Archive -Path output\test_exports\* -DestinationPath output\onebuy_test_exports.zip
+  --output data\onebuy_seed_records_jd.json
 ```
 
 ### 同学导入测试数据包
 
-同学拿到数据包后，在自己的项目目录运行：
+同学拉取代码后，在自己的项目目录运行：
 
 ```powershell
 # 示例：把路径替换成自己本机实际保存 onebuy_crawler 的位置
@@ -577,7 +534,7 @@ $env:CRAWLER_ENABLE_MYSQL="0"
   --keyword "余华 活着" `
   --input data\jd_search_html\yuhua_huozhe.html `
   --limit 10 `
-  --output-file output\yuhua_debug.jsonl
+  --output-file data\yuhua_debug.jsonl
 ```
 
 ## 开发检查
