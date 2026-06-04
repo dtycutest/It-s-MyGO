@@ -1,0 +1,28 @@
+# Node (frontend)
+frontend/node_modules/
+frontend/dist/
+
+# Python (backend + crawler)
+__pycache__/
+*.pyc
+.venv/
+env/
+.pytest_cache/
+
+# Scrapy
+.scrapy/
+output/
+crawler/data/jd_search_html/*.html
+
+# Environment
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

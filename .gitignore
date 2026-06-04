@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.eggs/
+dist/
+*.egg
+.venv/
+venv/
+env/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files with secrets
+.env
+!.env.example
+
+# Crawler
+browser_profiles/
+*.log
+
+# Temp files
+temp_repo/
+*.pyc
+
+# Check scripts
+check_report.py
+update_report.py
+check_images.py
+read_template.py
+generate_report.py
+verify_report.py
+output.txt

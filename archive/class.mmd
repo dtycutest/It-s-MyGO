@@ -1,0 +1,135 @@
+﻿classDiagram
+    class App {
+        +router: Router
+        +store: Pinia
+        +init()
+        +mount()
+    }
+
+    class BaseComponent {
+        +props: Object
+        +data: Object
+        +methods: Object
+        +mounted()
+        +destroyed()
+    }
+
+    class PageComponent {
+        +onLoad(options)
+        +onShow()
+        +onHide()
+        +onUnload()
+    }
+
+    class Store {
+        +state: Object
+        +getters: Object
+        +actions: Object
+    }
+
+    class ApiService {
+        +baseURL: string
+        +timeout: number
+        +get(url, params)
+        +post(url, data)
+        +put(url, data)
+        +delete(url, params)
+    }
+
+    class UserStore {
+        +userInfo: User
+        +isLoggedIn: boolean
+        +login(credentials)
+        +logout()
+        +updateProfile(data)
+    }
+
+    class ProductStore {
+        +products: Product[]
+        +currentProduct: Product
+        +searchProducts(query)
+        +getProductDetail(id)
+        +compareProducts(ids)
+    }
+
+    class FavoriteStore {
+        +favorites: Product[]
+        +addFavorite(product)
+        +removeFavorite(id)
+        +getFavorites()
+    }
+
+    class AlertStore {
+        +alerts: Alert[]
+        +addAlert(alert)
+        +removeAlert(id)
+        +getAlerts()
+    }
+
+    class ProductApi {
+        +searchProducts(query)
+        +getProductDetail(id)
+        +getProductPlatforms(id)
+        +getPriceHistory(id)
+    }
+
+    class UserApi {
+        +login(credentials)
+        +register(data)
+        +getUserInfo()
+        +updateUserInfo(data)
+    }
+
+    class Product {
+        +id: string
+        +name: string
+        +description: string
+        +image: string
+        +platforms: Platform[]
+        +getLowestPrice()
+        +getBestPlatform()
+    }
+
+    class Platform {
+        +id: string
+        +name: string
+        +price: number
+        +rating: number
+        +url: string
+        +getPriceScore()
+        +getReliabilityScore()
+    }
+
+    class User {
+        +id: string
+        +nickname: string
+        +avatar: string
+        +phone: string
+        +favorites: Product[]
+        +alerts: Alert[]
+    }
+
+    App --> BaseComponent
+    BaseComponent <|-- PageComponent
+    Store <|-- UserStore
+    Store <|-- ProductStore
+    Store <|-- FavoriteStore
+    Store <|-- AlertStore
+    ApiService <|-- ProductApi
+    ApiService <|-- UserApi
+
+    PageComponent --> UserStore
+    PageComponent --> ProductStore
+    PageComponent --> FavoriteStore
+    PageComponent --> AlertStore
+    PageComponent --> ProductApi
+    PageComponent --> UserApi
+
+    UserStore --> UserApi
+    ProductStore --> ProductApi
+    FavoriteStore --> ProductApi
+    AlertStore --> ProductApi
+
+    Product *-- Platform
+    User *-- Product
+    User *-- Alert

@@ -1,0 +1,12 @@
+# Stable products for cross-platform comparison demos.
+# Keep one product per line. These keywords are intentionally specific enough
+# for comparison, but not so strict that JD/HTML import filters out real rows.
+余华 活着
+维达 V2239 抽纸 24包
+蓝月亮 深层洁净 洗衣液 3kg
+云南白药 益优冰柠牙膏 145g
+海飞丝 怡神冰凉 洗发水 750ml
+多芬 深层营润 沐浴露 720g
+晨光 K35 中性笔 0.5mm 12支
+可口可乐 330ml 24罐
+雀巢咖啡 1+2 原味 100条

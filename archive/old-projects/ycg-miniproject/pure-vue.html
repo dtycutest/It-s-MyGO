@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纯 Vue 测试页</title>
+    <style>
+        body { font-family: sans-serif; padding: 30px; background: #f5f5f5; }
+        .box { background: white; padding: 25px; margin: 15px 0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        .success { color: #28a745; }
+        .warning { color: #ffc107; }
+    </style>
+</head>
+<body>
+    <h1>纯 Vue 测试页面</h1>
+    
+    <div class="box">
+        <p>这是一个不依赖 uni-app 的页面，用于验证 Vue 是否工作。</p>
+    </div>
+    
+    <div id="app"></div>
+    
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+        
+        console.log('[测试] Vue 模块加载成功');
+        
+        createApp({
+            setup() {
+                const message = ref('✅ Vue 正在工作！');
+                const count = ref(0);
+                
+                return { message, count };
+            },
+            template: `
+                <div class="box">
+                    <h3 class="success">{{ message }}</h3>
+                    <p>点击计数: <strong>{{ count }}</strong></p>
+                    <button @click="count++">点击增加</button>
+                </div>
+                <div class="box">
+                    <h3>Vue 功能正常！</h3>
+                    <p>如果你看到这个，说明 Vue 没问题</p>
+                    <p>问题可能在 uni-app 配置</p>
+                </div>
+            `
+        }).mount('#app');
+        
+        console.log('[测试] Vue app 已挂载');
+    </script>
+</body>
+</html>
