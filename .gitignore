@@ -37,6 +37,23 @@ Thumbs.db
 browser_profiles/
 *.log
 
-# Temp files
+# Temp / generated files
 temp_repo/
-*.pyc
+_submission/
+*.zip
+*.rar
+output.txt
+check_report.py
+update_report.py
+check_images.py
+read_template.py
+generate_report.py
+verify_report.py
+
+# Template docx (not part of submission)
+计算机综合项目实践实验报告模板.docx
+
+# Old / archived projects (not the main submission)
+ycg-miniproject-new/
+archive/old-projects/
+archive/generate_report.py
