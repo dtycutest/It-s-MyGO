@@ -18,7 +18,6 @@ yarn-error.log*
 
 # Build outputs
 dist/
-build/
 
 # IDE
 .vscode/
@@ -41,12 +40,3 @@ browser_profiles/
 # Temp files
 temp_repo/
 *.pyc
-
-# Check scripts
-check_report.py
-update_report.py
-check_images.py
-read_template.py
-generate_report.py
-verify_report.py
-output.txt
