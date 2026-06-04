@@ -55,5 +55,20 @@ verify_report.py
 
 # Old / archived projects (not the main submission)
 ycg-miniproject-new/
-archive/old-projects/
-archive/generate_report.py
+archive/
+
+# Extra root-level docs (not part of submission)
+API_文档_完整版.md
+API集成指南.md
+FRONTEND_GUIDE.md
+Postman_Collection.json
+openapi.json
+快速开始指南.md
+接口逻辑检查与更新方案.md
+小程序UI开发实现指南.md
+微信小程序UI设计方案.md
+前端工作*
+前端系统*
+第一阶段*
+第二阶段*
+项目最终对接记录文档.md
